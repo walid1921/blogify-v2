@@ -1,0 +1,10 @@
+
+
+{% if date(blog_date) > date('-1day') %}
+    <li class="text-blue-300">
+        {{ blog_date|date('d/m/Y') }}
+        <span class="text-[10px] text-red-500">New</span>
+    </li>
+{% else %}
+    <li class="text-gray-300">{{ blog_date|date('d/m/Y') }}</li>
+{% endif %}
