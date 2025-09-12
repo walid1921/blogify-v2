@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Blogs Page{% endblock %}
+
+
+{% block body %}
+    <div class="flex flex-col item-center justify-center ">
+        <ul>
+            {% for key,blog in all_blogs|slice(0, pagination_limit) %}
+                <li class="px-2 py-1 bg-green-300 border inline-block ">
+                    <a href="{{ path('one_blog', { id: key }) }}">{{ blog.blogName }}</a>
+                </li>
+                <li>{{ blog.author }}</li>
+                <li>{{ blog.content }}</li>
+
+                {{ include('blog/_blogDate.html.twig', {blog_date: blog.created_at}) }}
+
+            {% endfor %}
+        </ul>
+
+
+    </div>
+
+{% endblock %}
