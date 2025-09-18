@@ -8,15 +8,15 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
-    #[Route('/', name: 'home_page')]
+    #[Route('/', name: 'home')]
     public function index(): Response
     {
-        $username = 'walid';
+        $message = 'Welcome to the home page';
 
         return $this->render(
             'home/index.html.twig', [
                 'controller_name' => 'MainController',
-                'username' => $username,
+                'welcomeMessage' => $message,
             ]);
     }
 }

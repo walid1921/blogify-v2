@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }}user page{% endblock %}
 
 {% block body %}
-    <p>my name is {{ username|title }}</p>
+    <p> {{ welcomeMessage }}</p>
     <a href="{{ path('user_page') }}">Users</a>
     <a href="{{ path('blog') }}">Blogs</a>
 {% endblock %}
