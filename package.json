@@ -1,0 +1,19 @@
+{
+    "dependencies": {
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "^5.3.8"
+    },
+    "scripts": {
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production",
+        "start": "concurrently \"symfony serve --no-tls\" \"npm run watch\""
+    },
+    "devDependencies": {
+        "@symfony/webpack-encore": "^5.2.0",
+        "concurrently": "^9.2.1",
+        "sass": "^1.92.1",
+        "sass-loader": "^16.0.5",
+        "webpack-dev-server": "^5.2.2"
+    }
+}
