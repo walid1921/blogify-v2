@@ -38,7 +38,7 @@ final class BlogController extends AbstractController
     //        ]);
     //    }
 
-    #[Route('blog', name: 'blog', requirements: ['limit' => '\d+'])]
+    #[Route('blogs', name: 'blogs', requirements: ['limit' => '\d+'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $blog = new Blog();
