@@ -1,22 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}user page{% endblock %}
+{% block title %}{{ parent() }}Home page{% endblock %}
 
 {% block body %}
     <p class="text-3xl "> {{ welcomeMessage }}</p>
 
-
-
-    <nav>
-        <ul class="flex justify-center gap-20 gap bg-gray-200">
-{#            {% for link in links %}#}
-{#                <li><a href="{{ link.url }}">{{ link.title }}</a></li>#}
-{#            {% endfor %}#}
-            <li><a href="{{ path('home') }}">Home</a></li>
-            <li><a href="{{ path('blogs') }}">Blogs</a></li>
-            <li><a href="{{ path('about') }}">About</a></li>
-            <li><a href="{{ path('contact') }}">Contact</a></li>
-            <li><a href="{{ path('users') }}">Users</a></li>
-        </ul>
-    </nav>
 {% endblock %}

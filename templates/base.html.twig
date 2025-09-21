@@ -19,7 +19,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
 
-            <a class="navbar-brand" href="#">Bligify</a>
+            <a class="navbar-brand" href="#">Blogify</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,23 +31,25 @@
                         <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('blogs') }}">Blogs</a>
+                        {#                        <a class="nav-link" href="{{ path('allBlogs') }}">Blogs</a> #}
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('blogs') }}">About</a>
+                        <a class="nav-link" href="{{ path('about') }}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('blogs') }}">Contact</a>
+                        <a class="nav-link" href="{{ path('contact') }}">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('blogs') }}">Users</a>
+                        <a class="nav-link" href="{{ path('users') }}">Users</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">Dropdown</a>
+                        <a class="nav-link dropdown-toggle" href="{{ path('blog.allBlogs') }}" role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">Blogs</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="{{ path('blog.allBlogs') }}">All blogs</a></li>
+                            <li><a class="dropdown-item" href="{{ path('blog.updateBlogs') }}">Update blogs</a></li>
+                            <li><a class="dropdown-item" href="{{ path('blog.create') }}">Create new blog</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
