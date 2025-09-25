@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Blog;
+use App\Form\BlogType;
 use App\Repository\BlogsRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 
@@ -41,16 +44,50 @@ final class BlogController extends AbstractController
 
     // ! Create a blog
     #[Route('/create', name: 'create')]
-    public function createBlog (EntityManagerInterface $entityManager): Response
+    public function createBlog (Request $request, EntityManagerInterface $entityManager): Response
     {
+        // creates a blog object and initializes inputs
         $blog = new Blog();
-        $blog->setTitle('Javasript');
-        $blog->setContent('Is the best programming language');
+        $blog->setTitle('');
+        $blog->setContent('');
+        $blog->setCreatedAt(new DateTimeImmutable());
+        $blog->setIsPublished(false);
 
-        $entityManager->persist($blog);
+
+        $form = $this->createForm(BlogType::class, $blog);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            $entityManager->persist($blog);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('blog.updateBlogs');
+        }
+
+
+        // return new Response('Saved new blog with id ' . $blog->getId());
+        return $this->render('blog/createBlog.html.twig', [
+            'formBlog' => $form->createView()
+        ]);
+    }
+
+    // ! Delete a Blog
+    #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
+    public function deleteBlog (int $id, BlogsRepository $br, EntityManagerInterface $entityManager): Response
+    {
+        $blog = $br->find($id);
+
+        if (!$blog) {
+            throw $this->createNotFoundException('Blog not found');
+        }
+
+        $entityManager->remove($blog);
         $entityManager->flush();
 
-        return new Response('Saved new blog with id ' . $blog->getId());
+        $this->addFlash('success', 'Blog deleted successfully.');
+
+        return $this->redirectToRoute('blog.updateBlogs'); // back to blog list
     }
 
 
