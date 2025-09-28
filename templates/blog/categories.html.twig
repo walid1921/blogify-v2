@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog Categories{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex vh-100 justify-content-center align-items-center">
+        <div class="container">
+            <div class="h-50 d-flex justify-content-center flex-column items-center ">
+
+            </div>
+            <div>
+                <a href="{{ path('blog.create') }}">Create new category</a>
+            </div>
+
+            <br>
+            {% for key,category in blogCategories %}
+                <span>{{ category.name }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

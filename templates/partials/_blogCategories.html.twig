@@ -1,0 +1,22 @@
+<ul class="list-unstyled d-flex align-items-center gap-4 p-0 m-0">
+    {% for category in blogCategories %}
+        <li>
+            {#            <a href="{{ path('blog.byCategory', {id: category.id}) }}"> #}
+            <a href="#">
+                <span class="link-no-underline-black fw-light d-flex gap-1 align-items-center">
+                    {{ category.name }}
+
+                    {# Calculate if createdAt is within last 3 days #}
+                    {% set now = "now"| date("U") %}
+                    {% set created = category.createdAt|date("U") %}
+                    {% set diff = (now - created) / 86400 %} {# seconds → days #}
+
+                    {% if diff < 3 %}
+                        <span class="new_tag">new</span>
+                    {% endif %}
+
+                </span>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

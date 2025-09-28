@@ -1,5 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ form(formBlog) }}
+    {#    {{ form(formBlog) }} #}
+    <div class="d-flex vh-100 justify-content-center align-items-center">
+        <div class="w-50 max-width-500">
+            {{ form_start(formBlog) }}
+            <div class="form-inline-group">
+                {{ form_row(formBlog.title, { row_attr: { class: 'form-row-inline' } }) }}
+                {{ form_row(formBlog.created_at,  { row_attr: { class: 'form-row-inline' } }) }}
+            </div>
+
+            {#  {{ form_rest(formBlog) }} #}
+            {{ form_row(formBlog.content) }}
+            {{ form_row(formBlog.is_published) }}
+            {{ form_row(formBlog.save) }}
+            {{ form_end(formBlog) }}
+        </div>
+
+
+    </div>
+
+    <div class="container-fluid ">
+        <button class="btn btn-primary">Click here</button>
+    </div>
+
+
+
 {% endblock %}

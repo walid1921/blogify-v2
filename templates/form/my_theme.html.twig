@@ -1,0 +1,96 @@
+{% use 'form_div_layout.html.twig' %}
+
+
+{% block form_label %}
+    {% if label is not same as(false) %}
+        {% if label is empty %} {# If no label is given, use a humanized version of the field name #}
+            {% set label = name|humanize %}
+        {% endif %}
+
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({ for: id }) %}
+        {% endif %}
+
+        <label
+            {% with { attr: label_attr } %}
+                {{ block('attributes') }}
+            {% endwith %}>
+            {{ label|trans({}, translation_domain) }}
+            {% if required %}
+                <span>*</span>
+            {% endif %}
+        </label>
+    {% endif %}
+{% endblock %}
+
+
+{# ---- ERRORS ---- #}
+{% block form_errors %}
+    {% if errors|length %}
+        <ul class="form-errors">
+            {% for error in errors %}
+                <li>{{ error.message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+
+{# ---- HELP ---- #}
+{% block form_help %}
+    {% if help is not empty %}
+        <div id="{{ id }}_help" class="form-help">
+            {{ help|trans({}, translation_domain) }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{# Generic row for text, email, password fields, etc. #}
+{% block form_row %}
+    <div class="form-group my-custom-row">
+        {{ form_label(form, null, { label_attr: { class: 'my-label' } }) }}
+        <div class="my-input-wrapper">
+            {{ form_widget(form, { attr: { class: 'my-input' } }) }}
+        </div>
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
+{% block form_row_inline %}
+    <div class="form-row-inline">
+        {{ form_label(form, null, { label_attr: { class: 'my-label' } }) }}
+        <div class="my-input-wrapper">
+            {{ form_widget(form, { attr: { class: 'my-input' } }) }}
+        </div>
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
+
+
+
+{# Textarea customization #}
+{% block textarea_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' my-textarea')|trim }) %}
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+{% endblock %}
+
+
+{# Checkbox customization #}
+{% block checkbox_widget %}
+    <div class="form-check my-checkbox">
+        <input type="checkbox" {{ block('widget_attributes') }}
+               class="form-check-input my-checkbox-input"{% if value is not empty %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+        <label class="form-check-label my-checkbox-label">{{ label|default('') }}</label>
+    </div>
+{% endblock %}
+
+
+{# ---- SUBMIT BUTTON ---- #}
+{% block submit_widget %}
+    {% set cls = (attr.class|default('') ~ ' button-primary button-primary--halfWidth')|trim %}
+    <button type="submit" {{ block('button_attributes') }} class="{{ cls }}">
+        {{ label|default('Save')|trans({}, translation_domain) }}
+    </button>
+{% endblock %}

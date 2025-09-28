@@ -1,0 +1,155 @@
+@mixin link-underline($color, $height: 1px) {
+    display: inline-flex;
+    overflow: hidden;
+    position: relative;
+
+    &:before {
+        transform: translateX(-100%);
+        background-color: $color;
+        bottom: 0;
+        content: "";
+        height: $height;
+        left: 0;
+        position: absolute;
+        width: 100%;
+    }
+
+    &:after {
+        background-color: $color;
+        bottom: 0;
+        content: "";
+        height: $height;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        transform: none;
+        transform-origin: initial;
+        transition: none;
+    }
+
+    &:hover {
+
+        &:before {
+            animation-direction: normal;
+            animation-duration: 0.8s;
+            animation-fill-mode: forwards;
+            animation-name: link-slide-in;
+            animation-timing-function: cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        &:after {
+            animation-direction: normal;
+            animation-duration: 0.8s;
+            animation-fill-mode: forwards;
+            animation-name: link-slide-out;
+            animation-timing-function: cubic-bezier(0.5, 0, 0, 1);
+        }
+    }
+}
+
+@keyframes link-slide-in {
+    45% {
+        transform: translateX(-100%)
+    }
+    to {
+        transform: translateX(0)
+    }
+}
+
+@keyframes link-slide-out {
+    55% {
+        transform: translateX(100%)
+    }
+    to {
+        transform: translateX(120%)
+    }
+
+}
+
+@mixin link-no-underline($color, $height: 1px, $beforeColor: transparant) {
+    position: relative;
+
+    &:before {
+        content: '';
+        position: absolute;
+        right: -1px;
+        bottom: -3px;
+        height: $height;
+        width: 2px;
+        z-index: 1;
+        background: $beforeColor;
+    }
+    &:after {
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 100%;
+        content: "";
+        background-color: $color;
+        transform: scale3d(0, 1, 0);
+        transform-origin: right center;
+        transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+        height: $height;
+    }
+
+    &:hover {
+        &:after {
+            transform: scale3d(1, 1, 1);
+            transform-origin: left center;
+        }
+    }
+}
+
+@mixin link-grow-alt($color, $height: 1px) {
+    position: relative;
+
+    &:after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        content: "";
+        background-color: $color;
+        transform: scaleX(1);
+        transform-origin: left center;
+        transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+        height: $height;
+    }
+
+    &:hover {
+        &:after {
+            transform: scaleX(0);
+            transform-origin: left center;
+        }
+    }
+}
+
+.link-no-underline-black {
+    color: #000;
+    @include link-no-underline(#000);
+
+}
+
+.link-no-underline-white {
+    color: #fff;
+    @include link-no-underline(#fff);
+
+}
+
+.link-underline-black {
+    color: #000;
+    @include link-underline(#000);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.link-underline-white {
+    color: #fff;
+    @include link-underline(#fff);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
