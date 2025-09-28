@@ -1,8 +1,227 @@
-// Import Bootstrap SCSS
+$border-radius-sm: 0;
+$border-radius: 0;
+$border-radius-lg: 0;
+$primary: #121212;
+$secondary: #7a7a7a;
+$border-radius: 0;
+
+@import "scss/link";
 @import "~bootstrap/scss/bootstrap";
+@import "scss/utilities";
 
 // Your custom styles
 body {
-    background-color: #343a40;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F5F5F5;
+    padding-top: 140px;
+    letter-spacing: 0.05em;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+
+//! Categories style
+.sticky-categories {
+    position: sticky;
+    top: 70px;
+    height: 50px;
+    z-index: 10;
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #eee;
+
+    display: flex;
+    align-items: center;
+}
+
+.new_tag {
+    color: #1E40AF;
+    font-size: 12px;
+    background-color: #DBEAFE;
+    padding: 1px 8px;
+    border-radius: 100px;
+}
+
+
+//! Form theme style
+.form-container {
+    width: 100%;
+    max-width: 800px; // limit form width
+    margin: 0 auto;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-inline-group {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row-inline {
+
+    min-width: 100%;
+
+    .my-input-wrapper {
+        width: 100%;
+    }
+}
+
+
+.my-custom-row {
+    margin-bottom: 1.5rem;
+    position: relative;
+    width: 100%;
+
+    .my-label {
+        position: absolute;
+        padding: 0 6px 0 6px;
+        top: -15px;
+        left: 15px;
+        display: block;
+        font-size: 15px;
+        margin-bottom: 0.5rem;
+        color: #A8A8A7;
+        background-color: #F5F5F5;
+    }
+
+    .my-input,
+    .my-textarea {
+        display: block;
+        width: 100%;
+        padding: 15px 20px 15px 20px;
+        border: 1px solid #A8A8A7;
+        font-size: 1rem;
+        background-color: #F5F5F5;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            border: 1px solid #111;
+            outline: none;
+        }
+    }
+}
+
+.my-textarea {
+    min-height: 150px;
+    resize: none;
+}
+
+
+.my-checkbox {
+    margin-top: 0.5rem;
+
+    .my-checkbox-input {
+        margin-right: 0.5rem;
+    }
+
+    .my-checkbox-label {
+        font-size: 0.95rem;
+        color: #444;
+    }
+}
+
+
+//! Primary Button
+
+
+.button-primary {
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 2px;
+
+    padding: 6px 20px;
+
+    border: 2px solid transparent; // transparent needed for border-image
+    border-image: linear-gradient(to top left, #111111, #7a7a7a) 1; // opposite direction of background
+    border-image-slice: 1;
+
+    box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(to bottom right, #111111, #7a7a7a);
+    transition: background 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        background: linear-gradient(to bottom right, #1a1a1a, #9a9a9a);
+        //opacity: 50%;
+        transition: background 0.3s ease-in-out;
+
+        //transition: opacity 0.3s ease-in-out;
+    }
+
+    &:active {
+        transform: translateY(1px);
+        box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    &--fullWidth {
+        width: 100%;
+    }
+
+    &--halfWidth {
+        width: 50%;
+    }
+}
+
+
+.blog-image {
+    min-height: 350px; // 👈 set your preferred minimum height
+    object-fit: cover; // keeps image proportional, crops if needed
+    width: 100%; // ensures it spans the column
+}
+
+.blog-bg {
+    position: relative;
+    min-height: 80vh;
+    color: white;
+    overflow: hidden;
+
+    // Base image
+    .bg-image {
+        position: absolute;
+        inset: 0;
+        background: url('../images/252-15041-4036_2.png') no-repeat center center/cover;
+        transition: transform 1s ease, opacity 1s ease;
+        z-index: 0;
+    }
+
+    // Hover image
+    .bg-image-hover {
+        position: absolute;
+        inset: 0;
+        background: url('../images/cq5dam.web.hebebed.2000.2000 (4).jpg') no-repeat center center/cover;
+        transform: scale(1.1); // start zoomed
+        opacity: 0;
+        transition: transform 1s ease, opacity 1s ease;
+        z-index: 0;
+    }
+
+    &:hover {
+        .bg-image {
+            opacity: 0; // fade out
+            transform: scale(1.1); // zoom out
+        }
+
+        .bg-image-hover {
+            opacity: 1; // fade in
+            transform: scale(1); // zoom to normal
+        }
+    }
+
+    // Dark overlay on top of both images
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+        z-index: 1;
+    }
 
 }

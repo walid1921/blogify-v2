@@ -1,0 +1,33 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+// Extend Bootstrap utilities
+$utilities: map-merge(
+        $utilities,
+        (
+            "max-width": (
+                property: max-width,
+                class: mw,
+                values: (
+                    100: 100%,
+                    50: 50px,
+                    max-content: max-content
+                )
+            ),
+            "font-size": (
+                property: font-size,
+                class: fs,
+                values: (
+                    7: 0.9rem,
+                    8: 0.75rem, // smaller than fs-6 (0.875rem)
+                    9: 0.625rem // extra small
+                )
+            )
+        )
+);
+
+
+@import "bootstrap/scss/utilities/api";

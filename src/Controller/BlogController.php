@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Blog;
 use App\Form\BlogType;
+use App\Repository\BlogCategoriesRepository;
 use App\Repository\BlogsRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BlogController extends AbstractController
 {
 
-    // ! Read all blogs
+    // ! Fetch All Blogs
     #[Route('/', name: 'allBlogs', requirements: ['limit' => '\d+'])]
     public function index (BlogsRepository $br): Response
     {
@@ -35,7 +36,7 @@ final class BlogController extends AbstractController
     {
         $blogs = $br->findAll();
 
-        return $this->render('blog/index.html.twig', [
+        return $this->render('blog/index.html.twig ', [
             'controller_name' => 'BlogController',
             'blogs' => $blogs,
         ]);
@@ -57,8 +58,7 @@ final class BlogController extends AbstractController
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($blog);
             $entityManager->flush();
 
@@ -68,7 +68,7 @@ final class BlogController extends AbstractController
 
         // return new Response('Saved new blog with id ' . $blog->getId());
         return $this->render('blog/createBlog.html.twig', [
-            'formBlog' => $form->createView()
+            'formBlog' => $form
         ]);
     }
 
@@ -106,4 +106,18 @@ final class BlogController extends AbstractController
             ]
         );
     }
+
+    //! Fetch All Blog Categories
+    #[Route('/categories', name: 'allBlogCategories')]
+    public function blogCategories (BlogCategoriesRepository $bcr): Response
+    {
+        $blogCategories = $bcr->findAll();
+
+
+        return $this->render('blog/categories.html.twig', [
+            'blogCategories' => $blogCategories
+        ]);
+    }
+
+    //! Create a Blog Category
 }

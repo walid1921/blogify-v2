@@ -3,6 +3,203 @@
 {% block title %}{{ parent() }}Home page{% endblock %}
 
 {% block body %}
-    <p class="text-3xl "> {{ welcomeMessage }}</p>
+
+    <div class="container">
+
+
+        <div class="d-flex flex-column gap-1 mb-4">
+            <h1 class="text-uppercase fs-2">Blogs</h1>
+            <p class="fw-light">Subtitle: Write something here</p>
+        </div>
+
+
+        <div class="sticky-categories">
+            {% include 'partials/_blogCategories.html.twig' with { blogCategories: blogCategories } %}
+        </div>
+
+
+        <div class="row align-items-start pt-3 w-100">  <!-- g-4 adds gutter spacing -->
+
+            <div class="col-5">
+                <div class="d-flex flex-column gap-3">
+                    <img src="{{ asset('images/252-15041-4036_2.png') }}" alt="Blog image" class="img-fluid blog-image">
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="border border-black px-2 ">
+                            <p class="fs-8">Event</p>
+                        </div>
+                        <p class="text-secondary fs-8">Feb 20, 2025</p>
+                    </div>
+                    <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
+                        knitwear</h3>
+                    <p class="fw-light fs-7">
+                        Welcome to REVA – where fashion isn’t just clothing, but a passion,
+                        an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve been...
+                    </p>
+                    <a href='#'
+                       class="text-decoration-none fs-7 link-underline-black d-inline-flex w-auto mw-max-content align-items-center gap-2">
+                        Read more
+                        <svg width="19" height="18" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="black"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-7 px-4 pb-5 d-flex flex-column justify-content-end blog-bg">
+                <div class="bg-image"></div>
+                <div class="bg-image-hover"></div>
+                <div class="overlay"></div>
+                <div class="d-flex flex-column gap-3 z-1">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="border border-white px-2 ">
+                            <p class="fs-8">Event</p>
+                        </div>
+                        <p class="text-white fs-8">Feb 20, 2025</p>
+                    </div>
+                    <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
+                        knitwear</h3>
+                    <p class="fw-light fs-7">
+                        Welcome to REVA – where fashion isn’t just clothing, but a passion,
+                        an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve been...
+                    </p>
+                    <div class="d-flex justify-content-end">
+                        <a href='#'
+                           class="text-decoration-none fs-7 link-underline-white align-items-center gap-2">
+                            Read more
+                            <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="white"
+                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-start pt-3 w-100">
+
+            <div class="col-7 px-4 pb-5 d-flex flex-column justify-content-end blog-bg">
+                <div class="bg-image"></div>
+                <div class="bg-image-hover"></div>
+                <div class="overlay"></div>
+                <div class="d-flex flex-column gap-3 z-1">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="border border-white px-2 ">
+                            <p class="fs-8">Event</p>
+                        </div>
+                        <p class="text-white fs-8">Feb 20, 2025</p>
+                    </div>
+                    <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
+                        knitwear</h3>
+                    <p class="fw-light fs-7">
+                        Welcome to REVA – where fashion isn’t just clothing, but a passion,
+                        an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve been...
+                    </p>
+                    <div class="d-flex justify-content-end">
+                        <a href='#'
+                           class="text-decoration-none fs-7 link-underline-white align-items-center gap-2">
+                            Read more
+                            <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="white"
+                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-5">
+                <div class="d-flex flex-column gap-3">
+                    <img src="{{ asset('images/252-15041-4036_2.png') }}" alt="Blog image" class="img-fluid blog-image">
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="border border-black px-2 ">
+                            <p class="fs-8">Event</p>
+                        </div>
+                        <p class="text-secondary fs-8">Feb 20, 2025</p>
+                    </div>
+                    <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
+                        knitwear</h3>
+                    <p class="fw-light fs-7">
+                        Welcome to REVA – where fashion isn’t just clothing, but a passion,
+                        an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve been...
+                    </p>
+                    <a href='#'
+                       class="text-decoration-none fs-7 link-underline-black d-inline-flex w-auto mw-max-content align-items-center gap-2">
+                        Read more
+                        <svg width="19" height="18" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="black"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- -------- START HEADER 5 w/ text and illustration ------- -->
+    <header>
+        <div class="page-header min-vh-75">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 my-auto">
+                        <h1 class="text-gradient text-warning mb-0">Your Desired</h1>
+                        <h1 class="mb-4">Experiences</h1>
+                        <p class="lead">The time is now for it to be okay to be great. For being a bright color. For
+                            standing out.</p>
+                        <div class="buttons">
+                            <button type="button" class="btn bg-gradient-warning mt-4">Discover</button>
+                            <button type="button" class="btn text-warning shadow-none mt-4">Read more</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 ps-5 pe-0">
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <img class="w-100 border-radius-lg shadow mt-0 mt-lg-7"
+                                     src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/desire.jpg"
+                                     alt="">
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <img class="w-100 border-radius-lg shadow"
+                                     src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/chair.jpg"
+                                     alt="">
+                                <img class="w-100 border-radius-lg shadow mt-4"
+                                     src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/facade.jpg"
+                                     alt="">
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <img class="w-100 border-radius-lg shadow mt-0 mt-lg-5"
+                                     src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/architecture.jpg"
+                                     alt="">
+                                <img class="w-100 border-radius-lg shadow mt-4"
+                                     src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/baloon.jpg"
+                                     alt="">
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <img class="w-100 border-radius-lg shadow mt-3"
+                                     src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/seaside.jpg"
+                                     alt="">
+                                <img class="w-100 border-radius-lg shadow mt-4"
+                                     src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/medusa.jpg"
+                                     alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- -------- END HEADER 5 w/ text and illustration ------- -->
+
+
+
 
 {% endblock %}
