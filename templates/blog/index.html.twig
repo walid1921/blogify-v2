@@ -44,31 +44,72 @@
                     <caption>List of blogs</caption>
                     <thead class="table-light">
                     <tr>
-                        <th scope="col" class="py-3">#</th>
+                        <th scope="col" class="ps-3 py-3">#</th>
                         <th scope="col" class="py-3">Title</th>
                         <th scope="col" class="py-3">Content</th>
-                        <th scope="col" class="py-3">Created</th>
+                        <th scope="col" class="py-3">
+                            <a
+                                href="{{ path('blog.updateBlogs', { order: order == 'ASC' ? 'DESC' : 'ASC' }) }}">
+                                Created
+                                {% if order == 'ASC' %}
+                                    <img src="{{ asset('icons/Sort From Bottom To Top.svg') }}" alt="sort icon">
+                                {% else %}
+                                    <img src="{{ asset('icons/Sort From Top To Bottom.svg') }}" alt="sort icon">
+                                {% endif %}
+                            </a>
+                        </th>
+
                         <th scope="col" class="py-3">Status</th>
-                        <th scope="col" class="py-3">Update</th>
+                        <th scope="col" class="pe-3 py-3">Update</th>
                     </tr>
                     </thead>
                     <tbody>
                     {# {{ dump(blogs) }} #}
                     {% for key,blog in blogs %}
                         <tr>
-                            <td class="py-3">{{ blog.id }}</td>
-                            <td class="py-3">{{ blog.title }}</td>
+                            <td class="ps-3 py-3">{{ blog.id }}</td>
+                            <td class="py-3">
+                                <a href="#"
+                                   class="link-no-underline-black d-inline-block align-items-center ">
+                                    <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
+                                    {{ blog.title|u.truncate(30, '...') }}
+                                </a>
+                            </td>
                             <td class="py-3">{{ blog.content|u.truncate(70, '...') }}</td>
                             <td class="py-3">{{ blog.createdAt|date('Y-m-d') }}</td>
                             <td class="py-3">
                                 {% if (blog.published) %}
-                                    <span>Published</span>
+                                    <span class="text-success">Published</span>
                                 {% else %}
-                                    <span>Pending</span>
+                                    <span class="text-danger">Pending</span>
                                 {% endif %}
                             </td>
-                            <td class="py-3"><a href="{{ path('blog.delete', {id: blog.id}) }}">x</a></td>
+                            <td class="py-3">
+                                <a class="me-3"
+                                   href="#"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#deleteModal-{{ blog.id }}">
+                                    <img
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Delete"
+                                        src="{{ asset('icons/Trash Bin Trash.svg') }}"
+                                        alt="pen icon">
+                                </a>
+                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit">
+                                    <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
+                                </a>
+                            </td>
                         </tr>
+
+                        {% include "components/_modalConfirm.html.twig" with {
+                            modal_id: "deleteModal-" ~ blog.id,
+                            title: "Confirm Deletion",
+                            body: "Are you sure you want to delete <strong>" ~ blog.title ~ "</strong>?",
+                            confirm_path: path('blog.delete', {id: blog.id}),
+                            confirm_text: "Delete"
+                        } %}
+
                     {% endfor %}
                     </tbody>
                 </table>

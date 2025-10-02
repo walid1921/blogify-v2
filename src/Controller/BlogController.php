@@ -32,13 +32,14 @@ final class BlogController extends AbstractController
 
     // ! Update blogs
     #[Route('/update', name: 'updateBlogs', requirements: ['limit' => '\d+'])]
-    public function updateBlogs (BlogsRepository $br): Response
+    public function updateBlogs (Request $request, BlogsRepository $br): Response
     {
-        $blogs = $br->findAll();
+        $order = $request->query->get('order', 'DESC'); // default DESC
+        $blogs = $br->findAllSortedByDate($order);
 
         return $this->render('blog/index.html.twig', [
-            'controller_name' => 'BlogController',
             'blogs' => $blogs,
+            'order' => $order,
         ]);
     }
 

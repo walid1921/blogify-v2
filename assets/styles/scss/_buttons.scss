@@ -2,7 +2,7 @@
 .button-primary {
     color: #ffffff;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 14px;
     text-align: center;
     letter-spacing: 2px;
 
@@ -37,12 +37,13 @@
 .button-secondary {
     color: #111111;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 14px;
     text-align: center;
     letter-spacing: 2px;
 
     border: 1px solid transparent; // transparent needed for border-image
     border-image: linear-gradient(to top left, #111111, #dedede) 1; // opposite direction of background
+    background-color: white;
     transition: background 0.2s ease-in-out;
     cursor: pointer;
 
@@ -53,7 +54,7 @@
     }
 
     &:hover {
-        background-color: white;
+        background-color: #eeeeee;
         transition: background-color 0.2s ease-in-out;
     }
 
@@ -70,7 +71,7 @@
 .button-blurred {
     color: #ffffff;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 14px;
     text-align: center;
     letter-spacing: 2px;
 
