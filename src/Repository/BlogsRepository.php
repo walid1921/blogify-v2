@@ -40,4 +40,13 @@ class BlogsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findAllSortedByDate (string $order = 'DESC'): array
+    {
+        return $this->createQueryBuilder('b')
+            ->orderBy('b.created_at', $order) // ASC or DESC
+            ->getQuery()
+            ->getResult();
+    }
+
 }
