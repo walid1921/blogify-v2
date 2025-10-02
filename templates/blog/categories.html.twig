@@ -4,20 +4,19 @@
 
 {% block body %}
 
-    <div class="d-flex vh-100 justify-content-center align-items-center">
-        <div class="container">
-            <div class="h-50 d-flex justify-content-center flex-column items-center ">
+    <div class="page-container">
 
-            </div>
-            <div>
-                <a href="{{ path('blog.create') }}">Create new category</a>
-            </div>
+        <h2>CATEGORIES</h2>
 
-            <br>
-            {% for key,category in blogCategories %}
-                <span>{{ category.name }}</span>
-            {% endfor %}
+        <div>
+            <a href="{{ path('blog.create') }}">Create new category</a>
         </div>
+
+        <br>
+        {% for key,category in blogCategories %}
+            <span>{{ category.name }}</span>
+        {% endfor %}
+
     </div>
 
 

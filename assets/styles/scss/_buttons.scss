@@ -1,0 +1,103 @@
+//! Primary Button
+.button-primary {
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 2px;
+
+    border: 2px solid transparent; // transparent needed for border-image
+    border-image: linear-gradient(to top left, #111111, #7a7a7a) 1; // opposite direction of background
+    background: linear-gradient(to bottom right, #111111, #7a7a7a);
+    transition: background 0.2s ease-in-out;
+    cursor: pointer;
+
+    padding: 6px 10px;
+
+    &.with-text {
+        padding: 6px 20px;
+    }
+
+    &:hover {
+        opacity: 90%;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    &--fullWidth {
+        width: 100%;
+    }
+
+    &--halfWidth {
+        width: 50%;
+    }
+}
+
+
+//! Secondary Button
+.button-secondary {
+    color: #111111;
+    font-weight: normal;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 2px;
+
+    border: 1px solid transparent; // transparent needed for border-image
+    border-image: linear-gradient(to top left, #111111, #dedede) 1; // opposite direction of background
+    transition: background 0.2s ease-in-out;
+    cursor: pointer;
+
+    padding: 6px 10px;
+
+    &.with-text {
+        padding: 6px 20px;
+    }
+
+    &:hover {
+        background-color: white;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    &--fullWidth {
+        width: 100%;
+    }
+
+    &--halfWidth {
+        width: 50%;
+    }
+}
+
+//! Blurred Button
+.button-blurred {
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 2px;
+
+    border: 1px solid transparent; // transparent needed for border-image
+    border-image: linear-gradient(to top left, #4f4f4f, #c7c7c7) 1; // opposite direction of background
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: background 0.2s ease-in-out;
+    cursor: pointer;
+
+    padding: 6px 10px;
+
+    &.with-text {
+        padding: 6px 20px;
+    }
+
+    &:hover {
+        opacity: 90%;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .fullWidth {
+        width: 100%;
+    }
+
+    .halfWidth {
+        width: 50%;
+    }
+}

@@ -1,0 +1,119 @@
+//! Form theme style
+
+.form-inline-group {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row-inline {
+    min-width: 100%;
+
+    .my-input-wrapper {
+        width: 100%;
+    }
+}
+
+
+.my-custom-row {
+    display: flex;
+    gap: 20px;
+    position: relative;
+    width: 100%;
+
+    .my-label {
+        position: absolute;
+        padding: 0 6px;
+        left: 20px;
+        top: 15px;
+        font-size: 1rem;
+        color: #A8A8A7;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        background-color: #F5F5F5;
+        z-index: 4;
+    }
+
+    .my-input {
+        display: block;
+        width: 100%;
+        padding: 15px 20px;
+        border: 1px solid #A8A8A7;
+        font-size: 1rem;
+        background: transparent;
+        outline: none;
+        z-index: 2;
+        position: relative;
+
+        &:focus ~ .my-label,
+        &:valid ~ .my-label {
+            top: -10px;
+            font-size: 0.85rem;
+            color: #111;
+        }
+
+        &:focus ~ .underline,
+        &:valid ~ .underline {
+            transform: scaleX(1);
+        }
+    }
+
+    .underline {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background-color: #111;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+        z-index: 3;
+    }
+
+
+}
+
+
+.my-textarea {
+    min-height: 150px;
+    resize: none;
+}
+
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #A8A8A7;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+
+        &:checked {
+            background-color: #d9d9d9;
+            border-color: #111;
+
+            &::after {
+                content: "✔";
+                position: absolute;
+                font-size: 12px;
+                color: #111;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    .my-checkbox-label {
+        font-size: 0.95rem;
+        color: #444;
+    }
+}

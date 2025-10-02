@@ -1,0 +1,100 @@
+//! TOAST NOTIFICATIONS
+
+.notification-container {
+    position: fixed;
+    top: 100px;
+    right: 0;
+    transform: translateX(-20%);
+    max-width: 600px;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 250px;
+    max-width: 400px;
+    font-size: 0.9rem;
+    text-align: center;
+    opacity: 0;
+    animation: fadeInOut 4s forwards;
+
+    .icon {
+        height: 100%;
+        padding: 10px 15px;
+    }
+
+    .icon.success {
+        border-right: 1px solid #A2CEBB;
+    }
+
+    .icon.error {
+        border-right: 1px solid #F0AEB5;
+    }
+
+    .icon.warning {
+        border-right: 1px solid #FFE59B;
+    }
+
+    .icon.info {
+        border-right: 1px solid #ACB5BD;
+    }
+
+
+    p {
+        padding: 10px 15px;
+    }
+}
+
+/* Success Notification */
+.notification.success {
+    background-color: #D1E7DE;
+    border: 1px solid #A2CEBB;
+    color: #1B8655;
+}
+
+/* Error Notification */
+.notification.error {
+    background-color: #F9D7DB;
+    border: 1px solid #F0AEB5;
+    color: #DB3545;
+}
+
+/* Warning Notification */
+.notification.warning {
+    background-color: #fad554;
+    border: 1px solid #FFE59B;
+    color: #FFC008;
+}
+
+/* Info Notification */
+.notification.info {
+    background-color: #CDD4DB;
+    border: 1px solid #ACB5BD;
+    color: #212529;
+}
+
+
+/* Fade In and Out Animation */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}

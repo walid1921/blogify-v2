@@ -36,7 +36,7 @@ final class BlogController extends AbstractController
     {
         $blogs = $br->findAll();
 
-        return $this->render('blog/index.html.twig ', [
+        return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
             'blogs' => $blogs,
         ]);
@@ -55,12 +55,16 @@ final class BlogController extends AbstractController
         $blog->setIsPublished(false);
 
 
+        // Create the form using the BlogType form class
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
+        // Handle the form submission, validation, and saving the data to the database
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($blog);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Blog added successfully!');
 
             return $this->redirectToRoute('blog.updateBlogs');
         }
@@ -85,7 +89,7 @@ final class BlogController extends AbstractController
         $entityManager->remove($blog);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Blog deleted successfully.');
+        $this->addFlash('success', 'Blog deleted successfully!');
 
         return $this->redirectToRoute('blog.updateBlogs'); // back to blog list
     }

@@ -2,12 +2,14 @@
 
 
 {% block body %}
-    <h4>we got {{ users|length }} users</h4>
+    <div class="page-container">
+        <h4>we got {{ users|length }} users</h4>
 
-    <div>
-        {% for user in users %}
-            <p>{{ user.username }} is {{ user.age }}</p>
-        {% endfor %}
-        <a href="{{ path('home') }}">Home page</a>
+        <div>
+            {% for user in users %}
+                <p>{{ user.username }} is {{ user.age }}</p>
+            {% endfor %}
+            <a href="{{ path('home') }}">Home page</a>
+        </div>
     </div>
 {% endblock %}

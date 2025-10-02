@@ -6,7 +6,7 @@
 
     <div class="container">
         {% for blog in blogs %}
-            {% include 'partials/_blogRow.html.twig' with { blog: blog, flip: loop.index is odd } %}
+            {% include 'components/_blogRow.html.twig' with { blog: blog, flip: loop.index is odd } %}
         {% endfor %}
     </div>
 
@@ -64,8 +64,5 @@
         </div>
     </header>
     <!-- -------- END HEADER 5 w/ text and illustration ------- -->
-
-
-
 
 {% endblock %}

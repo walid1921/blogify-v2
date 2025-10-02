@@ -19,11 +19,11 @@
 <body>
 <header>
 
-    {# Navbar #}
+    {# NAVBAR #}
     <nav
         class="navbar navbar-expand-lg fixed-top navbar-light bg-white z-index-3 py-3">
         <div class="container">
-            <a class="navbar-brand" href="{{ path('home') }}" rel="tooltip" title="Blogify"
+            <a class="navbar-brand fw-semibold fs-4" href="{{ path('home') }}" rel="tooltip" title="Blogify"
                data-placement="bottom">
                 Blogify
             </a>
@@ -31,7 +31,7 @@
                     aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navigation">
+            <div class="collapse navbar-collapse gap-5" id="navigation">
                 <ul class="navbar-nav navbar-nav-hover mx-auto">
                     <li class="nav-item px-3">
                         <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
@@ -47,7 +47,7 @@
                            aria-expanded="false">Blogs</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ path('blog.allBlogs') }}">All blogs</a></li>
-                            <li><a class="dropdown-item" href="{{ path('blog.updateBlogs') }}">Update blogs</a></li>
+                            <li><a class="dropdown-item" href="{{ path('blog.updateBlogs') }}">Blogs table</a></li>
                             <li><a class="dropdown-item" href="{{ path('blog.create') }}">Create new blog</a></li>
                             <li><a class="dropdown-item" href="{{ path('blog.allBlogCategories') }}">Categories</a></li>
                             <li>
@@ -58,17 +58,23 @@
                     </li>
                 </ul>
 
+
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+
+                {% include 'components/_button.html.twig' with {
+                    typeButton: 'primary',
+                    path: path('login'),
+                    textButton: 'Login',
+                } %}
             </div>
         </div>
     </nav>
 </header>
 
-<div class="container">
-    {% block body %}{% endblock %}
-</div>
+{% block body %}{% endblock %}
+
 </body>
 </html>
