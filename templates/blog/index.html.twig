@@ -1,55 +1,79 @@
 {% extends 'base.html.twig' %}
 
 
+
 {% block title %}Update Blogs{% endblock %}
 
 
 {% block body %}
-    <br>
 
-    {% for message in app.flashes('success') %}
-        <h3 class="alert alert-success">{{ message }}</h3>
-    {% endfor %}
+    <div class="notification-container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                {% include 'components/_toast.html.twig' with { type: label,  message: message } %}
+            {% endfor %}
+        {% endfor %}
+    </div>
 
 
-    <div class="container">
-        <div>
-            <h2>Update Blogs</h2> ({{ blogs|length }})
-            <br>
-            <a href="{{ path('blog.create') }}">Create new blog</a>
+    <div class="page-container">
+
+        <div class="d-flex align-items-end justify-content-between mb-3 px-4">
+
+            <div class="d-flex flex-column gap-1 mb-4 ">
+                <div class="d-flex align-items-start gap-2">
+                    <h1 class="text-uppercase fs-2">UPDATE BLOGS</h1>
+                    <span>({{ blogs|length }})</span>
+                </div>
+                <p class="fw-light">Subtitle: Write something here</p>
+            </div>
+
+
+            {% include 'components/_button.html.twig' with {
+                typeButton: 'primary',
+                path: path('blog.create'),
+                iconType: 'add',
+                iconColor: 'white',
+                textButton: 'New blog',
+            } %}
         </div>
 
-        <br>
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th scope="col">Blog Nr.</th>
-                <th scope="col">Title</th>
-                <th scope="col">Content</th>
-                <th scope="col">Created</th>
-                <th scope="col">Status</th>
-                <th scope="col">Delete</th>
-            </tr>
-            </thead>
-            <tbody
-            {% for key,blog in blogs %}
-                <tr>
-                    <th scope="row">{{ blog.id }}</th>
-                    <td>{{ blog.title }}</td>
-                    <td>{{ blog.content }}</td>
-                    <td>{{ blog.createdAt|date('Y-m-d') }}</td>
-                    <td>
-                        {% if (blog.published) %}
-                            <span>Published</span>
-                        {% else %}
-                            <span>Pending</span>
-                        {% endif %}
-                    </td>
-                    <td><a href="{{ path('blog.delete', {id: blog.id}) }}">x</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="px-4">
+            <div class="table-responsive border border-black border-opacity-25 ">
+                <table class="table table-striped table-hover">
+                    <caption>List of blogs</caption>
+                    <thead class="table-light">
+                    <tr>
+                        <th scope="col" class="py-3">#</th>
+                        <th scope="col" class="py-3">Title</th>
+                        <th scope="col" class="py-3">Content</th>
+                        <th scope="col" class="py-3">Created</th>
+                        <th scope="col" class="py-3">Status</th>
+                        <th scope="col" class="py-3">Update</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# {{ dump(blogs) }} #}
+                    {% for key,blog in blogs %}
+                        <tr>
+                            <td class="py-3">{{ blog.id }}</td>
+                            <td class="py-3">{{ blog.title }}</td>
+                            <td class="py-3">{{ blog.content|u.truncate(70, '...') }}</td>
+                            <td class="py-3">{{ blog.createdAt|date('Y-m-d') }}</td>
+                            <td class="py-3">
+                                {% if (blog.published) %}
+                                    <span>Published</span>
+                                {% else %}
+                                    <span>Pending</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-3"><a href="{{ path('blog.delete', {id: blog.id}) }}">x</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

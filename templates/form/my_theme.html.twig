@@ -47,25 +47,36 @@
 
 
 {# Generic row for text, email, password fields, etc. #}
+
 {% block form_row %}
-    <div class="form-group my-custom-row">
-        {{ form_label(form, null, { label_attr: { class: 'my-label' } }) }}
-        <div class="my-input-wrapper">
-            {{ form_widget(form, { attr: { class: 'my-input' } }) }}
+    {% if 'checkbox' in form.vars.block_prefixes %}
+        {# ✅ Checkbox row #}
+        <div class="custom-checkbox">
+            {{ form_widget(form) }}
+            {{ form_label(form, null, { label_attr: { class: 'my-checkbox-label' } }) }}
+            {{ form_errors(form) }}
         </div>
-        {{ form_errors(form) }}
-    </div>
+    {% else %}
+        {# ✅ Default input row #}
+        <div class="my-custom-row">
+            {{ form_widget(form, { attr: { class: 'my-input' } }) }}
+            {{ form_label(form, null, { label_attr: { class: 'my-label' } }) }}
+            <span class="underline"></span>
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
 {% endblock %}
 
-{% block form_row_inline %}
-    <div class="form-row-inline">
-        {{ form_label(form, null, { label_attr: { class: 'my-label' } }) }}
-        <div class="my-input-wrapper">
-            {{ form_widget(form, { attr: { class: 'my-input' } }) }}
-        </div>
-        {{ form_errors(form) }}
-    </div>
-{% endblock %}
+
+{# {% block form_row_inline %} #}
+{#    <div class="form-row-inline"> #}
+{#        {{ form_label(form, null, { label_attr: { class: 'my-label' } }) }} #}
+{#        <div class="my-input-wrapper"> #}
+{#            {{ form_widget(form, { attr: { class: 'my-input' } }) }} #}
+{#        </div> #}
+{#        {{ form_errors(form) }} #}
+{#    </div> #}
+{# {% endblock %} #}
 
 
 
@@ -79,12 +90,15 @@
 
 {# Checkbox customization #}
 {% block checkbox_widget %}
-    <div class="form-check my-checkbox">
+    <div class="custom-checkbox">
         <input type="checkbox" {{ block('widget_attributes') }}
-               class="form-check-input my-checkbox-input"{% if value is not empty %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
-        <label class="form-check-label my-checkbox-label">{{ label|default('') }}</label>
+            {% if value is not empty %} value="{{ value }}"{% endif %}
+            {% if checked %} checked="checked"{% endif %}>
+        <span class="checkmark"></span>
+        {{ label|default('') }}
     </div>
 {% endblock %}
+
 
 
 {# ---- SUBMIT BUTTON ---- #}

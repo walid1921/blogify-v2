@@ -1,0 +1,6 @@
+{% macro excerpt(text, wordCount) %}
+
+    {% set t = text|u.truncate(wordCount, '...') %}
+
+    {{ t }}
+{% endmacro %}
