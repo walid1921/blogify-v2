@@ -30,9 +30,9 @@ final class BlogController extends AbstractController
         ]);
     }
 
-    // ! Update blogs
-    #[Route('/update', name: 'updateBlogs', requirements: ['limit' => '\d+'])]
-    public function updateBlogs (Request $request, BlogsRepository $br): Response
+    // ! Blogs table (to update)
+    #[Route('/blogs', name: 'blogsTable', requirements: ['limit' => '\d+'])]
+    public function blogsTable (Request $request, BlogsRepository $br): Response
     {
         $order = $request->query->get('order', 'DESC'); // default DESC
         $blogs = $br->findAllSortedByDate($order);
@@ -42,7 +42,6 @@ final class BlogController extends AbstractController
             'order' => $order,
         ]);
     }
-
 
     // ! Create a blog
     #[Route('/create', name: 'create')]
@@ -62,18 +61,48 @@ final class BlogController extends AbstractController
 
         // Handle the form submission, validation, and saving the data to the database
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($blog);
-            $entityManager->flush();
+
+            // $blog = $form->getData(); // holds the submitted values
+            // dd($blog); // dump and die, to see the blog object with submitted data
+
+            $entityManager->persist($blog); // presist is like prepare in SQL statements, it tells Doctrine to manage the entity and track changes to it for future database operations.
+            $entityManager->flush(); // flush actually executes the SQL queries to synchronize the in-memory state of managed entities with the database.
 
             $this->addFlash('success', 'Blog added successfully!');
 
-            return $this->redirectToRoute('blog.updateBlogs');
+            return $this->redirectToRoute('blog.blogsTable');
         }
 
 
         // return new Response('Saved new blog with id ' . $blog->getId());
         return $this->render('blog/createBlog.html.twig', [
             'formBlog' => $form
+        ]);
+    }
+
+    //! Edit a Blog
+    #[Route('/edit/{id}', name: 'edit', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
+    public function editBlog (int $id, Request $request, BlogsRepository $br, EntityManagerInterface $entityManager): Response
+    {
+        $blog = $br->find($id);
+        if (!$blog) {
+            throw $this->createNotFoundException('Blog not found');
+        }
+
+        $form = $this->createForm(BlogType::class, $blog);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($blog);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Blog updated successfully!');
+
+            return $this->redirectToRoute('blog.blogsTable');
+        }
+        return $this->render('blog/updateBlog.html.twig', [
+            'formBlog' => $form,
+            'blog' => $blog
         ]);
     }
 
@@ -92,9 +121,8 @@ final class BlogController extends AbstractController
 
         $this->addFlash('success', 'Blog deleted successfully!');
 
-        return $this->redirectToRoute('blog.updateBlogs'); // back to blog list
+        return $this->redirectToRoute('blog.blogsTable');
     }
-
 
     // ! One blog page
     #[Route('/blog/{id}', name: 'one_blog', requirements: ['id' => '\d+'])]

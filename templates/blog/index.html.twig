@@ -49,7 +49,7 @@
                         <th scope="col" class="py-3">Content</th>
                         <th scope="col" class="py-3">
                             <a
-                                href="{{ path('blog.updateBlogs', { order: order == 'ASC' ? 'DESC' : 'ASC' }) }}">
+                                href="{{ path('blog.blogsTable', { order: order == 'ASC' ? 'DESC' : 'ASC' }) }}">
                                 Created
                                 {% if order == 'ASC' %}
                                     <img src="{{ asset('icons/Sort From Bottom To Top.svg') }}" alt="sort icon">
@@ -67,7 +67,7 @@
                     {# {{ dump(blogs) }} #}
                     {% for key,blog in blogs %}
                         <tr>
-                            <td class="ps-3 py-3">{{ blog.id }}</td>
+                            <td class="text-secondary ps-3 py-3">{{ blog.id }}</td>
                             <td class="py-3">
                                 <a href="#"
                                    class="link-no-underline-black d-inline-block align-items-center ">
@@ -96,7 +96,9 @@
                                         src="{{ asset('icons/Trash Bin Trash.svg') }}"
                                         alt="pen icon">
                                 </a>
-                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit">
+                                <a href="{{ path('blog.edit', {id: blog.id} ) }}" data-bs-toggle="tooltip"
+                                   data-bs-placement="top"
+                                   data-bs-title="Edit">
                                     <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
                                 </a>
                             </td>
