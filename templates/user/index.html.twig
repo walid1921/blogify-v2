@@ -1,9 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} Users {% endblock %}
 
 {% block body %}
     <div class="page-container">
-        <h4>we got {{ users|length }} users</h4>
+
+        <div class="d-flex flex-column gap-1 mb-4 ">
+            <div class="d-flex align-items-start gap-2">
+                <h1 class="text-uppercase fs-3">USERS</h1>
+                <span>({{ users|length }})</span>
+            </div>
+            <p class="fw-light">Update and delete users here</p>
+        </div>
 
         <div>
             {% for user in users %}
