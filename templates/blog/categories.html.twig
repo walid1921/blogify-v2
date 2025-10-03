@@ -6,13 +6,14 @@
 
     <div class="page-container">
 
-        <h2>CATEGORIES</h2>
-
-        <div>
-            <a href="{{ path('blog.create') }}">Create new category</a>
+        <div class="d-flex flex-column gap-1 mb-4 ">
+            <div class="d-flex align-items-start gap-2">
+                <h1 class="text-uppercase fs-3">CATEGORIES</h1>
+                <span>({{ blogCategories|length }})</span>
+            </div>
+            <p class="fw-light">Update and delete categories here</p>
         </div>
 
-        <br>
         {% for key,category in blogCategories %}
             <span>{{ category.name }}</span>
         {% endfor %}

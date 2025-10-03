@@ -106,6 +106,25 @@ final class BlogController extends AbstractController
         ]);
     }
 
+    //! Update blog's status
+    #[Route('/blog-status/{id}', name: 'blogStatus', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
+    public function updateBlogStatus (int $id, BlogsRepository $br, EntityManagerInterface $entityManager): Response
+    {
+        $blog = $br->find($id);
+
+        if (!$blog) {
+            throw $this->createNotFoundException('Blog not found');
+        }
+
+        $blog->setIsPublished(!$blog->isPublished());
+        $entityManager->persist($blog);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Blog status updated successfully!');
+
+        return $this->redirectToRoute('blog.blogsTable');
+    }
+
     // ! Delete a Blog
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
     public function deleteBlog (int $id, BlogsRepository $br, EntityManagerInterface $entityManager): Response

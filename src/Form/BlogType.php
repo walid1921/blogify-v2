@@ -19,6 +19,7 @@ class BlogType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('is_published')
+            ->add('likes')
             ->add('save', SubmitType::class);
     }
 

@@ -20,6 +20,7 @@ class BlogFixtures extends Fixture
             $blog->setTitle($faker->sentence(6, true));
             $blog->setContent($faker->paragraphs(1, true));
             $blog->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTime()));
+            $blog->setLikes($faker->numberBetween(0, 1000));
             $blog->setIsPublished($faker->boolean());
 
             $manager->persist($blog);

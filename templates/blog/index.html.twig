@@ -2,7 +2,7 @@
 
 
 
-{% block title %}Update Blogs{% endblock %}
+{% block title %}Blogs{% endblock %}
 
 
 {% block body %}
@@ -22,12 +22,11 @@
 
             <div class="d-flex flex-column gap-1 mb-4 ">
                 <div class="d-flex align-items-start gap-2">
-                    <h1 class="text-uppercase fs-2">UPDATE BLOGS</h1>
+                    <h1 class="text-uppercase fs-3">BLOGS</h1>
                     <span>({{ blogs|length }})</span>
                 </div>
-                <p class="fw-light">Subtitle: Write something here</p>
+                <p class="fw-light">Update and delete blogs here</p>
             </div>
-
 
             {% include 'components/_button.html.twig' with {
                 typeButton: 'primary',
@@ -45,6 +44,7 @@
                     <thead class="table-light">
                     <tr>
                         <th scope="col" class="ps-3 py-3">#</th>
+                        <th scope="col" class="py-3">Likes</th>
                         <th scope="col" class="py-3">Title</th>
                         <th scope="col" class="py-3">Content</th>
                         <th scope="col" class="py-3">
@@ -69,6 +69,11 @@
                         <tr>
                             <td class="text-secondary ps-3 py-3">{{ blog.id }}</td>
                             <td class="py-3">
+                                <div class="d-flex align-items-center gap-1">
+                                    <span>{{ blog.likes }}</span>
+                                </div>
+                            </td>
+                            <td class="py-3">
                                 <a href="#"
                                    class="link-no-underline-black d-inline-block align-items-center ">
                                     <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
@@ -79,15 +84,21 @@
                             <td class="py-3">{{ blog.createdAt|date('Y-m-d') }}</td>
                             <td class="py-3">
                                 {% if (blog.published) %}
-                                    <span class="text-success">Published</span>
+                                    <a class="link-no-underline-black text-success"
+                                       href="#"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#updateModal-{{ blog.id }}">Published
+                                    </a>
                                 {% else %}
-                                    <span class="text-danger">Pending</span>
+                                    <a class="link-no-underline-black text-danger"
+                                       href="#"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#updateModal-{{ blog.id }}">Unpublished
+                                    </a>
                                 {% endif %}
                             </td>
                             <td class="py-3">
-                                <a class="me-3"
-                                   href="#"
-                                   data-bs-toggle="modal"
+                                <a class="me-3" href="#" data-bs-toggle="modal"
                                    data-bs-target="#deleteModal-{{ blog.id }}">
                                     <img
                                         data-bs-toggle="tooltip"
@@ -110,6 +121,14 @@
                             body: "Are you sure you want to delete <strong>" ~ blog.title ~ "</strong>?",
                             confirm_path: path('blog.delete', {id: blog.id}),
                             confirm_text: "Delete"
+                        } %}
+
+                        {% include "components/_modalConfirm.html.twig" with {
+                            modal_id: "updateModal-" ~ blog.id,
+                            title: "Update Status",
+                            body: "Are you sure you want to update <strong>" ~ blog.title ~ "</strong>?",
+                            confirm_path: path('blog.blogStatus', {id: blog.id}),
+                            confirm_text: "Confirm"
                         } %}
 
                     {% endfor %}
