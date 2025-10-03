@@ -34,21 +34,27 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 
 
-.logo {
+//! Logo
+.petarisia-main-logo {
     display: flex;
     gap: 8px;
+    align-items: flex-end;
 
     img {
         height: 20px;
         width: auto;
     }
 
-    span {
+    .sub-logo {
+        display: flex;
+        align-items: flex-end;
         font-size: 12px;
+        line-height: 1;
     }
-
 }
 
+
+//! Containers
 .page-container {
     padding-top: 140px; // space for fixed header
 }
