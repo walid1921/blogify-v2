@@ -1,15 +1,15 @@
 //! TOAST NOTIFICATIONS
 
 .notification-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     position: fixed;
     top: 100px;
     right: 0;
     transform: translateX(-20%);
     max-width: 600px;
     z-index: 999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 20px;
 }
 
