@@ -1,0 +1,37 @@
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
+     data-bs-interval="3000" data-bs-touch="true" data-bs-touch="true">
+    {# INDICATORS #}
+    <div class="carousel-indicators w-lg-100 justify-content-start justify-content-lg-center mb-2">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+    </div>
+
+    {# CAROUSEL ITEMS #}
+    <div class="carousel-inner">
+        {% for image in images %}
+            <div class="carousel-item {{ loop.first ? 'active' : '' }}">
+                <img src="{{ asset(image) }}" alt="Blog image" class="img-fluid carousel-image">
+            </div>
+        {% endfor %}
+    </div>
+
+
+    {# LEFT & RIGHT ARROWS #}
+    <button class="d-none d-lg-block carousel-control-prev z-2" type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="d-none d-lg-block carousel-control-next z-2" type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>

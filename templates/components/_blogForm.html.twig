@@ -10,10 +10,12 @@
 
 {#    {{ form(formBlog) }} #}
 <div class="d-flex flex-column gap-4 justify-content-center align-items-center">
-
     <div class="w-50">
-        {{ form_start(formBlog) }}
 
+        {# ⚠️ Keep novalidate=false so HTML5 validation also works #}
+        {{ form_start(formBlog, {'attr': {'novalidate': false}}) }}
+
+        {# 🔹 Global form errors (e.g. if CSRF fails) #}
         {{ form_errors(formBlog) }}
 
         <div class="d-flex flex-column gap-4">
@@ -23,9 +25,11 @@
             </div>
 
             {{ form_row(formBlog.content) }}
+            {{ form_row(formBlog.likes) }}
             {{ form_row(formBlog.is_published) }}
             {{ form_row(formBlog.save) }}
-            {{ form_end(formBlog) }}
         </div>
+
+        {{ form_end(formBlog) }}
     </div>
 </div>
