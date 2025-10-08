@@ -16,9 +16,14 @@
 
 .my-custom-row {
     display: flex;
-    gap: 20px;
-    position: relative;
+    flex-direction: column;
+    gap: 5px;
     width: 100%;
+
+    .input-wrapper {
+        position: relative;
+        width: 100%;
+    }
 
     .my-label {
         position: absolute;
@@ -69,6 +74,31 @@
         z-index: 3;
     }
 
+    //! Validation
+    .my-input.is-invalid {
+        border-color: #dc3545;
+    }
+
+    .my-input.is-invalid ~ .underline {
+        background-color: #dc3545;
+        transform: scaleX(1);
+    }
+
+    .form-errors {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: 6px;
+        list-style: none;
+        padding-left: 0;
+        animation: fadeIn 0.3s ease-in-out;
+
+        li {
+            background: #ffe5e9;
+            border-left: 2px solid #dc3545;
+            padding: 6px 10px;
+        }
+    }
+
 
 }
 
@@ -115,5 +145,17 @@
     .my-checkbox-label {
         font-size: 0.95rem;
         color: #444;
+    }
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-3px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

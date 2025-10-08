@@ -47,25 +47,32 @@
 
 
 {# Generic row for text, email, password fields, etc. #}
-
 {% block form_row %}
+    {% set fieldClass = 'my-input' %}
+    {% if not form.vars.valid %}
+        {% set fieldClass = fieldClass ~ ' is-invalid' %}
+    {% endif %}
+
     {% if 'checkbox' in form.vars.block_prefixes %}
-        {# ✅ Checkbox row #}
         <div class="custom-checkbox">
             {{ form_widget(form) }}
             {{ form_label(form, null, { label_attr: { class: 'my-checkbox-label' } }) }}
             {{ form_errors(form) }}
         </div>
     {% else %}
-        {# ✅ Default input row #}
         <div class="my-custom-row">
-            {{ form_widget(form, { attr: { class: 'my-input' } }) }}
-            {{ form_label(form, null, { label_attr: { class: 'my-label' } }) }}
-            <span class="underline"></span>
+            <div class="input-wrapper">
+                {{ form_widget(form, { attr: { class: fieldClass } }) }}
+                {{ form_label(form, null, { label_attr: { class: 'my-label' } }) }}
+                <span class="underline"></span>
+            </div>
+
             {{ form_errors(form) }}
         </div>
     {% endif %}
 {% endblock %}
+
+
 
 
 {# {% block form_row_inline %} #}

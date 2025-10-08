@@ -63,12 +63,11 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 //! Categories style
 .sticky-categories {
     position: sticky;
-    top: 75px;
+    top: 72px;
     height: 50px;
-    z-index: 10;
     background-color: #F5F5F5;
     border-bottom: 1px solid #eee;
-
+    z-index: 100;
     display: flex;
     align-items: center;
 }
@@ -140,6 +139,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 
 
+//! Carousel
 .carousel-control-prev,
 .carousel-control-next {
     width: auto; // shrink to fit content instead of covering whole side
@@ -150,4 +150,58 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     pointer-events: auto; // re-enable clicks just for the icons
+}
+
+
+.carousel-indicators [data-bs-target] {
+    background-color: #ffffff;
+    opacity: 0.5;
+}
+
+.carousel-indicators .active {
+    opacity: 1;
+    background-color: black;
+}
+
+.carousel-image {
+    min-height: 350px; // 👈 set your preferred minimum height
+    max-height: 500px;
+    object-fit: cover; // keeps image proportional, crops if needed
+    width: 100%; // ensures it spans the column
+}
+
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+    opacity: 50%;
+
+    &:hover {
+        opacity: 100%;
+    }
+
+    &.published {
+        background-color: #22c55e;
+
+    }
+
+    &.draft {
+        background-color: #facc15;
+    }
+
+
+    &.archived {
+        background-color: #6b7280;
+    }
+
+
+    &.danger {
+        background-color: #ef4444;
+    }
+
+
 }
