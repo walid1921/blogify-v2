@@ -25,6 +25,16 @@ $utilities: map-merge(
                     8: 0.75rem, // smaller than fs-6 (0.875rem)
                     9: 0.625rem // extra small
                 )
+            ),
+            "vh": (
+                property: height,
+                class: vh,
+                values: (
+                    25: 25vh,
+                    50: 50vh,
+                    75: 75vh,
+                    100: 100vh
+                )
             )
         )
 );

@@ -1,10 +1,9 @@
-
-
-{% if date(blog_date) > date('-1day') %}
+{% if date(createdAt) > date('-1day') %}
     <li class="text-blue-300">
-        {{ blog_date|date('d/m/Y') }}
+        {{ createdAt|date('F j, Y') }}
         <span class="text-[10px] text-red-500">New</span>
     </li>
 {% else %}
-    <li class="text-gray-300">{{ blog_date|date('d/m/Y') }}</li>
+    <li class="text-gray-300">{{ createdAt|date('F j, Y') }}
+    </li>
 {% endif %}

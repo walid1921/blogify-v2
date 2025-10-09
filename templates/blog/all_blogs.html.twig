@@ -18,9 +18,33 @@
 
     <div class="page-container">
 
-        <div class="d-flex flex-column gap-1 mb-4 px-4">
-            <h1 class="text-uppercase fs-3">Blogs</h1>
-            <p class="fw-light">All blogs will be here (+ pagination, search, filter, open single blog)</p>
+        <div class="d-flex flex-column gap-4 mb-4 px-4">
+            {# Breadcrumb #}
+            {% block bread %}
+                <nav aria-label="breadcrumb" class="d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+                    </ol>
+                </nav>
+            {% endblock %}
+
+            <div class="d-flex align-items-end justify-content-between">
+                <div class="d-flex flex-column gap-1">
+                    <div class="d-flex align-items-start gap-2">
+                        <h1 class="text-uppercase fs-3">BLOGS</h1>
+                    </div>
+                    <p class="fw-light">All blogs will be here (+ pagination, search, filter, open single blog)</p>
+                </div>
+
+                {% include 'components/_button.html.twig' with {
+                    typeButton: 'primary',
+                    path: path('blog.blogsTable'),
+                    textButton: 'Table view',
+                    iconType: 'table',
+                    iconColor: 'white',
+                } %}
+            </div>
         </div>
 
 

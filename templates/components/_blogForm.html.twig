@@ -1,33 +1,43 @@
-<div class="container-fluid mb-3">
-    {% include 'components/_button.html.twig' with {
-        typeButton: 'secondary',
-        path: path('blog.blogsTable'),
-        iconType: 'back',
-        iconColor: 'black',
-    } %}
-</div>
-
-
 {#    {{ form(formBlog) }} #}
-<div class="d-flex flex-column gap-4 justify-content-center align-items-center">
-    <div class="w-50">
+<div class="px-3 d-flex flex-column gap-4 justify-content-center align-items-center w-100 my-5">
+    <div class="w-100 ">
 
         {# ⚠️ Keep novalidate=false so HTML5 validation also works #}
-        {{ form_start(formBlog, {'attr': {'novalidate': false}}) }}
+        {{ form_start(formBlog, {'attr': {'novalidate': true}}) }}
 
         {# 🔹 Global form errors (e.g. if CSRF fails) #}
         {{ form_errors(formBlog) }}
 
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column gap-4 w-100">
             <div class="form-inline-group">
                 {{ form_row(formBlog.title, { row_attr: { class: 'form-row-inline' } }) }}
+                {{ form_row(formBlog.likes,  { row_attr: { class: 'form-row-inline' } }) }}
+            </div>
+
+            <div class="form-inline-group">
+                {{ form_row(formBlog.coverImage, { row_attr: { class: 'form-row-inline' } }) }}
                 {{ form_row(formBlog.created_at,  { row_attr: { class: 'form-row-inline' } }) }}
             </div>
 
-            {{ form_row(formBlog.content) }}
-            {{ form_row(formBlog.likes) }}
+
+            <div class=" editorjs-holder-wrapper">
+                <label for="editorjs-holder" class="editorjs-holder-label">Content *</label>
+                <div id="editorjs-holder" class="editorjs-holder"></div>
+                {{ form_widget(formBlog.content) }}
+            </div>
+
+            {# {{ form_row(formBlog.category) }} #}
             {{ form_row(formBlog.is_published) }}
-            {{ form_row(formBlog.save) }}
+
+            <div class="d-flex flex-column gap-1">
+                <p class="text-secondary fs-7">You can save it now and edit it later</p>
+                {{ form_row(formBlog.save) }}
+            </div>
+
+
+            {# {{ form_row(formBlog.content) }} #}
+
+
         </div>
 
         {{ form_end(formBlog) }}

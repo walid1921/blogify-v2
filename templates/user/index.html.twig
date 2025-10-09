@@ -5,19 +5,32 @@
 {% block body %}
     <div class="page-container">
 
-        <div class="d-flex flex-column gap-1 mb-4 ">
-            <div class="d-flex align-items-start gap-2">
-                <h1 class="text-uppercase fs-3">USERS</h1>
-                <span>({{ users|length }})</span>
+        <div class="d-flex flex-column gap-4 mb-4 px-4">
+            {# Breadcrumb #}
+            {% block bread %}
+                <nav aria-label="breadcrumb" class="d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('blog.allBlogs') }}">Blogs Table</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Create</li>
+                    </ol>
+                </nav>
+            {% endblock %}
+
+            <div class="d-flex flex-column gap-1">
+                <div class="d-flex align-items-start gap-2">
+                    <h1 class="text-uppercase fs-3">USERS</h1>
+                    <span>({{ users|length }})</span>
+                </div>
+                <p class="fw-light">Update and delete users here</p>
             </div>
-            <p class="fw-light">Update and delete users here</p>
         </div>
+
 
         <div>
             {% for user in users %}
                 <p>{{ user.username }} is {{ user.age }}</p>
             {% endfor %}
-            <a href="{{ path('home') }}">Home page</a>
         </div>
     </div>
 {% endblock %}

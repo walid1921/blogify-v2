@@ -110,7 +110,7 @@
 
 {# ---- SUBMIT BUTTON ---- #}
 {% block submit_widget %}
-    {% set cls = (attr.class|default('') ~ ' button-primary button-primary--halfWidth')|trim %}
+    {% set cls = (attr.class|default('') ~ ' button-primary button-primary--halfWidth mx-auto')|trim %}
     <button type="submit" {{ block('button_attributes') }} class="{{ cls }}">
         {{ label|default('Save')|trans({}, translation_domain) }}
     </button>
