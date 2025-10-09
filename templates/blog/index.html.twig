@@ -21,33 +21,35 @@
 
     <div class="page-container">
 
-        {# Breadcrumb #}
-        {% block bread %}
-            <nav aria-label="breadcrumb" class="d-none d-md-block">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Blogs</li>
-                </ol>
-            </nav>
-        {% endblock %}
 
-        {# Header #}
-        <div class="d-flex align-items-end justify-content-between mb-3 px-4">
+        <div class="d-flex flex-column gap-4 mb-4 px-4">
+            {# Breadcrumb #}
+            {% block bread %}
+                <nav aria-label="breadcrumb" class="d-none d-md-block">
+                    <ol class="breadcrumb mb-0 ">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Blogs table</li>
+                    </ol>
+                </nav>
+            {% endblock %}
 
-            <div class="d-flex flex-column gap-1 mb-4 ">
-                <div class="d-flex align-items-start gap-2">
-                    <h1 class="text-uppercase fs-3">BLOGS</h1>
-                    <span>({{ blogs|length }})</span>
+            <div class="d-flex align-items-end justify-content-between">
+                <div class="d-flex flex-column gap-1">
+                    <div class="d-flex align-items-start gap-2">
+                        <h1 class="text-uppercase fs-3">Blogs</h1>
+                        <span>({{ blogs|length }})</span>
+                    </div>
+                    <p class="fw-light">Update and delete blogs here</p>
                 </div>
-                <p class="fw-light">Update and delete blogs here</p>
-            </div>
 
-            {% include 'components/_button.html.twig' with {
-                typeButton: 'primary',
-                path: path('blog.create'),
-                iconType: 'add',
-                iconColor: 'white',
-            } %}
+                {% include 'components/_button.html.twig' with {
+                    typeButton: 'primary',
+                    path: path('blog.create'),
+                    textButton: 'New blog',
+                    iconType: 'add',
+                    iconColor: 'white',
+                } %}
+            </div>
         </div>
 
         {# Table #}
@@ -61,6 +63,7 @@
                         <th scope="col" class="py-3">Likes</th>
                         <th scope="col" class="py-3">Title</th>
                         <th scope="col" class="py-3">Content</th>
+                        <th scope="col" class="py-3">Categories</th>
                         <th scope="col" class="py-3">
                             <a
                                 href="{{ path('blog.blogsTable', { order: order == 'ASC' ? 'DESC' : 'ASC' }) }}">
@@ -92,15 +95,17 @@
 
                             {#   Title   #}
                             <td class="py-3 fs-7">
-                                <a href="#"
+                                <a href="{{ path('blog.one_blog', { id: blog.id }) }}"
                                    class="link-no-underline-black d-inline-block align-items-center ">
                                     <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
-                                    {{ blog.title|u.truncate(30, '...') }}
+                                    {{ blog.title|u.truncate(10, '...') }}
                                 </a>
                             </td>
 
                             {#   Content   #}
-                            <td class="py-3 fs-7">{{ blog.content|u.truncate(70, '...') }}</td>
+                            <td class="py-3 fs-7">{{ blog.content|u.truncate(40, '...') }}</td>
+
+                            <td class="py-3 fs-7">New, Java, something,</td>
 
                             {#   Created_at   #}
                             <td class="py-3 fs-7">{{ blog.createdAt|date('Y-m-d') }}</td>

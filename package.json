@@ -1,8 +1,14 @@
 {
     "dependencies": {
+        "@editorjs/editorjs": "^2.31.0",
+        "@editorjs/header": "^2.8.8",
+        "@editorjs/image": "^2.10.3",
+        "@editorjs/list": "^2.0.8",
+        "@editorjs/underline": "^1.2.1",
         "@popperjs/core": "^2.11.8",
         "bootstrap": "^5.3.8",
-        "core-js": "^3.45.1"
+        "core-js": "^3.45.1",
+        "editorjs-html": "^4.0.5"
     },
     "scripts": {
         "dev": "encore dev",
@@ -11,6 +17,7 @@
         "start": "concurrently \"symfony serve --no-tls\" \"npm run watch\""
     },
     "devDependencies": {
+        "@rodrigoodhin/editorjs-image-gallery": "^0.1.0",
         "@symfony/webpack-encore": "^5.2.0",
         "concurrently": "^9.2.1",
         "sass": "^1.92.1",

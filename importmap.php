@@ -35,4 +35,7 @@ return [
         'version' => '5.3.8',
         'type' => 'css',
     ],
+    'editorjs-html' => [
+        'version' => '4.0.5',
+    ],
 ];

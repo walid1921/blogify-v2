@@ -6,12 +6,35 @@
 
     <div class="page-container">
 
-        <div class="d-flex flex-column gap-1 mb-4 ">
-            <div class="d-flex align-items-start gap-2">
-                <h1 class="text-uppercase fs-3">CATEGORIES</h1>
-                <span>({{ blogCategories|length }})</span>
+
+        <div class="d-flex flex-column gap-4 mb-4 px-4">
+            {# Breadcrumb #}
+            {% block bread %}
+                <nav aria-label="breadcrumb" class="d-none d-md-block">
+                    <ol class="breadcrumb mb-0 ">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Categories</li>
+                    </ol>
+                </nav>
+            {% endblock %}
+
+            <div class="d-flex align-items-end justify-content-between">
+                <div class="d-flex flex-column gap-1">
+                    <div class="d-flex align-items-start gap-2">
+                        <h1 class="text-uppercase fs-3">CATEGORIES</h1>
+                        <span>({{ blogCategories|length }})</span>
+                    </div>
+                    <p class="fw-light">Update and delete categories here</p>
+                </div>
+
+                {% include 'components/_button.html.twig' with {
+                    typeButton: 'primary',
+                    path: path('blog.create'),
+                    textButton: 'New category',
+                    iconType: 'add',
+                    iconColor: 'white',
+                } %}
             </div>
-            <p class="fw-light">Update and delete categories here</p>
         </div>
 
         {% for key,category in blogCategories %}

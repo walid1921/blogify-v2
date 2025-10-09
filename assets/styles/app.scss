@@ -56,7 +56,9 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 //! Containers
 .page-container {
-    padding-top: 140px; // space for fixed header
+    padding-top: 120px; // space for fixed header
+    padding-bottom: 40px;
+    min-height: 100vh;
 }
 
 

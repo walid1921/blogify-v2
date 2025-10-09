@@ -18,16 +18,15 @@ class Blog
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(
-        min: 3,
+        min: 5,
         max: 255,
         minMessage: "The title must be at least {{ limit }} characters long.",
         maxMessage: "The title cannot be longer than {{ limit }} characters."
     )]
+    #[Assert\NotNull(message: "Title cannot be empty.")]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: "Content cannot be empty.")]
-    #[Assert\Length(min: 10, minMessage: "The content must be at least {{ limit }} characters.")]
     private ?string $content = null;
 
     #[ORM\Column]
@@ -43,6 +42,9 @@ class Blog
     #[Assert\PositiveOrZero(message: "Likes must be zero or a positive number.")]
     private ?int $likes = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $coverImage = null;
+
     public function getId (): ?int
     {
         return $this->id;
@@ -53,7 +55,7 @@ class Blog
         return $this->title;
     }
 
-    public function setTitle (string $title): static
+    public function setTitle (?string $title): static
     {
         $this->title = $title;
 
@@ -65,7 +67,7 @@ class Blog
         return $this->content;
     }
 
-    public function setContent (string $content): static
+    public function setContent (?string $content): static
     {
         $this->content = $content;
 
@@ -104,6 +106,18 @@ class Blog
     public function setLikes (int $likes): static
     {
         $this->likes = $likes;
+
+        return $this;
+    }
+
+    public function getCoverImage (): ?string
+    {
+        return $this->coverImage;
+    }
+
+    public function setCoverImage (?string $coverImage): static
+    {
+        $this->coverImage = $coverImage;
 
         return $this;
     }

@@ -8,6 +8,8 @@ use App\Repository\BlogCategoriesRepository;
 use App\Repository\BlogsRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,14 +46,19 @@ final class BlogController extends AbstractController
     }
 
     // ! Create a blog
+
+    /**
+     * @throws JsonException
+     */
     #[Route('/create', name: 'create')]
     public function createBlog (Request $request, EntityManagerInterface $entityManager): Response
     {
         // creates a blog object and initializes inputs
         $blog = new Blog();
         $blog->setTitle('');
-        $blog->setContent('');
+        $blog->setContent(json_encode(['blocks' => []], JSON_THROW_ON_ERROR)); // initialize with an empty JSON string instead of '':
         $blog->setCreatedAt(new DateTimeImmutable());
+        $blog->setLikes(0);
         $blog->setIsPublished(false);
 
 
@@ -61,22 +68,42 @@ final class BlogController extends AbstractController
 
         // Handle the form submission, validation, and saving the data to the database
         if ($form->isSubmitted() && $form->isValid()) {
-
             // $blog = $form->getData(); // holds the submitted values
             // dd($blog); // dump and die, to see the blog object with submitted data
+
+            // ✅ Handle uploaded cover image
+            $imageFile = $form->get('coverImage')->getData();
+            if ($imageFile) {
+                // create a unique name for the file
+                $newFilename = uniqid('', true) . '.' . $imageFile->guessExtension();
+
+                // move the file to /public/uploads/blogs
+                try {
+                    $imageFile->move(
+                        $this->getParameter('kernel.project_dir') . '/public/uploads/blogs',
+                        $newFilename
+                    );
+                } catch (Exception $e) {
+                    $this->addFlash('danger', 'Image upload failed: ' . $e->getMessage());
+                }
+
+                // set filename in the entity
+                $blog->setCoverImage($newFilename);
+            }
 
             $entityManager->persist($blog); // presist is like prepare in SQL statements, it tells Doctrine to manage the entity and track changes to it for future database operations.
             $entityManager->flush(); // flush actually executes the SQL queries to synchronize the in-memory state of managed entities with the database.
 
             $this->addFlash('success', 'Blog added successfully!');
-
             return $this->redirectToRoute('blog.blogsTable');
         }
 
 
         // return new Response('Saved new blog with id ' . $blog->getId());
         return $this->render('blog/createBlog.html.twig', [
-            'formBlog' => $form
+//            'formBlog' => $form
+            'formBlog' => $form->createView(), // return the FormView so submitted values are preserved
+
         ]);
     }
 
@@ -144,19 +171,20 @@ final class BlogController extends AbstractController
     }
 
     // ! One blog page
-    #[Route('/blog/{id}', name: 'one_blog', requirements: ['id' => '\d+'])]
-    public function oneBlog (int $id): Response
+    #[Route('/{id}', name: 'one_blog', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function oneBlog (int $id, BlogsRepository $br): Response
     {
+
+        $blog = $br->find($id);
+
         // Here should redirect to not found page
-        if (!isset($this->blogs[$id])) {
+        if (!$blog) {
             throw $this->createNotFoundException('Blog not found');
         }
 
-        return $this->render('blog/oneBlog.html.twig',
-            [
-                'one_blog' => $this->blogs[$id],
-            ]
-        );
+        return $this->render('blog/oneBlog.html.twig', [
+            'blog' => $blog,
+        ]);
     }
 
     //! Fetch All Blog Categories
