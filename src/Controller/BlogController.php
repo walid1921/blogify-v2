@@ -147,7 +147,7 @@ final class BlogController extends AbstractController
         $entityManager->persist($blog);
         $entityManager->flush();
 
-        $this->addFlash('info', 'Blog status updated successfully!');
+        $this->addFlash('success', 'Blog status updated successfully!');
 
         return $this->redirectToRoute('blog.blogsTable');
     }

@@ -1,9 +1,9 @@
 {% if date(createdAt) > date('-1day') %}
-    <li class="text-blue-300">
-        {{ createdAt|date('F j, Y') }}
-        <span class="text-[10px] text-red-500">New</span>
-    </li>
+    <p class="text-secondary ">
+        {{ createdAt|date('F j, Y') }} -
+        <span class="fw-semibold">New</span>
+    </p>
 {% else %}
-    <li class="text-gray-300">{{ createdAt|date('F j, Y') }}
-    </li>
+    <p class="text-gray-300">{{ createdAt|date('F j, Y') }}
+    </p>
 {% endif %}
