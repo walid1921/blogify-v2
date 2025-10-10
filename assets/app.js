@@ -10,24 +10,26 @@ import './styles/app.css';
 import './styles/app.scss';
 import * as bootstrap from 'bootstrap';  // Import Bootstrap’s JS API
 
-
+// Enable Bootstrap tooltips
 document.addEventListener("DOMContentLoaded", () => {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el));
 });
 
-
-const toastTrigger = document.getElementById('liveToastBtn')
-const toastLiveExample = document.getElementById('liveToast')
+// Bootstrap toast example
+const toastTrigger = document.getElementById('liveToastBtn');
+const toastLiveExample = document.getElementById('liveToast');
 
 if (toastTrigger) {
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
     toastTrigger.addEventListener('click', () => {
-        toastBootstrap.show()
-    })
+        toastBootstrap.show();
+    });
 }
 
-
+// --------------------
+// EDITOR.JS SETUP
+// --------------------
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
@@ -64,19 +66,50 @@ document.addEventListener('DOMContentLoaded', () => {
             imageGallery: {
                 class: ImageGallery,
             },
-            underline: Underline
+            underline: Underline,
         },
         data: initialData,
         placeholder: 'Your Blog content will be here...',
         onChange: async () => {
             const output = await editor.save();
-            editorContainer.value = JSON.stringify(output); // save JSON into textarea
+            editorContainer.value = JSON.stringify(output); // Save JSON into hidden textarea
         },
     });
 });
 
-
+// --------------------
+// RENDER EDITORJS CONTENT (frontend display)
+// --------------------
 import edjsHTML from 'editorjs-html';
+
+// ✅ Custom parser for ImageGallery
+const customParsers = {
+    imageGallery: (block) => {
+        if (!block.data) return '';
+
+        // handle both possible formats
+        const urls = block.data.images || block.data.urls;
+        if (!urls || !urls.length) return '';
+
+        // Build responsive gallery grid
+        const galleryHTML = urls.map(img => {
+            const url = typeof img === 'string' ? img : img.url; // support both string and object formats
+            return `
+                <div class="editorjs-gallery-item">
+                    <img src="${url}" alt="gallery image" loading="lazy"/>
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <div class="editorjs-gallery">
+                ${galleryHTML}
+            </div>
+        `;
+    },
+};
+
+const edjsParser = edjsHTML(customParsers);
 
 document.addEventListener('DOMContentLoaded', () => {
     const contentElement = document.querySelector('.js-blog-content');
@@ -84,10 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
         const data = JSON.parse(contentElement.dataset.content);
-        const edjsParser = edjsHTML();
-        const html = edjsParser.parse(data); // returns string or object depending on version
+        const html = edjsParser.parse(data);
 
-        // handle both old and new return formats
+        // handle both array and string outputs
         if (Array.isArray(html)) {
             contentElement.innerHTML = html.join('');
         } else if (typeof html === 'string') {

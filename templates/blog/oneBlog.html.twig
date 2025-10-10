@@ -11,34 +11,57 @@
     {#    <p>Created at: {{ include('blog/_blogDate.html.twig', { blog_date: one_blog.created_at }) }}</p> #}
 
 
+    <div class="page-container">
 
+        <div class="d-flex flex-column gap-2 mb-4 ps-4">
 
+            <div class="d-flex justify-content-start">
+                <div class=" mb-2">
+                    {% include 'components/_button.html.twig' with {
+                        typeButton: 'secondary',
+                        path: 'javascript:history.back()',
+                        iconType: 'back',
+                        iconColor: 'black',
+                    } %}
+                </div>
+            </div>
 
-    <div class="page-container my-5">
+            {# Breadcrumb #}
+            {% block bread %}
+                <nav aria-label="breadcrumb" class="d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('blog.allBlogs') }}">Blogs</a></li>
+                        <li class="breadcrumb-item active"
+                            aria-current="page">{{ blog.title|u.truncate(15, '...') }}</li>
+                    </ol>
+                </nav>
+            {% endblock %}
 
+            <div class="d-flex flex-column gap-3 mt-4">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="border border-black px-2 ">
+                        <p class="fs-7">Event</p>
+                    </div>
+                    <p class="text-secondary fs-7">
+                        {{ include('blog/_blogDate.html.twig', { createdAt: blog.createdAt }) }}</p>
+                </div>
 
-        {# Breadcrumb #}
-        {% block bread %}
-            <nav aria-label="breadcrumb" class="d-none d-md-block">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ path('blog.allBlogs') }}">Blogs</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ blog.title }}</li>
-                </ol>
-            </nav>
-        {% endblock %}
+                <h1 class="text-uppercase fs-3">{{ blog.title }}</h1>
+            </div>
+        </div>
 
-        <h1 class="mb-4">{{ blog.title }}</h1>
-        <p class="d-flex gap-1">Published: {{ include('blog/_blogDate.html.twig', { createdAt: blog.createdAt }) }}</p>
 
         {% if blog.coverImage %}
             <img src="{{ asset('uploads/blogs/' ~ blog.coverImage) }}"
                  alt="{{ blog.title }}"
-                 class="img-fluid mb-3 rounded shadow-sm">
+                 class="cover-image ">
         {% endif %}
 
 
-        <div class="js-blog-content" data-content='{{ blog.content|raw }}'></div>
+        <div class="w-100">
+            <div class="js-blog-content" data-content="{{ blog.content|e('html_attr') }}"></div>
+        </div>
     </div>
 
 

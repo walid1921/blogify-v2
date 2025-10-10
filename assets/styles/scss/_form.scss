@@ -239,7 +239,7 @@
 
     .ce-popover__search {
         border: 1px solid #A8A8A7;
-        background-color: var(--bs-body-bg);
+        background-color: #000;
         border-radius: 0 !important;
     }
 
@@ -349,7 +349,7 @@
     .editorjs-holder {
         display: flex;
         border: 1px solid #A8A8A7;
-        padding: 15px 0 15px 70px;
+        padding: 15px 0 70px 70px;
         width: 100%;
 
     }
@@ -359,6 +359,16 @@
 .ce-block__content {
     max-width: 100%;
     margin: 0;
+
+    .image-gallery {
+        width: 100%;
+
+
+        .gg-container {
+            width: 100%;
+
+        }
+    }
 }
 
 .ce-toolbar__content {
@@ -392,6 +402,66 @@
     font-weight: 400;
 }
 
+
+.image-gallery textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e4e4e4;
+    border-radius: 3px;
+    outline: none;
+    font-size: 14px;
+    height: 100px;
+    resize: none;
+    display: flex;
+}
+
+/* Ensure gallery looks consistent on both form (EditorJS) and blog display */
+.editorjs-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* larger min size */
+    grid-template-rows: repeat(1, 1fr);
+    gap: 5px;
+    margin: 30px 0;
+    align-items: stretch;
+}
+
+.editorjs-gallery-item {
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+
+    }
+}
+
+.cover-image {
+    width: 100%;
+    height: 60vh;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.js-blog-content {
+    width: 100%;
+
+    img {
+        width: 100%;
+        height: 60vh;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        padding: 0;
+
+    }
+
+    p {
+        margin: 30px 24px 30px 24px;
+    }
+}
 
 .my-textarea {
     min-height: 150px;
