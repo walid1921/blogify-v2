@@ -55,28 +55,28 @@
 .notification.success {
     background-color: #D1E7DE;
     border: 1px solid #A2CEBB;
-    color: #1B8655;
+    color: var(--bs-success);
 }
 
 /* Error Notification */
 .notification.error {
     background-color: #F9D7DB;
     border: 1px solid #F0AEB5;
-    color: #DB3545;
+    color: var(--bs-danger);
 }
 
 /* Warning Notification */
 .notification.warning {
-    background-color: #fad554;
+    background-color: #fcf1c4;
     border: 1px solid #FFE59B;
-    color: #FFC008;
+    color: var(--bs-warning);
 }
 
 /* Info Notification */
 .notification.info {
     background-color: rgba(205, 212, 219, 0.59);
     border: 1px solid #ACB5BD;
-    color: #212529;
+    color: var(--bs-info);
 }
 
 

@@ -1,0 +1,23 @@
+.icon-heart {
+    position: relative;
+    display: inline-block;
+
+    .likesNum {
+        position: absolute;
+        top: -16px;
+        right: -10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-width: 20px; // ensures a minimum size
+        aspect-ratio: 1 / 1; // keeps it perfectly circular
+        padding: 0 4px; // optional, helps breathing room
+        font-size: 10px;
+
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-secondary);
+        border-radius: 50%;
+    }
+
+}

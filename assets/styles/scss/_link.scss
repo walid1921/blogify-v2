@@ -126,20 +126,20 @@
 }
 
 .link-no-underline-black {
-    color: #000;
-    @include link-no-underline(#000);
+    color: var(--bs-black);
+    @include link-no-underline(var(--bs-black));
 
 }
 
 .link-no-underline-white {
-    color: #fff;
-    @include link-no-underline(#fff);
+    color: var(--bs-white);
+    @include link-no-underline(var(--bs-white));
 
 }
 
 .link-underline-black {
-    color: #000;
-    @include link-underline(#000);
+    color: var(--bs-black);
+    @include link-underline(var(--bs-black));
 
     &:hover {
         cursor: pointer;
@@ -147,8 +147,8 @@
 }
 
 .link-underline-white {
-    color: #fff;
-    @include link-underline(#fff);
+    color: var(--bs-white);
+    @include link-underline(var(--bs-white));
 
     &:hover {
         cursor: pointer;

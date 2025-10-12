@@ -1,0 +1,18 @@
+//! Logo
+.petarisia-main-logo {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+
+    img {
+        height: 20px;
+        width: auto;
+    }
+
+    .sub-logo {
+        display: flex;
+        align-items: flex-end;
+        font-size: 12px;
+        line-height: 1;
+    }
+}

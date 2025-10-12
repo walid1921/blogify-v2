@@ -75,6 +75,58 @@ document.addEventListener('DOMContentLoaded', () => {
             editorContainer.value = JSON.stringify(output); // Save JSON into hidden textarea
         },
     });
+
+
+    // ---- Add helper + placeholder to ImageGallery textarea(s) whenever they appear
+    (function attachGalleryHelperWatcher() {
+        const holder = document.getElementById('editorjs-holder');
+        if (!holder) return;
+
+        // Helper that updates a single <textarea>
+        const decorateTextarea = (ta) => {
+            if (!ta || ta.dataset.galleryDecorated === '1') return;
+
+            // Add placeholder text
+            ta.placeholder = `Paste your image URLs here (one per line), example:
+https://images.unsplash.com/photo-1501004318641-b39e6451bec6#.jpg
+https://wallpapercave.com/wp/wp9100484.jpg`;
+
+            // Add helper note below textarea
+            const helper = document.createElement('div');
+            helper.className = 'gallery-helper';
+            helper.textContent = `💡 Tip: Add “#.jpg” at the end of each Unsplash or image URL so it displays properly. Also Press “Shift + Enter” to go to a new line`;
+            helper.style.cssText =
+                'font-size:0.7rem;color:#666;margin-top:6px;font-style:italic;';
+
+            // Insert right after the textarea
+            ta.parentNode && ta.parentNode.insertBefore(helper, ta.nextSibling);
+
+            // Mark as decorated to avoid duplicates
+            ta.dataset.galleryDecorated = '1';
+        };
+
+        // Decorate any existing textareas (in case gallery already loaded
+        holder.querySelectorAll('.image-gallery textarea').forEach(decorateTextarea);
+
+        // Watch for future gallery blocks being inserted/edited
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                // Check new nodes
+                mutation.addedNodes.forEach((node) => {
+                    if (!(node instanceof HTMLElement)) return;
+
+                    //  If new node *is* a textarea
+                    if (node.matches && node.matches('.image-gallery textarea')) {
+                        decorateTextarea(node);
+                    }
+                    // Also check descendants
+                    node.querySelectorAll?.('.image-gallery textarea').forEach(decorateTextarea);
+                });
+            }
+        });
+
+        observer.observe(holder, {childList: true, subtree: true});
+    })();
 });
 
 // --------------------
