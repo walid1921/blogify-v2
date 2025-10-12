@@ -1,26 +1,46 @@
-$border-radius-sm: 0;
+//! COLORS
+$border-width: 1px;
+$border-style: solid;
+$border-color: #dee2e6;
 $border-radius: 0;
+$border-radius-sm: 0;
 $border-radius-lg: 0;
+$border-radius-xl: 0;
+$border-radius-xxl: 0;
+$border-radius-2xl: 0;
+
+$body-bg: #F5F5F5;
+$body-color: #212529;
+
 $primary: #121212;
 $secondary: #ababab;
-$border-radius: 0;
-$body-bg: #F5F5F5;
+$black: #111;
+$white: #fff;
+$gray: #6c757d;
+$success: #1B8655;
+$info: #212529;
+$warning: #FFC008;
+$danger: #DB3545;
+
 
 @import "scss/form";
 @import "scss/link";
+@import "scss/like";
 @import "scss/switchBtn";
 @import "scss/toast";
 @import "scss/buttons";
+@import "scss/logo";
 @import "~bootstrap/scss/bootstrap";
 @import "scss/utilities";
 
 
-// My custom styles
 body {
     font-family: 'Montserrat', sans-serif;
     letter-spacing: 0.05em;
 }
 
+
+//! TEXT STYLES
 a {
     text-decoration: none;
 }
@@ -34,27 +54,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 
 
-//! Logo
-.petarisia-main-logo {
-    display: flex;
-    gap: 8px;
-    align-items: flex-end;
-
-    img {
-        height: 20px;
-        width: auto;
-    }
-
-    .sub-logo {
-        display: flex;
-        align-items: flex-end;
-        font-size: 12px;
-        line-height: 1;
-    }
-}
-
-
-//! Containers
+//! LAYOUT STYLES
 .page-container {
     padding-top: 120px; // space for fixed header
     padding-bottom: 40px;
@@ -67,17 +67,18 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     position: sticky;
     top: 72px;
     height: 50px;
-    background-color: #F5F5F5;
-    border-bottom: 1px solid #eee;
+    background-color: var(--bs-body-bg);
+    border-bottom: 1px solid var(--bs-border-color);
     z-index: 100;
     display: flex;
     align-items: center;
 }
 
 .new_tag {
-    color: #1E40AF;
+    color: var(--bs-gray);
     font-size: 12px;
-    background-color: #DBEAFE;
+    background-color: var(--bs-white);
+    border: 0.5px solid var(--bs-border-color);
     padding: 1px 8px;
     border-radius: 100px;
 }
@@ -92,7 +93,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 .blog-bg {
     position: relative;
     min-height: 80vh;
-    color: white;
+    color: var(--bs-white);
     overflow: hidden;
 
     .bg-layer {
@@ -156,13 +157,13 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 
 .carousel-indicators [data-bs-target] {
-    background-color: #ffffff;
+    background-color: var(--bs-white);
     opacity: 0.5;
 }
 
 .carousel-indicators .active {
     opacity: 1;
-    background-color: black;
+    background-color: var(--bs-black);
 }
 
 .carousel-image {
@@ -187,19 +188,13 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     }
 
     &.published {
-        background-color: #22c55e;
+        background-color: var(--bs-success);
 
     }
 
     &.draft {
-        background-color: #facc15;
+        background-color: var(--bs-warning);
     }
-
-
-    &.archived {
-        background-color: #6b7280;
-    }
-
 
     &.danger {
         background-color: #ef4444;

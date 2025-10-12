@@ -3,7 +3,7 @@
         <li>
             {#            <a href="{{ path('blog.byCategory', {id: category.id}) }}"> #}
             <a href="#">
-                <span class="link-no-underline-black fw-light d-flex gap-1 align-items-center">
+                <span class="link-no-underline-black fw-normal fs-7 d-flex gap-2 align-items-center">
                     {{ category.name }}
 
                     {# Calculate if createdAt is within last 3 days #}
@@ -12,7 +12,7 @@
                     {% set diff = (now - created) / 86400 %} {# seconds → days #}
 
                     {% if diff < 3 %}
-                        <span class="new_tag">new</span>
+                        <span class="new_tag fw-medium fs-8">New</span>
                     {% endif %}
 
                 </span>

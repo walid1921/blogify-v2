@@ -38,16 +38,28 @@
                 </nav>
             {% endblock %}
 
-            <div class="d-flex flex-column gap-3 mt-4">
+            <div class="d-flex flex-column gap-4 mt-4">
+                <div class="d-flex align-items-center gap-3">
+
+
+                    {% include 'components/_likes.html.twig' with {
+                        heartSize: '30',
+                        heartColor: 'black',
+                        likesNum: blog.likes
+                    } %}
+                    <h1 class="text-uppercase fs-3">{{ blog.title }}</h1>
+                </div>
+
                 <div class="d-flex align-items-center gap-2">
                     <div class="border border-black px-2 ">
                         <p class="fs-7">Event</p>
                     </div>
-                    <p class="text-secondary fs-7">
-                        {{ include('blog/_blogDate.html.twig', { createdAt: blog.createdAt }) }}</p>
+
+                    {{ include('blog/_blogDate.html.twig', { createdAt: blog.createdAt }) }}
+
                 </div>
 
-                <h1 class="text-uppercase fs-3">{{ blog.title }}</h1>
+
             </div>
         </div>
 
