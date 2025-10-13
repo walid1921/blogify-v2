@@ -14,6 +14,7 @@ $body-color: #212529;
 
 $primary: #121212;
 $secondary: #ababab;
+
 $black: #111;
 $white: #fff;
 $gray: #6c757d;
@@ -37,7 +38,14 @@ $danger: #DB3545;
 body {
     font-family: 'Montserrat', sans-serif;
     letter-spacing: 0.05em;
+
+    //outline: 2px solid red;
+    //overflow-x: hidden;
 }
+
+//* {
+//    outline: 1px solid rgba(255, 0, 0, 0.3);
+//}
 
 
 //! TEXT STYLES
@@ -74,27 +82,15 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     align-items: center;
 }
 
-.new_tag {
-    color: var(--bs-gray);
-    font-size: 12px;
-    background-color: var(--bs-white);
-    border: 0.5px solid var(--bs-border-color);
-    padding: 1px 8px;
-    border-radius: 100px;
-}
-
-
-.blog-image {
-    min-height: 350px; // 👈 set your preferred minimum height
-    object-fit: cover; // keeps image proportional, crops if needed
-    width: 100%; // ensures it spans the column
-}
 
 .blog-bg {
     position: relative;
-    min-height: 80vh;
     color: var(--bs-white);
     overflow: hidden;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
     .bg-layer {
         position: absolute;
@@ -163,7 +159,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 .carousel-indicators .active {
     opacity: 1;
-    background-color: var(--bs-black);
+    background-color: var(--bs-white);
 }
 
 .carousel-image {
@@ -200,5 +196,45 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
         background-color: #ef4444;
     }
 
+}
 
+.new_category_indicator {
+    position: absolute;
+    top: -5px;
+    right: -12px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+    background-color: var(--bs-primary);
+    transition: background-color 0.3s ease;
+    opacity: 80%;
+
+    &:hover {
+        opacity: 100%;
+    }
+}
+
+
+.hide-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+
+@media (max-width: 767.98px) { /* phones */
+    .fs-responsive {
+        font-size: var(--bs-font-size-sm, 0.875rem) !important; /* ≈ fs-8 */
+    }
+}
+
+@media (min-width: 768px) { /* md and up */
+    .fs-responsive {
+        font-size: var(--bs-font-size-base, 1rem) !important; /* ≈ fs-7 */
+    }
 }
