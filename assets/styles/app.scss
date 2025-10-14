@@ -12,7 +12,7 @@ $border-radius-2xl: 0;
 $body-bg: #F5F5F5;
 $body-color: #212529;
 
-$primary: #121212;
+$primary: #121212; // #1C1C1C
 $secondary: #ababab;
 
 $black: #111;
@@ -80,6 +80,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     z-index: 100;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 
@@ -236,5 +237,197 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 @media (min-width: 768px) { /* md and up */
     .fs-responsive {
         font-size: var(--bs-font-size-base, 1rem) !important; /* ≈ fs-7 */
+    }
+}
+
+
+.user {
+
+    padding: 10px;
+    background-color: var(--bs-white);
+    border-radius: 50%;
+}
+
+
+.faq-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+
+    .faq-content {
+        width: 100%;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        text-align: start;
+
+        .accordion-style {
+            width: 100%;
+            margin-top: 20px;
+
+            .accordion {
+                width: 100%;
+            }
+        }
+    }
+}
+
+
+.accordion-style {
+    width: 100%;
+
+    .accordion {
+        border: none;
+
+        .accordion-item {
+            border: none;
+            border-bottom: 1px solid var(--bs-border-color);
+            border-radius: 0;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .accordion-header {
+                margin: 0;
+            }
+
+            .accordion-button {
+                background: transparent;
+                border: none;
+                box-shadow: none;
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--bs-black);
+                padding: 16px 0;
+                border-radius: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: color 0.2s ease;
+
+                // remove Bootstrap's default icon
+                &::after {
+                    display: none;
+                }
+
+                .accordion-icon {
+                    display: flex;
+                    align-items: center;
+                    transition: transform 0.3s ease;
+
+                    svg {
+                        width: 21px;
+                        height: 20px;
+                        stroke: #999;
+                        transition: transform 0.3s ease, stroke 0.3s ease;
+                    }
+                }
+
+                &:not(.collapsed) {
+                    .accordion-icon svg {
+                        transform: rotate(90deg);
+                        stroke: #555;
+                    }
+                }
+
+                &:focus {
+                    box-shadow: none;
+                }
+
+                &:hover {
+                    color: #000;
+                }
+            }
+
+            .accordion-body {
+                padding: 10px 0 20px;
+                font-size: 15px;
+                color: var(--bs-primary);
+                line-height: 1.6;
+            }
+        }
+    }
+}
+
+.section {
+    margin: 100px 0;
+}
+
+
+.zoom-wrap {
+    overflow: hidden; // keeps the image from spilling outside
+    display: block;
+
+    img {
+        transition: transform 0.5s ease-in-out; // smooth zoom animation
+        will-change: transform; // GPU optimization
+    }
+
+    &:hover img {
+        transform: scale(1.08); // zoom in on hover
+    }
+}
+
+
+.cta-shop {
+    position: relative;
+    isolation: isolate;
+    min-height: 65vh;
+    display: grid;
+    place-items: center;
+
+    &__bg {
+        position: absolute;
+        inset: 0;
+        background-image: url("../images/shop-bg.png");
+        background-size: cover;
+        background-position: center;
+        filter: saturate(.9);
+        z-index: -2;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.10),
+                    rgba(0, 0, 0, 0.80)
+            );
+            z-index: -1;
+        }
+    }
+
+    &__inner {
+        width: 100%;
+        display: grid;
+        place-items: center;
+        padding-block: clamp(3rem, 7vh, 6rem);
+    }
+
+    &__panel {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        max-width: 720px;
+        width: min(92%, 760px);
+        background: var(--bs-body-bg);
+        color: var(--bs-black);
+        padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 4vw, 3rem);
+        text-align: center;
+    }
+
+    &__subtitle {
+        display: flex;
+        flex-direction: column;
+        margin: 0 0 1.25rem;
+        color: #5f6368; // muted gray
+        font-size: clamp(.95rem, 1.3vw, 1.125rem);
+        line-height: 1.6;
     }
 }

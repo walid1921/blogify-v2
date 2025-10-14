@@ -8,25 +8,28 @@
 
 
         <div class="d-flex flex-column gap-4 mb-4 px-4">
-            <div class=" mb-2">
-                {% include 'components/_button.html.twig' with {
-                    typeButton: 'secondary',
-                    path: path('blog.blogsTable'),
-                    iconType: 'back',
-                    iconColor: 'black',
-                } %}
+
+            <div class="d-flex justify-content-start">
+                <div class=" mb-2">
+                    {% include 'components/_button.html.twig' with {
+                        typeButton: 'secondary',
+                        path: 'javascript:history.back()',
+                        iconType: 'back',
+                        iconColor: 'black',
+                    } %}
+                </div>
             </div>
 
             {# Breadcrumb #}
-            {% block bread %}
-                <nav aria-label="breadcrumb" class="d-none d-md-block">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ path('blog.allBlogs') }}">Blogs Table</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Create</li>
-                    </ol>
-                </nav>
-            {% endblock %}
+            {#            {% block bread %} #}
+            {#                <nav aria-label="breadcrumb" class="d-none d-md-block"> #}
+            {#                    <ol class="breadcrumb mb-0"> #}
+            {#                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li> #}
+            {#                        <li class="breadcrumb-item"><a href="{{ path('blog.allBlogs') }}">Blogs Table</a></li> #}
+            {#                        <li class="breadcrumb-item active" aria-current="page">Create</li> #}
+            {#                    </ol> #}
+            {#                </nav> #}
+            {#            {% endblock %} #}
 
             <div class="d-flex flex-column gap-1">
                 <h1 class="text-uppercase fs-3">Create a New Blog Post</h1>

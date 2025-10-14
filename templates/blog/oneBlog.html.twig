@@ -13,7 +13,7 @@
 
     <div class="page-container">
 
-        <div class="d-flex flex-column gap-2 mb-4 ps-4">
+        <div class="d-flex flex-column gap-2 mb-4 px-4">
 
             <div class="d-flex justify-content-start">
                 <div class=" mb-2">
@@ -27,16 +27,16 @@
             </div>
 
             {# Breadcrumb #}
-            {% block bread %}
-                <nav aria-label="breadcrumb" class="d-none d-md-block">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ path('blog.allBlogs') }}">Blogs</a></li>
-                        <li class="breadcrumb-item active"
-                            aria-current="page">{{ blog.title|u.truncate(15, '...') }}</li>
-                    </ol>
-                </nav>
-            {% endblock %}
+            {#            {% block bread %} #}
+            {#                <nav aria-label="breadcrumb" class="d-none d-md-block"> #}
+            {#                    <ol class="breadcrumb mb-0"> #}
+            {#                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li> #}
+            {#                        <li class="breadcrumb-item"><a href="{{ path('blog.allBlogs') }}">Blogs</a></li> #}
+            {#                        <li class="breadcrumb-item active" #}
+            {#                            aria-current="page">{{ blog.title|u.truncate(15, '...') }}</li> #}
+            {#                    </ol> #}
+            {#                </nav> #}
+            {#            {% endblock %} #}
 
             <div class="d-flex flex-column gap-4 mt-4">
                 <div class="d-flex align-items-center gap-3">
@@ -50,16 +50,18 @@
                     <h1 class="text-uppercase fs-3">{{ blog.title }}</h1>
                 </div>
 
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-end gap-2">
                     <div class="border border-black px-2 ">
                         <p class="fs-7">Event</p>
                     </div>
 
                     {{ include('blog/_blogDate.html.twig', { createdAt: blog.createdAt }) }}
-
                 </div>
 
-
+                <div class="d-flex align-items-center gap-2">
+                    <p class="fs-7"><span class="fw-semibold">Original language:</span> {{ blog.blogLanguage }} -</p>
+                    <p class="text-secondary fs-7">{{ blog.readTime }} min read</p>
+                </div>
             </div>
         </div>
 
@@ -70,10 +72,47 @@
                  class="cover-image ">
         {% endif %}
 
+        <div class="d-flex flex-column mt-5 align-items-center justify-content-center w-100">
+            <div class="w-75 w-md-50 px-4">
+                <div class="js-blog-content" data-content="{{ blog.content|e('html_attr') }}"></div>
 
-        <div class="w-100">
-            <div class="js-blog-content" data-content="{{ blog.content|e('html_attr') }}"></div>
+                <div class="d-flex justify-content-between w-100 pt-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <a href="#" class="user" data-bs-toggle="tooltip"
+                           data-bs-placement="top"
+                           data-bs-title="Visit profile">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="6" r="4" stroke="black" stroke-width="1.5"></circle>
+                                <path
+                                    d="M15 20.6151C14.0907 20.8619 13.0736 21 12 21C8.13401 21 5 19.2091 5 17C5 14.7909 8.13401 13 12 13C15.866 13 19 14.7909 19 17C19 17.3453 18.9234 17.6804 18.7795 18"
+                                    stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
+                            </svg>
+                        </a>
+                        <div>
+                            <p class="mb-0">{{ blog.author }}</p>
+                            <p class="text-secondary fs-7 mb-0">Author</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <a href="#">
+                            <img src="{{ asset('icons/instagram.svg') }}" alt="Instagram" width="24" height="24"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="top"
+                                 data-bs-title="Instagram">
+                        </a>
+                        <a href="#">
+                            <img src="{{ asset('icons/facebook.svg') }}" alt="Facebook" width="24" height="24"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="top"
+                                 data-bs-title="Facebook">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
 

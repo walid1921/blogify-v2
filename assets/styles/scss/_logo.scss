@@ -15,4 +15,16 @@
         font-size: 12px;
         line-height: 1;
     }
+
+    &.is-large {
+        img {
+            height: 30px;
+        }
+    }
+
+    &.is-small {
+        img {
+            height: 20px;
+        }
+    }
 }

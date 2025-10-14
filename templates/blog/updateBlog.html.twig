@@ -16,17 +16,6 @@
                 } %}
             </div>
 
-            {# Breadcrumb #}
-            {% block bread %}
-                <nav aria-label="breadcrumb" class="d-none d-md-block">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ path('blog.allBlogs') }}">Blogs Table</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
-                    </ol>
-                </nav>
-            {% endblock %}
-
             <div class="d-flex flex-column gap-1">
                 <h1 class="text-uppercase fs-3">Edit your Blog Post</h1>
                 <p class="fw-light">Hit the "Save" button after finishing the editing.</p>
