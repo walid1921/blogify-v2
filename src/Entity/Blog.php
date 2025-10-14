@@ -45,6 +45,15 @@ class Blog
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $coverImage = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $read_time = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $author = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $blog_language = null;
+
     public function getId (): ?int
     {
         return $this->id;
@@ -118,6 +127,42 @@ class Blog
     public function setCoverImage (?string $coverImage): static
     {
         $this->coverImage = $coverImage;
+
+        return $this;
+    }
+
+    public function getReadTime (): ?int
+    {
+        return $this->read_time;
+    }
+
+    public function setReadTime (?int $read_time): static
+    {
+        $this->read_time = $read_time;
+
+        return $this;
+    }
+
+    public function getAuthor (): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor (string $author): static
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getBlogLanguage (): ?string
+    {
+        return $this->blog_language;
+    }
+
+    public function setBlogLanguage (string $blog_language): static
+    {
+        $this->blog_language = $blog_language;
 
         return $this;
     }

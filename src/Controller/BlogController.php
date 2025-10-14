@@ -25,7 +25,6 @@ final class BlogController extends AbstractController
     public function index (BlogsRepository $br): Response
     {
 
-
         return $this->render('blog/all_blogs.html.twig', [
             'controller_name' => 'BlogController',
 
@@ -59,6 +58,10 @@ final class BlogController extends AbstractController
         $blog->setContent(json_encode(['blocks' => []], JSON_THROW_ON_ERROR)); // initialize with an empty JSON string instead of '':
         $blog->setCreatedAt(new DateTimeImmutable());
         $blog->setLikes(0);
+        $blog->setReadTime(0);
+//        $blog->setAuthor($this->getUser());
+        $blog->setAuthor('Walid Ayad');
+        $blog->setBlogLanguage('English');
         $blog->setIsPublished(false);
 
 

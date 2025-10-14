@@ -1,0 +1,20 @@
+<div class="cta-shop">
+    <div class="cta-shop__bg"></div>
+
+    <div class="cta-shop__inner container">
+        <div class="cta-shop__panel">
+            <div class="petarisia-main-logo is-large">
+                <img src="{{ asset('images/Black logo.png') }}" alt="logo">
+            </div>
+            <div class="cta-shop__subtitle">
+                <p> 10% discount with the code <span class="fw-bold">- PETARISIA_BLOGS -</span></p>
+                <span>Now on our online shop</span>
+            </div>
+            {% include 'components/_button.html.twig' with {
+                typeButton: 'primary',
+                path: path('blog.blogsTable'),
+                textButton: 'Go To Store',
+            } %}
+        </div>
+    </div>
+</div>
