@@ -2,361 +2,251 @@
 
 {% block title %}{{ parent() }}Home page{% endblock %}
 
+{% set slides = [
+    {
+        category: 'Event',
+        title: 'The fascination of texture: fringes, mesh and modern knitwear',
+        readTime: '4 min read',
+        author: 'Walid Ayad',
+        date: 'Feb 20, 2025',
+        bg: 'images/252-15041-4036_2.png',
+        bgHover: 'images/cq5dam.web.hebebed.2000.2000 (4).jpg',
+        content: "Welcome to REVA – where fashion isn’t just clothing, but a passion, an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve been..."
+    },
+    {
+        category: 'Collection',
+        title: 'Redefining elegance with sustainable materials',
+        readTime: '3 min read',
+        author: 'Walid Ayad',
+        date: 'Mar 1, 2025',
+        bg: 'images/cq5dam.web.hebebed.2000.2000 (4).jpg',
+        bgHover: 'images/252-15041-4036_2.png',
+        content: 'Our latest collection merges classic silhouettes with eco-friendly textiles, redefining elegance through sustainability...'
+    },
+    {
+        category: 'Editorial',
+        title: 'The story behind modern craftsmanship',
+        readTime: '5 min read',
+        author: 'Walid Ayad',
+        date: 'Apr 10, 2025',
+        bg: 'images/252-15041-4036_2.png',
+        bgHover: 'images/cq5dam.web.hebebed.2000.2000 (4).jpg',
+        content: 'Behind every piece is a team of artisans dedicated to the perfection of detail. Explore the story of how tradition meets technology...'
+    }
+] %}
+
+{% set blogs = [
+    {
+        category: 'Event',
+        title: 'The fascination of texture: fringes',
+        readTime: '4 min read',
+        author: 'Walid Ayad',
+        date: 'Feb 20, 2025',
+        image: 'images/252-15041-4036_2.png',
+        content: "Laboris commodo ex officia non tempor. Ut cillum est Lorem duis aute proident dolore excepteur id irure nulla labore sit sint duis. Enim anim pariatur voluptate eu qui consectetur et labore id ad tempor. Do magna est laborum. Reprehenderit laborum consequat ad proident pariatur dolor duis enim non minim. Ipsum quis irure dolor eiusmod ipsum laboris adipisicing eiusmod mollit minim laborum. Eiusmod sit nisi adipisicing est aute reprehenderit magna ea sit pariatur ad. In commodo ad est exercitation est adipisicing aliqua et elit velit ex ullamco fugiat consequat ea."
+    },
+    {
+        category: 'Collection',
+        title: 'Redefining elegance with sustainable materials',
+        readTime: '3 min read',
+        author: 'Walid Ayad',
+        date: 'Mar 1, 2025',
+        image: 'images/252-15041-4036_2.png',
+        content: 'Laboris commodo ex officia non tempor. Ut cillum est Lorem duis aute proident dolore excepteur id irure nulla labore sit sint duis. Enim anim pariatur voluptate eu qui consectetur et labore id ad tempor. Do magna est laborum. Reprehenderit laborum consequat ad proident pariatur dolor duis enim non minim. Ipsum quis irure dolor eiusmod ipsum laboris adipisicing eiusmod mollit minim laborum. Eiusmod sit nisi adipisicing est aute reprehenderit magna ea sit pariatur ad. In commodo ad est exercitation est adipisicing aliqua et elit velit ex ullamco fugiat consequat ea.'
+    },
+    {
+        category: 'Editorial',
+        title: 'The story behind modern craftsmanship',
+        readTime: '5 min read',
+        author: 'Walid Ayad',
+        date: 'Apr 10, 2025',
+        image: 'images/252-15041-4036_2.png',
+        content: 'Laboris commodo ex officia non tempor. Ut cillum est Lorem duis aute proident dolore excepteur id irure nulla labore sit sint duis. Enim anim pariatur voluptate eu qui consectetur et labore id ad tempor. Do magna est laborum. Reprehenderit laborum consequat ad proident pariatur dolor duis enim non minim. Ipsum quis irure dolor eiusmod ipsum laboris adipisicing eiusmod mollit minim laborum. Eiusmod sit nisi adipisicing est aute reprehenderit magna ea sit pariatur ad. In commodo ad est exercitation est adipisicing aliqua et elit velit ex ullamco fugiat consequat ea.'
+    }
+] %}
+
+
 {% block body %}
 
     <div class="page-container">
 
-        <div class="d-flex flex-column gap-1 mb-4 px-4">
-            <h1 class="text-uppercase fs-3">Blogs</h1>
-            <p class="fw-light">I think in this page its not needed to have header find something else</p>
+        <div class="blog-header">
+            <h1 class="text-uppercase">Blogs</h1>
+            <p class="fw-light">I think in this page its not needed to have a header to find something else</p>
         </div>
-
 
         <div class="sticky-categories px-2 px-md-4">
             {% include 'components/_blogCategories.html.twig' with { blogCategories: blogCategories } %}
         </div>
 
+        <section class="row g-3 g-md-0 align-items-stretch pt-3 w-100">
+            {# TOP LEFT BLOG #}
+            <div
+                class="col-12 col-md-5 p-0 pe-md-3 d-flex flex-column justify-content-between">
+                <a href="#" class="zoom-wrap">
+                    <img src="{{ asset('images/252-15041-4036_2.png') }}" alt="Blog image" class="img-fluid w-100">
+                </a>
 
-        <div class="d-flex flex-column">
-            <div class="row g-3 g-md-0 align-items-stretch pt-3 w-100">
+                <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4 ">
+                    <div class="d-flex align-items-center gap-2">
 
-                {# TOP LEFT BLOG #}
-                <div
-                    class="col-12 col-md-5 p-0 pe-md-3 d-flex flex-column justify-content-between order-2 order-md-1">
-                    <a href="#" class="zoom-wrap">
-                        <img src="{{ asset('images/252-15041-4036_2.png') }}" alt="Blog image" class="img-fluid w-100">
-                    </a>
+                        <p class="fw-medium">Event</p>
 
-                    <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4 ">
-                        <div class="d-flex align-items-center gap-2">
-
-                            <p class="fs-7 fw-medium">Event</p>
-
-                            <div class="w-100 bg-secondary" style="height: 1px;"></div>
-                        </div>
-                        <h3 class="fs-5">The fascination of texture: fringes <span
-                                class="fs-8 fw-normal text-secondary">- 4 min read</span></h3>
-                        <p class="fw-light fs-7">
-                            Welcome to REVA – where fashion isn’t just clothing, but a passion,
-                            an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve
-                            been...
-
-                        </p>
+                        <div class="w-100 bg-secondary" style="height: 1px;"></div>
                     </div>
-                    <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-md-auto mt-5">
-                        <div class="d-flex align-items-end gap-2">
-                            <p>Walid Ayad</p>
-                            <p class="text-secondary fs-8">Feb 20, 2025</p>
-                        </div>
-                        <a href='#'
-                           class="text-decoration-none fs-7 link-underline-black align-items-center gap-2">
-                            Read more
-                            <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="black"
-                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </a>
-                    </div>
+                    <h3>The fascination of texture: fringes <small class=" fw-normal text-secondary">- 4 min
+                            read</small></h3>
+                    <p class="fw-light ">
+                        Welcome to REVA – where fashion isn’t just clothing, but a passion,
+                        an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve
+                        been...
+
+                    </p>
                 </div>
-
-                {# TOP RIGHT BLOG #}
-                <div
-                    class="col-12 col-md-7 d-flex flex-column justify-content-end p-0 blog-bg order-1 order-md-2"
-                    style="--bg-image: url('{{ asset('images/252-15041-4036_2.png') }}');
-                        --bg-image-hover: url('{{ asset('images/cq5dam.web.hebebed.2000.2000 (4).jpg') }}');">
-                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
-                         data-bs-interval="3000" data-bs-touch="true">
-                        {# INDICATORS #}
-                        <div class="carousel-indicators mb-2">
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                                    class="active"
-                                    aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                                    aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                                    aria-label="Slide 3"></button>
-                        </div>
-
-                        {# CAROUSEL ITEMS #}
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="d-flex px-4 pb-5 flex-column justify-content-end blog-bg z-0"
-                                     style="--bg-image: url('{{ asset('images/252-15041-4036_2.png') }}');
-                                         --bg-image-hover: url('{{ asset('images/cq5dam.web.hebebed.2000.2000 (4).jpg') }}');">
-                                    <div class="bg-layer base"></div>
-                                    <div class="bg-layer hover"></div>
-                                    <div class="overlay"></div>
-                                    <div class="d-flex flex-column gap-3 z-1">
-                                        <div class="d-flex align-items-center gap-2">
-
-                                            <p class="fs-7 fw-medium">Event</p>
-
-                                            <div class="w-100 bg-secondary" style="height: 1px;"></div>
-                                        </div>
-                                        {#                                        <p class="text-white fs-8">Feb 20, 2025</p> #}
-
-                                        <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
-                                            knitwear <span class="fs-8 fw-normal opacity-50">- 4 min read</span>
-                                        </h3>
-                                        <p class="fw-light fs-7">
-                                            Welcome to REVA – where fashion isn’t just clothing, but a passion,
-                                            an expression of youth, and a journey of self-expression. Since our start in
-                                            2020, we’ve
-                                            been...
-                                        </p>
-                                        <div
-                                            class="d-flex justify-content-between gap-0 gap-md-3 mt-2 z-3">
-                                            <div class="d-flex align-items-end gap-2">
-                                                <p>Walid Ayad</p>
-                                                <p class="text-secondary fs-8">Feb 20, 2025</p>
-                                            </div>
-                                            <a href='#'
-                                               class="text-decoration-none fs-7 link-underline-white align-items-center gap-2">
-                                                Read more
-                                                <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
-                                                        stroke="white"
-                                                        stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round"></path>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-flex px-4 pb-5 flex-column justify-content-end blog-bg z-0"
-                                     style="--bg-image: url('{{ asset('images/252-15041-4036_2.png') }}');
-                                         --bg-image-hover: url('{{ asset('images/cq5dam.web.hebebed.2000.2000 (4).jpg') }}');">
-                                    <div class="bg-layer base"></div>
-                                    <div class="bg-layer hover"></div>
-                                    <div class="overlay"></div>
-                                    <div class="d-flex flex-column gap-3 z-1">
-                                        <div class="d-flex align-items-center gap-2">
-
-                                            <p class="fs-7 fw-medium">Event</p>
-
-                                            <div class="w-100 bg-secondary" style="height: 1px;"></div>
-                                        </div>
-                                        {#                                        <p class="text-white fs-8">Feb 20, 2025</p> #}
-
-                                        <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
-                                            knitwear <span class="fs-8 fw-normal opacity-50">- 4 min read</span>
-                                        </h3>
-                                        <p class="fw-light fs-7">
-                                            Welcome to REVA – where fashion isn’t just clothing, but a passion,
-                                            an expression of youth, and a journey of self-expression. Since our start in
-                                            2020, we’ve
-                                            been...
-                                        </p>
-                                        <div
-                                            class="d-flex justify-content-between gap-0 gap-md-3 mt-2 z-3">
-                                            <div class="d-flex align-items-end gap-2">
-                                                <p>Walid Ayad</p>
-                                                <p class="text-secondary fs-8">Feb 20, 2025</p>
-                                            </div>
-                                            <a href='#'
-                                               class="text-decoration-none fs-7 link-underline-white align-items-center gap-2">
-                                                Read more
-                                                <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
-                                                        stroke="white"
-                                                        stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round"></path>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="d-flex px-4 pb-5 flex-column justify-content-end blog-bg z-0"
-                                     style="--bg-image: url('{{ asset('images/252-15041-4036_2.png') }}');
-                                         --bg-image-hover: url('{{ asset('images/cq5dam.web.hebebed.2000.2000 (4).jpg') }}');">
-                                    <div class="bg-layer base"></div>
-                                    <div class="bg-layer hover"></div>
-                                    <div class="overlay"></div>
-                                    <div class="d-flex flex-column gap-3 z-1">
-                                        <div class="d-flex align-items-center gap-2">
-
-                                            <p class="fs-7 fw-medium">Event</p>
-
-                                            <div class="w-100 bg-secondary" style="height: 1px;"></div>
-                                        </div>
-                                        {#                                        <p class="text-white fs-8">Feb 20, 2025</p> #}
-
-                                        <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
-                                            knitwear <span class="fs-8 fw-normal opacity-50">- 4 min read</span>
-                                        </h3>
-                                        <p class="fw-light fs-7">
-                                            Welcome to REVA – where fashion isn’t just clothing, but a passion,
-                                            an expression of youth, and a journey of self-expression. Since our start in
-                                            2020, we’ve
-                                            been...
-                                        </p>
-                                        <div
-                                            class="d-flex justify-content-between gap-0 gap-md-3 mt-2 z-3">
-                                            <div class="d-flex align-items-end gap-2">
-                                                <p>Walid Ayad</p>
-                                                <p class="text-secondary fs-8">Feb 20, 2025</p>
-                                            </div>
-                                            <a href='#'
-                                               class="text-decoration-none fs-7 link-underline-white align-items-center gap-2">
-                                                Read more
-                                                <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
-                                                        stroke="white"
-                                                        stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round"></path>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {# LEFT & RIGHT ARROWS #}
-                        <button class="carousel-control-prev z-2" type="button"
-                                data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next z-2" type="button"
-                                data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-md-auto mt-5">
+                    <div class="d-flex align-items-center gap-2">
+                        <p>Walid Ayad</p>
+                        <small class=" fw-normal text-secondary">- Feb 20, 2025</small>
                     </div>
+                    <a href='#'
+                       class="text-decoration-none  link-underline-black align-items-center gap-2">
+                        Read more
+                        <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="black"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
-            <div class="row g-3 g-md-0 align-items-stretch pt-3 w-100 mt-3 mt-md-5">
-                <div
-                    class="col-12 col-md-4 p-0 pe-md-3 d-flex flex-column justify-content-between order-2 order-md-1">
-                    <a href="#" class="zoom-wrap">
-                        <img src="{{ asset('images/252-15041-4036_2.png') }}" alt="Blog image" class="img-fluid w-100">
-                    </a>
-
-
-                    <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4 ">
-                        <div class="d-flex align-items-center gap-2">
-
-                            <p class="fs-7 fw-medium">Event</p>
-
-                            <div class="w-100 bg-secondary" style="height: 1px;"></div>
-                        </div>
-                        <h3 class="fs-5">The fascination of texture: fringes <span
-                                class="fs-8 fw-normal text-secondary">- 4 min read</span></h3>
-                        <p class="fw-light fs-7">
-                            Welcome to REVA – where fashion isn’t just clothing, but a passion,
-                            an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve
-                            been...
-
-                        </p>
+            {# CAROUSEL #}
+            <div
+                class="col-12 col-md-7 d-flex flex-column justify-content-end p-0 blog-bg order-1 order-md-2"
+                style="--bg-image: url('{{ asset('images/252-15041-4036_2.png') }}');
+                    --bg-image-hover: url('{{ asset('images/cq5dam.web.hebebed.2000.2000 (4).jpg') }}');">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
+                     data-bs-interval="3000" data-bs-touch="true">
+                    {# INDICATORS #}
+                    <div class="carousel-indicators mb-2">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                class="active"
+                                aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
                     </div>
-                    <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-4">
-                        <div class="d-flex align-items-end gap-2">
-                            <p>Walid Ayad</p>
-                            <p class="text-secondary fs-8">Feb 20, 2025</p>
-                        </div>
-                        <a href='#'
-                           class="text-decoration-none fs-7 link-underline-black align-items-center gap-2">
-                            Read more
-                            <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="black"
-                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </a>
+
+                    {# CAROUSEL ITEMS #}
+                    <div class="carousel-inner">
+                        {% for slide in slides %}
+                            <div class="carousel-item {{ loop.first ? 'active' : '' }}">
+                                <div class="d-flex px-4 pb-5 flex-column justify-content-end blog-bg z-0"
+                                     style="--bg-image: url('{{ asset(slide.bg) }}');
+                                         --bg-image-hover: url('{{ asset(slide.bgHover) }}');">
+
+                                    <div class="bg-layer base"></div>
+                                    <div class="bg-layer hover"></div>
+                                    <div class="overlay"></div>
+
+                                    <div class="d-flex flex-column gap-3 z-1">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <p class="fw-medium">{{ slide.category }}</p>
+                                            <div class="w-100 bg-secondary" style="height: 1px;"></div>
+                                        </div>
+
+                                        <h3>{{ slide.title }}
+                                            <small class="fw-normal text-secondary">- {{ slide.readTime }}</small>
+                                        </h3>
+
+                                        <p class="fw-light">{{ slide.content|u.truncate(140, '...') }}</p>
+
+                                        <div class="d-flex justify-content-between gap-0 gap-md-3 mt-2 z-3">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <p>{{ slide.author }}</p>
+                                                <small class="fw-normal text-secondary">- {{ slide.date }}</small>
+                                            </div>
+
+                                            <a href="#"
+                                               class="text-decoration-none link-underline-white align-items-center gap-2">
+                                                Read more
+                                                <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
+                                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round"></path>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                </div>
-                <div
-                    class="col-12 col-md-4 p-0 pe-md-3 d-flex flex-column justify-content-between order-2 order-md-1">
-                    <a href="#" class="zoom-wrap">
-                        <img src="{{ asset('images/252-15041-4036_2.png') }}" alt="Blog image" class="img-fluid w-100">
-                    </a>
 
-                    <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4 ">
-                        <div class="d-flex align-items-center gap-2">
-
-                            <p class="fs-7 fw-medium">Event</p>
-
-                            <div class="w-100 bg-secondary" style="height: 1px;"></div>
-                        </div>
-                        <h3 class="fs-5">The fascination of texture: fringes <span
-                                class="fs-8 fw-normal text-secondary">- 4 min read</span></h3>
-                        <p class="fw-light fs-7">
-                            Welcome to REVA – where fashion isn’t just clothing, but a passion,
-                            an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve
-                            been...
-
-                        </p>
-                    </div>
-                    <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-4">
-                        <div class="d-flex align-items-end gap-2">
-                            <p>Walid Ayad</p>
-                            <p class="text-secondary fs-8">Feb 20, 2025</p>
-                        </div>
-                        <a href='#'
-                           class="text-decoration-none fs-7 link-underline-black align-items-center gap-2">
-                            Read more
-                            <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="black"
-                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="col-12 col-md-4 p-0 pe-md-3 d-flex flex-column justify-content-between order-2 order-md-1">
-                    <a href="#" class="zoom-wrap">
-                        <img src="{{ asset('images/252-15041-4036_2.png') }}" alt="Blog image" class="img-fluid w-100">
-                    </a>
-
-                    <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4 ">
-                        <div class="d-flex align-items-center gap-2">
-
-                            <p class="fs-7 fw-medium">Event</p>
-
-                            <div class="w-100 bg-secondary" style="height: 1px;"></div>
-                        </div>
-                        <h3 class="fs-5">The fascination of texture: fringes <span
-                                class="fs-8 fw-normal text-secondary">- 4 min read</span></h3>
-                        <p class="fw-light fs-7">
-                            Welcome to REVA – where fashion isn’t just clothing, but a passion,
-                            an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve
-                            been...
-
-                        </p>
-                    </div>
-                    <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-4">
-                        <div class="d-flex align-items-end gap-2">
-                            <p>Walid Ayad</p>
-                            <p class="text-secondary fs-8">Feb 20, 2025</p>
-                        </div>
-                        <a href='#'
-                           class="text-decoration-none fs-7 link-underline-black align-items-center gap-2">
-                            Read more
-                            <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="black"
-                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </a>
-                    </div>
+                    {# LEFT & RIGHT ARROWS #}
+                    <button class="carousel-control-prev z-2" type="button"
+                            data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next z-2" type="button"
+                            data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             </div>
+        </section>
+
+        {# BLOGS #}
+        <section class="d-flex flex-column pt-3 w-100 mt-3 mt-md-5">
+            <div class="row g-3 align-items-stretch">
+                {% for blog in blogs %}
+                    <div class="col-12 col-md-6 col-lg-4 pe-0 pb-5 d-flex flex-column justify-content-between">
+                        <a href="#" class="zoom-wrap">
+                            <img src="{{ asset(blog.image) }}" alt="{{ blog.title }}" class="img-fluid w-100">
+                        </a>
+
+                        <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <p class="fw-medium">{{ blog.category }}</p>
+                                <div class="w-100 bg-secondary" style="height: 1px;"></div>
+                            </div>
+
+                            <h3>
+                                {{ blog.title }}
+                                <small class="fw-normal text-secondary"> - {{ blog.readTime }}</small>
+                            </h3>
+
+                            <p class="fw-light">{{ blog.content|u.truncate(140, '...') }}</p>
+                        </div>
+
+                        <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <p>{{ blog.author }}</p>
+                                <small class="fw-normal text-secondary">- {{ blog.date }}</small>
+                            </div>
+
+                            <a href="#" class="text-decoration-none link-underline-black align-items-center gap-2">
+                                Read more
+                                <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
+                                          stroke="black" stroke-width="2" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
 
             <div class="d-flex justify-content-end mt-3 mt-md-5 me-3">
                 {% include 'components/_button.html.twig' with {
@@ -367,7 +257,7 @@
                     iconColor: 'white'
                 } %}
             </div>
-        </div>
+        </section>
 
         <section class="section">
             {% include 'components/_joinToday.html.twig' %}
@@ -377,7 +267,7 @@
         <section class="faq-container section">
             <div class="faq-content">
 
-                <h2 class="text-uppercase fs-3 mb-4">Frequently Asked Questions</h2>
+                <h2 class="text-uppercase mb-4">Frequently Asked Questions</h2>
 
                 <div class="accordion-style d-inline-block text-start">
                     {% include 'components/_accordion.html.twig' %}
@@ -472,13 +362,13 @@
                         <div class="d-flex flex-column gap-3 z-1">
                             <div class="d-flex align-items-center gap-3">
                                 <div class="border border-white px-2 ">
-                                    <p class="fs-8">Event</p>
+                                    <small>Event</small>
                                 </div>
-                                <p class="text-white fs-8">Feb 20, 2025</p>
+                                <small class="text-white ">Feb 20, 2025</small>
                             </div>
-                            <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
+                            <h3>The fascination of texture: fringes, mesh and modern
                                 knitwear</h3>
-                            <p class="fw-light fs-7">
+                            <p class="fw-light ">
                                 Welcome to REVA – where fashion isn’t just clothing, but a passion,
                                 an expression of youth, and a journey of self-expression. Since our start in
                                 2020, we’ve
@@ -486,7 +376,7 @@
                             </p>
                             <div class="d-flex justify-content-end z-3">
                                 <a href='#'
-                                   class="link-underline-white text-decoration-none fs-7 align-items-center gap-2">
+                                   class="link-underline-white text-decoration-none  align-items-center gap-2">
                                     Read more
                                     <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -511,13 +401,13 @@
                         <div class="d-flex flex-column gap-3 z-1">
                             <div class="d-flex align-items-center gap-3">
                                 <div class="border border-white px-2 ">
-                                    <p class="fs-8">Event</p>
+                                    <small>Event</small>
                                 </div>
-                                <p class="text-white fs-8">Feb 20, 2025</p>
+                                <small class="text-white">Feb 20, 2025</small>
                             </div>
-                            <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
+                            <h3>The fascination of texture: fringes, mesh and modern
                                 knitwear</h3>
-                            <p class="fw-light fs-7">
+                            <p class="fw-light ">
                                 Welcome to REVA – where fashion isn’t just clothing, but a passion,
                                 an expression of youth, and a journey of self-expression. Since our start in
                                 2020, we’ve
@@ -525,7 +415,7 @@
                             </p>
                             <div class="d-flex justify-content-end">
                                 <a href='#'
-                                   class="text-decoration-none fs-7 link-underline-white align-items-center gap-2">
+                                   class="text-decoration-none  link-underline-white align-items-center gap-2">
                                     Read more
                                     <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -550,13 +440,13 @@
                         <div class="d-flex flex-column gap-3 z-1">
                             <div class="d-flex align-items-center gap-3">
                                 <div class="border border-white px-2 ">
-                                    <p class="fs-8">Event</p>
+                                    <small>Event</small>
                                 </div>
-                                <p class="text-white fs-8">Feb 20, 2025</p>
+                                <small class="text-white">Feb 20, 2025</small>
                             </div>
-                            <h3 class="fs-5">The fascination of texture: fringes, mesh and modern
+                            <h3>The fascination of texture: fringes, mesh and modern
                                 knitwear</h3>
-                            <p class="fw-light fs-7">
+                            <p class="fw-light ">
                                 Welcome to REVA – where fashion isn’t just clothing, but a passion,
                                 an expression of youth, and a journey of self-expression. Since our start in
                                 2020, we’ve
@@ -564,7 +454,7 @@
                             </p>
                             <div class="d-flex justify-content-end">
                                 <a href='#'
-                                   class="text-decoration-none fs-7 link-underline-white align-items-center gap-2">
+                                   class="text-decoration-none  link-underline-white align-items-center gap-2">
                                     Read more
                                     <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">

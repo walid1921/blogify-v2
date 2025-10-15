@@ -1,3 +1,23 @@
+@keyframes link-slide-in {
+    45% {
+        transform: translateX(-100%)
+    }
+    to {
+        transform: translateX(0)
+    }
+}
+
+@keyframes link-slide-out {
+    55% {
+        transform: translateX(100%)
+    }
+    to {
+        transform: translateX(120%)
+    }
+
+}
+
+
 @mixin link-underline($color, $height: 1px) {
     display: inline-flex;
     overflow: hidden;
@@ -29,43 +49,16 @@
     }
 
     &:hover {
-
         &:before {
-            animation-direction: normal;
-            animation-duration: 0.8s;
-            animation-fill-mode: forwards;
-            animation-name: link-slide-in;
-            animation-timing-function: cubic-bezier(0.5, 0, 0, 1);
+            animation: link-slide-in 0.8s cubic-bezier(0.5, 0, 0, 1) forwards;
         }
 
         &:after {
-            animation-direction: normal;
-            animation-duration: 0.8s;
-            animation-fill-mode: forwards;
-            animation-name: link-slide-out;
-            animation-timing-function: cubic-bezier(0.5, 0, 0, 1);
+            animation: link-slide-out 0.8s cubic-bezier(0.5, 0, 0, 1) forwards;
         }
     }
 }
 
-@keyframes link-slide-in {
-    45% {
-        transform: translateX(-100%)
-    }
-    to {
-        transform: translateX(0)
-    }
-}
-
-@keyframes link-slide-out {
-    55% {
-        transform: translateX(100%)
-    }
-    to {
-        transform: translateX(120%)
-    }
-
-}
 
 @mixin link-no-underline($color, $height: 1px, $beforeColor: transparant) {
     position: relative;
@@ -89,7 +82,7 @@
         background-color: $color;
         transform: scale3d(0, 1, 0);
         transform-origin: right center;
-        transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+        transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
         height: $height;
     }
 
@@ -113,7 +106,7 @@
         background-color: $color;
         transform: scaleX(1);
         transform-origin: left center;
-        transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+        transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
         height: $height;
     }
 
@@ -124,6 +117,7 @@
         }
     }
 }
+
 
 .link-no-underline-black {
     color: var(--bs-black);
@@ -141,8 +135,31 @@
     color: var(--bs-black);
     @include link-underline(var(--bs-black));
 
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(0.25rem, 0.6vw, 0.5rem);
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    font-weight: 500;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+
+    svg {
+        width: clamp(16px, 1.8vw, 20px);
+        height: auto;
+        transition: transform 0.3s ease, stroke 0.3s ease;
+    }
+
     &:hover {
         cursor: pointer;
+        color: var(--bs-primary);
+        transform: translateX(2px);
+        transition-delay: 0.05s;
+
+        svg {
+            transform: translateX(4px);
+            stroke: var(--bs-primary);
+        }
     }
 }
 
@@ -150,7 +167,31 @@
     color: var(--bs-white);
     @include link-underline(var(--bs-white));
 
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(0.25rem, 0.6vw, 0.5rem);
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    font-weight: 500;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+
+    svg {
+        width: clamp(16px, 1.8vw, 20px);
+        height: auto;
+        transition: transform 0.3s ease, stroke 0.3s ease;
+    }
+
     &:hover {
         cursor: pointer;
+        color: var(--bs-secondary);
+        transform: translateX(2px);
+        transition-delay: 0.05s;
+
+        svg {
+            transform: translateX(4px);
+            stroke: var(--bs-secondary);
+        }
     }
+
 }

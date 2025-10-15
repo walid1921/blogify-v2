@@ -1,4 +1,4 @@
-<ul class="list-unstyled d-flex align-items-center gap-3 gap-md-4 p-2 m-0 overflow-auto hide-scrollbar">
+<ul class="d-flex align-items-center gap-3 gap-md-4 p-2 m-0 overflow-auto hide-scrollbar">
     {% for category in blogCategories %}
         <li>
             {#            <a href="{{ path('blog.byCategory', {id: category.id}) }}"> #}
@@ -12,7 +12,7 @@
                     {% set created = category.createdAt|date("U") %}
                     {% set diff = (now - created) / 86400 %} {# seconds → days #}
 
-                    {% if diff < 3 %}
+                    {% if diff < 7 %}
                         <span class="new_category_indicator"
                               data-bs-toggle="tooltip"
                               data-bs-placement="top"
