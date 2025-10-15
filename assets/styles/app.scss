@@ -49,16 +49,79 @@ body {
 
 
 //! TEXT STYLES
+h1, h2, h3, h4, h5, h6 {
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: inherit;
+    margin: 0;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+}
+
+h2 {
+    font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+    line-height: 1.25;
+
+}
+
+h3 {
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    line-height: 1.3;
+}
+
+h4 {
+    font-size: clamp(0.95rem, 1.3vw, 1.25rem);
+    line-height: 1.35;
+}
+
+h5 {
+    font-size: clamp(0.85rem, 1.1vw, 1.1rem);
+    line-height: 1.4;
+}
+
+h6 {
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+    line-height: 1.4;
+}
+
+p {
+    font-size: clamp(0.875rem, 1.1vw, 1rem);
+    line-height: 1.6;
+    margin: 0;
+}
+
+small,
+.text-small {
+    font-size: clamp(0.75rem, 0.9vw, 0.875rem);
+    line-height: 1.4;
+}
+
 a {
     text-decoration: none;
 }
 
-p {
-    margin-bottom: 0;
+ul, ol {
+    font-size: clamp(0.875rem, 1.1vw, 1rem);
+    list-style: none; // removes bullets or numbers
 }
 
-h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
-    margin: 0;
+/* --------------------------------
+   RESPONSIVE UTILITY CLASSES
+-------------------------------- */
+
+.text-lg {
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+}
+
+.text-sm {
+    font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+}
+
+.text-xs {
+    font-size: clamp(0.7rem, 0.8vw, 0.8rem);
 }
 
 
@@ -69,6 +132,20 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     min-height: 100vh;
 }
 
+
+//! HEADER
+.blog-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: clamp(0.25rem, 0.8vw, 0.75rem);
+    margin-bottom: clamp(1.5rem, 3vw, 3rem);
+    padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.padding-header {
+    padding-inline: clamp(1rem, 4vw, 2rem);
+}
 
 //! Categories style
 .sticky-categories {
@@ -357,21 +434,6 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 
 
-.zoom-wrap {
-    overflow: hidden; // keeps the image from spilling outside
-    display: block;
-
-    img {
-        transition: transform 0.5s ease-in-out; // smooth zoom animation
-        will-change: transform; // GPU optimization
-    }
-
-    &:hover img {
-        transform: scale(1.08); // zoom in on hover
-    }
-}
-
-
 .cta-shop {
     position: relative;
     isolation: isolate;
@@ -395,7 +457,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
             background: linear-gradient(
                     to bottom,
                     rgba(0, 0, 0, 0.10),
-                    rgba(0, 0, 0, 0.80)
+                    rgba(0, 0, 0, 0.90)
             );
             z-index: -1;
         }
@@ -413,7 +475,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        gap: 30px;
         max-width: 720px;
         width: min(92%, 760px);
         background: var(--bs-body-bg);
@@ -426,8 +488,25 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
         display: flex;
         flex-direction: column;
         margin: 0 0 1.25rem;
-        color: #5f6368; // muted gray
+        color: var(--bs-gray);
         font-size: clamp(.95rem, 1.3vw, 1.125rem);
         line-height: 1.6;
+    }
+}
+
+
+.zoom-wrap {
+    overflow: hidden;
+    display: block;
+
+    img {
+        transition: transform 0.4s ease-in-out;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+
+        &:hover {
+            transform: scale(1.08);
+        }
     }
 }
