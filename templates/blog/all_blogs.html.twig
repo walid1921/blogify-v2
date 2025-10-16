@@ -3,62 +3,6 @@
 
 {% block title %}Blogs{% endblock %}
 
-{% set blogs = [
-    {
-        category: 'Event',
-        title: 'The fascination of texture: fringes',
-        readTime: '4 min read',
-        author: 'Walid Ayad',
-        date: 'Feb 20, 2025',
-        image: 'images/252-15041-4036_2.png',
-        content: "Welcome to REVA – where fashion isn’t just clothing, but a passion, an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve been..."
-    },
-    {
-        category: 'Collection',
-        title: 'Redefining elegance with sustainable materials',
-        readTime: '3 min read',
-        author: 'Walid Ayad',
-        date: 'Mar 1, 2025',
-        image: 'images/252-15041-4036_2.png',
-        content: 'Our latest collection merges classic silhouettes with eco-friendly textiles, redefining elegance through sustainability...'
-    },
-    {
-        category: 'Editorial',
-        title: 'The story behind modern craftsmanship',
-        readTime: '5 min read',
-        author: 'Walid Ayad',
-        date: 'Apr 10, 2025',
-        image: 'images/252-15041-4036_2.png',
-        content: 'Behind every piece is a team of artisans dedicated to the perfection of detail. Explore the story of how tradition meets technology...'
-    },
-    {
-        category: 'Editorial',
-        title: 'The story behind modern craftsmanship',
-        readTime: '5 min read',
-        author: 'Walid Ayad',
-        date: 'Apr 10, 2025',
-        image: 'images/252-15041-4036_2.png',
-        content: 'Behind every piece is a team of artisans dedicated to the perfection of detail. Explore the story of how tradition meets technology...'
-    },
-    {
-        category: 'Editorial',
-        title: 'The story behind modern craftsmanship',
-        readTime: '5 min read',
-        author: 'Walid Ayad',
-        date: 'Apr 10, 2025',
-        image: 'images/252-15041-4036_2.png',
-        content: 'Behind every piece is a team of artisans dedicated to the perfection of detail. Explore the story of how tradition meets technology...'
-    },
-    {
-        category: 'Editorial',
-        title: 'The story behind modern craftsmanship',
-        readTime: '5 min read',
-        author: 'Walid Ayad',
-        date: 'Apr 10, 2025',
-        image: 'images/252-15041-4036_2.png',
-        content: 'Behind every piece is a team of artisans dedicated to the perfection of detail. Explore the story of how tradition meets technology...'
-    }
-] %}
 
 
 
@@ -120,46 +64,9 @@
             </li>
         </div>
 
+        {# Blogs cards #}
+        {% include 'components/_blogList.html.twig' with { blogs: blogs } %}
 
-        <section class="row g-3 pt-3 w-100">
-            {% for blog in blogs %}
-                <div class="col-12 col-md-6 col-lg-4 pe-0 pb-5 d-flex flex-column justify-content-between">
-                    <a href="#" class="zoom-wrap">
-                        <img src="{{ asset(blog.image) }}" alt="{{ blog.title }}" class="img-fluid w-100">
-                    </a>
-
-                    <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4">
-                        <div class="d-flex align-items-center gap-2">
-                            <p class="fw-medium">{{ blog.category }}</p>
-                            <div class="w-100 bg-secondary" style="height: 1px;"></div>
-                        </div>
-
-                        <h3>{{ blog.title }}
-                            <small class="fw-normal text-secondary"> - {{ blog.readTime }}</small>
-                        </h3>
-
-                        <p class="fw-light">{{ blog.content|u.truncate(140, '...') }}</p>
-                    </div>
-
-                    <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-4">
-                        <div class="d-flex align-items-center gap-2">
-                            <p>{{ blog.author }}</p>
-                            <small class="fw-normal text-secondary">- {{ blog.date }}</small>
-                        </div>
-
-                        <a href="#" class="text-decoration-none link-underline-black align-items-center gap-2">
-                            Read more
-                            <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
-                                      stroke="black" stroke-width="2" stroke-linecap="round"
-                                      stroke-linejoin="round"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </section>
 
     </div>
 

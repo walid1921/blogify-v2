@@ -36,12 +36,14 @@
                     iconColor: 'white',
                 } %}
             </div>
-            {% for key,category in blogCategories %}
-                <span>{{ category.name }}</span>
-            {% endfor %}
+            {% if blogCategories|length > 0 %}
+                {% for key,category in blogCategories %}
+                    <span>{{ category.name }}</span>
+                {% endfor %}
+            {% else %}
+                {{ include('components/_emptyPage.html.twig' , {message : "No Categories yet", linkText: "New Category", linkPath: "blog.create"}) }}
+            {% endif %}
         </div>
-
-
     </div>
 
 

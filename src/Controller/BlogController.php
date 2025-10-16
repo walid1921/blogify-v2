@@ -20,14 +20,76 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BlogController extends AbstractController
 {
 
+    private array $dummyBlogs = [
+        [
+            'category' => 'Event',
+            'title' => 'The fascination of texture: fringes',
+            'readTime' => '4 min read',
+            'author' => 'Walid Ayad',
+            'date' => 'Feb 20, 2025',
+            'image' => 'images/252-15041-4036_2.png',
+            'content' => "Welcome to REVA – where fashion isn’t just clothing, but a passion, an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve been..."
+        ],
+        [
+            'category' => 'Collection',
+            'title' => 'Redefining elegance with sustainable materials',
+            'readTime' => '3 min read',
+            'author' => 'Walid Ayad',
+            'date' => 'Mar 1, 2025',
+            'image' => 'images/252-15041-4036_2.png',
+            'content' => 'Our latest collection merges classic silhouettes with eco-friendly textiles, redefining elegance through sustainability...'
+        ],
+        [
+            'category' => 'Editorial',
+            'title' => 'The story behind modern craftsmanship',
+            'readTime' => '5 min read',
+            'author' => 'Walid Ayad',
+            'date' => 'Apr 10, 2025',
+            'image' => 'images/252-15041-4036_2.png',
+            'content' => 'Behind every piece is a team of artisans dedicated to the perfection of detail. Explore the story of how tradition meets technology...'
+        ],
+        [
+            'category' => 'Editorial',
+            'title' => 'The story behind modern craftsmanship',
+            'readTime' => '5 min read',
+            'author' => 'Walid Ayad',
+            'date' => 'Apr 10, 2025',
+            'image' => 'images/252-15041-4036_2.png',
+            'content' => 'Behind every piece is a team of artisans dedicated to the perfection of detail. Explore the story of how tradition meets technology...'
+        ],
+        [
+            'category' => 'Editorial',
+            'title' => 'The story behind modern craftsmanship',
+            'readTime' => '5 min read',
+            'author' => 'Walid Ayad',
+            'date' => 'Apr 10, 2025',
+            'image' => 'images/252-15041-4036_2.png',
+            'content' => 'Behind every piece is a team of artisans dedicated to the perfection of detail. Explore the story of how tradition meets technology...'
+        ],
+        [
+            'category' => 'Editorial',
+            'title' => 'The story behind modern craftsmanship',
+            'readTime' => '5 min read',
+            'author' => 'Walid Ayad',
+            'date' => 'Apr 10, 2025',
+            'image' => 'images/252-15041-4036_2.png',
+            'content' => 'Behind every piece is a team of artisans dedicated to the perfection of detail. Explore the story of how tradition meets technology...'
+        ],
+    ];
+
     // ! Fetch All Blogs
     #[Route('/', name: 'allBlogs', requirements: ['limit' => '\d+'])]
     public function index (BlogsRepository $br): Response
     {
 
-        return $this->render('blog/all_blogs.html.twig', [
-            'controller_name' => 'BlogController',
 
+        // Fetch blogs from the repository
+//        $blogs = $br->findAll();
+
+
+        return $this->render('blog/all_blogs.html.twig', [
+//            'blogs' => $blogs,
+            'blogs' => $this->dummyBlogs,
         ]);
     }
 
@@ -58,10 +120,10 @@ final class BlogController extends AbstractController
         $blog->setContent(json_encode(['blocks' => []], JSON_THROW_ON_ERROR)); // initialize with an empty JSON string instead of '':
         $blog->setCreatedAt(new DateTimeImmutable());
         $blog->setLikes(0);
-        $blog->setReadTime(0);
-//        $blog->setAuthor($this->getUser());
+        $blog->setReadTime();
+        // $blog->setAuthor($this->getUser());
         $blog->setAuthor('Walid Ayad');
-        $blog->setBlogLanguage('English');
+        $blog->setBlogLanguage('');
         $blog->setIsPublished(false);
 
 
@@ -87,7 +149,7 @@ final class BlogController extends AbstractController
                         $newFilename
                     );
                 } catch (Exception $e) {
-                    $this->addFlash('danger', 'Image upload failed: ' . $e->getMessage());
+                    $this->addFlash('error', 'Image upload failed: ' . $e->getMessage());
                 }
 
                 // set filename in the entity

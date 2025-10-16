@@ -35,37 +35,6 @@
     }
 ] %}
 
-{% set blogs = [
-    {
-        category: 'Event',
-        title: 'The fascination of texture: fringes',
-        readTime: '4 min read',
-        author: 'Walid Ayad',
-        date: 'Feb 20, 2025',
-        image: 'images/252-15041-4036_2.png',
-        content: "Laboris commodo ex officia non tempor. Ut cillum est Lorem duis aute proident dolore excepteur id irure nulla labore sit sint duis. Enim anim pariatur voluptate eu qui consectetur et labore id ad tempor. Do magna est laborum. Reprehenderit laborum consequat ad proident pariatur dolor duis enim non minim. Ipsum quis irure dolor eiusmod ipsum laboris adipisicing eiusmod mollit minim laborum. Eiusmod sit nisi adipisicing est aute reprehenderit magna ea sit pariatur ad. In commodo ad est exercitation est adipisicing aliqua et elit velit ex ullamco fugiat consequat ea."
-    },
-    {
-        category: 'Collection',
-        title: 'Redefining elegance with sustainable materials',
-        readTime: '3 min read',
-        author: 'Walid Ayad',
-        date: 'Mar 1, 2025',
-        image: 'images/252-15041-4036_2.png',
-        content: 'Laboris commodo ex officia non tempor. Ut cillum est Lorem duis aute proident dolore excepteur id irure nulla labore sit sint duis. Enim anim pariatur voluptate eu qui consectetur et labore id ad tempor. Do magna est laborum. Reprehenderit laborum consequat ad proident pariatur dolor duis enim non minim. Ipsum quis irure dolor eiusmod ipsum laboris adipisicing eiusmod mollit minim laborum. Eiusmod sit nisi adipisicing est aute reprehenderit magna ea sit pariatur ad. In commodo ad est exercitation est adipisicing aliqua et elit velit ex ullamco fugiat consequat ea.'
-    },
-    {
-        category: 'Editorial',
-        title: 'The story behind modern craftsmanship',
-        readTime: '5 min read',
-        author: 'Walid Ayad',
-        date: 'Apr 10, 2025',
-        image: 'images/252-15041-4036_2.png',
-        content: 'Laboris commodo ex officia non tempor. Ut cillum est Lorem duis aute proident dolore excepteur id irure nulla labore sit sint duis. Enim anim pariatur voluptate eu qui consectetur et labore id ad tempor. Do magna est laborum. Reprehenderit laborum consequat ad proident pariatur dolor duis enim non minim. Ipsum quis irure dolor eiusmod ipsum laboris adipisicing eiusmod mollit minim laborum. Eiusmod sit nisi adipisicing est aute reprehenderit magna ea sit pariatur ad. In commodo ad est exercitation est adipisicing aliqua et elit velit ex ullamco fugiat consequat ea.'
-    }
-] %}
-
-
 {% block body %}
 
     <div class="page-container">
@@ -120,6 +89,7 @@
                 </div>
             </div>
 
+            {# Three most liked blogs from the list #}
             {# CAROUSEL #}
             <div
                 class="col-12 col-md-7 d-flex flex-column justify-content-end p-0 blog-bg order-1 order-md-2"
@@ -205,46 +175,12 @@
 
         {# BLOGS #}
         <section class="d-flex flex-column pt-3 w-100 mt-3 mt-md-5">
+
+            {# Three random blogs from the list #}
             <div class="row g-3 align-items-stretch">
                 {% for blog in blogs %}
-                    <div class="col-12 col-md-6 col-lg-4 pe-0 pb-5 d-flex flex-column justify-content-between">
-                        <a href="#" class="zoom-wrap">
-                            <img src="{{ asset(blog.image) }}" alt="{{ blog.title }}" class="img-fluid w-100">
-                        </a>
-
-                        <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4">
-                            <div class="d-flex align-items-center gap-2">
-                                <p class="fw-medium">{{ blog.category }}</p>
-                                <div class="w-100 bg-secondary" style="height: 1px;"></div>
-                            </div>
-
-                            <h3>
-                                {{ blog.title }}
-                                <small class="fw-normal text-secondary"> - {{ blog.readTime }}</small>
-                            </h3>
-
-                            <p class="fw-light">{{ blog.content|u.truncate(140, '...') }}</p>
-                        </div>
-
-                        <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-4">
-                            <div class="d-flex align-items-center gap-2">
-                                <p>{{ blog.author }}</p>
-                                <small class="fw-normal text-secondary">- {{ blog.date }}</small>
-                            </div>
-
-                            <a href="#" class="text-decoration-none link-underline-black align-items-center gap-2">
-                                Read more
-                                <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
-                                          stroke="black" stroke-width="2" stroke-linecap="round"
-                                          stroke-linejoin="round"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
+                    {{ include('components/_blogCard.html.twig') }}
                 {% endfor %}
-
             </div>
 
 

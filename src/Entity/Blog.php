@@ -136,7 +136,7 @@ class Blog
         return $this->read_time;
     }
 
-    public function setReadTime (?int $read_time): static
+    public function setReadTime (?int $read_time = null): static
     {
         $this->read_time = $read_time;
 

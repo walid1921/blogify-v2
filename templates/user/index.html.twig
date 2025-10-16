@@ -35,9 +35,14 @@
                     iconColor: 'white',
                 } %}
             </div>
-            {% for user in users %}
-                <p>{{ user.username }} is {{ user.age }}</p>
-            {% endfor %}
+            {% if users|length > 0 %}
+                {% for user in users %}
+                    <p>{{ user.username }} is {{ user.age }}</p>
+                {% endfor %}
+            {% else %}
+                {{ include('components/_emptyPage.html.twig' , {message : "No Users yet", linkText: "New User", linkPath: "blog.create"}) }}
+            {% endif %}
+
         </div>
 
     </div>

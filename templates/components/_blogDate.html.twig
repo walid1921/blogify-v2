@@ -1,0 +1,9 @@
+{% if date(createdAt) > date('-7day') %}
+    <small class="text-secondary">
+        {{ createdAt|date('M j, Y') }} -
+        <span class="fw-semibold">New</span>
+    </small>
+{% else %}
+    <small class="text-secondary">- {{ createdAt|date('M j, Y') }}
+    </small>
+{% endif %}
