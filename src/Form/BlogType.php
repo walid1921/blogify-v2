@@ -34,8 +34,8 @@ class BlogType extends AbstractType
                 ],
             ])
             ->add('is_published')
-            ->add('readTime', IntegerType::class, ['label' => 'Estimated read time (min)'])
-            ->add('blogLanguage', TextType::class, ['required' => true])
+            ->add('readTime', IntegerType::class, ['required' => true, 'label' => 'Estimated read time (3 min)'])
+            ->add('blogLanguage', TextType::class, ['required' => true, 'label' => "Blog's Language (English)"])
             ->add('save', SubmitType::class);
     }
 

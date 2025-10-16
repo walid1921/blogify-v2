@@ -31,6 +31,7 @@ $danger: #DB3545;
 @import "scss/toast";
 @import "scss/buttons";
 @import "scss/logo";
+@import "scss/accordion";
 @import "~bootstrap/scss/bootstrap";
 @import "scss/utilities";
 
@@ -352,83 +353,6 @@ ul, ol {
 }
 
 
-.accordion-style {
-    width: 100%;
-
-    .accordion {
-        border: none;
-
-        .accordion-item {
-            border: none;
-            border-bottom: 1px solid var(--bs-border-color);
-            border-radius: 0;
-
-            &:last-child {
-                border-bottom: none;
-            }
-
-            .accordion-header {
-                margin: 0;
-            }
-
-            .accordion-button {
-                background: transparent;
-                border: none;
-                box-shadow: none;
-                font-size: 16px;
-                font-weight: 500;
-                color: var(--bs-black);
-                padding: 16px 0;
-                border-radius: 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                transition: color 0.2s ease;
-
-                // remove Bootstrap's default icon
-                &::after {
-                    display: none;
-                }
-
-                .accordion-icon {
-                    display: flex;
-                    align-items: center;
-                    transition: transform 0.3s ease;
-
-                    svg {
-                        width: 21px;
-                        height: 20px;
-                        stroke: #999;
-                        transition: transform 0.3s ease, stroke 0.3s ease;
-                    }
-                }
-
-                &:not(.collapsed) {
-                    .accordion-icon svg {
-                        transform: rotate(90deg);
-                        stroke: #555;
-                    }
-                }
-
-                &:focus {
-                    box-shadow: none;
-                }
-
-                &:hover {
-                    color: #000;
-                }
-            }
-
-            .accordion-body {
-                padding: 10px 0 20px;
-                font-size: 15px;
-                color: var(--bs-primary);
-                line-height: 1.6;
-            }
-        }
-    }
-}
-
 .section {
     margin: 100px 0;
 }
@@ -509,4 +433,14 @@ ul, ol {
             transform: scale(1.08);
         }
     }
+}
+
+
+.new_blog_tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 2px 10px 2px 20px;
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
 }

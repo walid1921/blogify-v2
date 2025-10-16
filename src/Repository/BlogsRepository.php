@@ -49,4 +49,40 @@ class BlogsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findRandomBlogs (int $limit = 3): array
+    {
+        // Get total count of blogs
+        $total = $this->count([]);
+
+        if ($total === 0) {
+            return [];
+        }
+
+        // Pick random offsets (make sure we don't exceed total)
+        $offsets = [];
+        while (count($offsets) < $limit && count($offsets) < $total) {
+            $offset = random_int(0, $total - 1);
+            if (!in_array($offset, $offsets, true)) {
+                $offsets[] = $offset;
+            }
+        }
+
+        // Fetch each blog by offset (Doctrine QueryBuilder supports setFirstResult + setMaxResults)
+        $randomBlogs = [];
+        foreach ($offsets as $offset) {
+            $blog = $this->createQueryBuilder('b')
+                ->setFirstResult($offset)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            if ($blog) {
+                $randomBlogs[] = $blog;
+            }
+        }
+
+        return $randomBlogs;
+    }
+
+
 }

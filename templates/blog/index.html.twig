@@ -80,102 +80,107 @@
                     </thead>
                     <tbody>
                     {# {{ dump(blogs) }} #}
-                    {% for key,blog in blogs %}
-                        <tr>
-                            {#   ID   #}
-                            <td colspan="1" class="text-secondary ps-3 py-3 fs-7">{{ blog.id }}</td>
+                    {% if blogs|length > 0 %}
+                        {% for key,blog in blogs %}
+                            <tr>
+                                {#   ID   #}
+                                <td colspan="1" class="text-secondary ps-3 py-3 fs-7">{{ blog.id }}</td>
 
-                            {#   Number of Likes   #}
-                            <td class="py-3 fs-7">
-                                <div class="d-flex align-items-center gap-1">
-                                    <span>{{ blog.likes }}</span>
-                                </div>
-                            </td>
+                                {#   Number of Likes   #}
+                                <td class="py-3 fs-7">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <span>{{ blog.likes }}</span>
+                                    </div>
+                                </td>
 
-                            {#   Title   #}
-                            <td class="py-3 fs-7">
-                                <a href="{{ path('blog.one_blog', { id: blog.id }) }}"
-                                   class="link-no-underline-black d-inline-block align-items-center ">
-                                    <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
-                                    {{ blog.title|u.truncate(10, '...') }}
-                                </a>
-                            </td>
+                                {#   Title   #}
+                                <td class="py-3 fs-7">
+                                    <a href="{{ path('blog.one_blog', { id: blog.id }) }}"
+                                       class="link-no-underline-black d-inline-block align-items-center ">
+                                        <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
+                                        {{ blog.title|u.truncate(10, '...') }}
+                                    </a>
+                                </td>
 
-                            {#   Content   #}
-                            <td class="py-3 fs-7">{{ blog.content|u.truncate(40, '...') }}</td>
+                                {#   Content   #}
+                                <td class="py-3 fs-7">{{ blog.content|u.truncate(40, '...') }}</td>
 
-                            <td class="py-3 fs-7">New, Java, something,</td>
+                                <td class="py-3 fs-7">New, Java, something,</td>
 
-                            {#   Created_at   #}
-                            <td class="py-3 fs-7">{{ blog.createdAt|date('Y-m-d') }}</td>
+                                {#   Created_at   #}
+                                <td class="py-3 fs-7">{{ blog.createdAt|date('Y-m-d') }}</td>
 
-                            {#   Status   #}
-                            <td class="py-3 fs-7">
-                                {% if (blog.published) %}
-                                    <a
-                                        href="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#updateModal-{{ blog.id }}">
+                                {#   Status   #}
+                                <td class="py-3 fs-7">
+                                    {% if (blog.published) %}
+                                        <a
+                                            href="#"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#updateModal-{{ blog.id }}">
                                           <span class="indicator published"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="top"
                                                 data-bs-title="Published"
                                           >
                                         </span>
-                                    </a>
-                                {% else %}
-                                    <a
-                                        href="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#updateModal-{{ blog.id }}">
+                                        </a>
+                                    {% else %}
+                                        <a
+                                            href="#"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#updateModal-{{ blog.id }}">
                                          <span class="indicator draft"
                                                data-bs-toggle="tooltip"
                                                data-bs-placement="top"
                                                data-bs-title="Unpublished"
                                          >
                                         </span>
+                                        </a>
+                                    {% endif %}
+                                </td>
+
+                                {#   Action buttons   #}
+                                <td class="py-3">
+                                    {#   delete   #}
+                                    <a class="me-3" href="#" data-bs-toggle="modal"
+                                       data-bs-target="#deleteModal-{{ blog.id }}">
+                                        <img
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            data-bs-title="Delete"
+                                            src="{{ asset('icons/Trash Bin Trash.svg') }}"
+                                            alt="pen icon">
                                     </a>
-                                {% endif %}
-                            </td>
+                                    {#   edit   #}
+                                    <a href="{{ path('blog.edit', {id: blog.id} ) }}" data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       data-bs-title="Edit">
+                                        <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
+                                    </a>
+                                </td>
+                            </tr>
 
-                            {#   Action buttons   #}
-                            <td class="py-3">
-                                {#   delete   #}
-                                <a class="me-3" href="#" data-bs-toggle="modal"
-                                   data-bs-target="#deleteModal-{{ blog.id }}">
-                                    <img
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="Delete"
-                                        src="{{ asset('icons/Trash Bin Trash.svg') }}"
-                                        alt="pen icon">
-                                </a>
-                                {#   edit   #}
-                                <a href="{{ path('blog.edit', {id: blog.id} ) }}" data-bs-toggle="tooltip"
-                                   data-bs-placement="top"
-                                   data-bs-title="Edit">
-                                    <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
-                                </a>
-                            </td>
-                        </tr>
+                            {% include "components/_modalConfirm.html.twig" with {
+                                modal_id: "deleteModal-" ~ blog.id,
+                                title: "Confirm Deletion",
+                                body: "Are you sure you want to delete <strong>" ~ blog.title ~ "</strong>?",
+                                confirm_path: path('blog.delete', {id: blog.id}),
+                                confirm_text: "Delete"
+                            } %}
 
-                        {% include "components/_modalConfirm.html.twig" with {
-                            modal_id: "deleteModal-" ~ blog.id,
-                            title: "Confirm Deletion",
-                            body: "Are you sure you want to delete <strong>" ~ blog.title ~ "</strong>?",
-                            confirm_path: path('blog.delete', {id: blog.id}),
-                            confirm_text: "Delete"
-                        } %}
+                            {% include "components/_modalConfirm.html.twig" with {
+                                modal_id: "updateModal-" ~ blog.id,
+                                title: "Update Status",
+                                body: "Are you sure you want to update <strong>" ~ blog.title ~ "</strong>?",
+                                confirm_path: path('blog.blogStatus', {id: blog.id}),
+                                confirm_text: "Confirm"
+                            } %}
 
-                        {% include "components/_modalConfirm.html.twig" with {
-                            modal_id: "updateModal-" ~ blog.id,
-                            title: "Update Status",
-                            body: "Are you sure you want to update <strong>" ~ blog.title ~ "</strong>?",
-                            confirm_path: path('blog.blogStatus', {id: blog.id}),
-                            confirm_text: "Confirm"
-                        } %}
+                        {% endfor %}
+                    {% else %}
+                        {{ include('components/_emptyPage.html.twig' , {message : "No Blogs yet", linkText: "New Blog", linkPath: "blog.create"}) }}
+                    {% endif %}
 
-                    {% endfor %}
                     </tbody>
                 </table>
             </div>
