@@ -115,3 +115,39 @@
         {{ label|default('Save')|trans({}, translation_domain) }}
     </button>
 {% endblock %}
+
+
+
+
+{# ===========================
+   🖼️ Custom Image Upload Field
+   =========================== #}
+{% block file_widget %}
+    {# opt-in when input has class "cover-upload-input" #}
+    {% set classes = (attr.class|default('')) %}
+    {% set is_cover = classes != '' and 'cover-upload-input' in classes|split(' ') %}
+
+    {% if is_cover %}
+        <div class="cover-upload-wrapper">
+            <label class="cover-upload-label" for="{{ id }}">
+                {{ block('form_widget_simple') }}
+                <div class="cover-upload-box" id="cover-preview-{{ id }}">
+                    <span>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#6c757d" stroke-width="1.5"
+                                  stroke-linecap="round"></path>
+                            <path
+                                d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
+                                stroke="#6c757d" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                    </span>
+                    <span class="cover-upload-text">Add a cover image</span>
+                </div>
+            </label>
+
+            {{ form_errors(form) }}
+        </div>
+    {% else %}
+        {{ block('form_widget_simple') }}
+    {% endif %}
+{% endblock %}

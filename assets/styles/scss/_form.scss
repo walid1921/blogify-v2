@@ -1,9 +1,63 @@
 //! Form theme style
 
-.form-inline-group {
+.cover-upload-wrapper {
+    width: 100%;
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+
+    .cover-upload-label {
+        width: 100%;
+        cursor: pointer;
+        position: relative;
+
+        .cover-upload-input {
+            display: none;
+        }
+
+        .cover-upload-box {
+            width: 100%;
+            height: 30vh;
+            background: repeating-linear-gradient(
+                    45deg,
+                    #f2f2f2,
+                    #f2f2f2 20px,
+                    #e5e5e5 20px,
+                    #e5e5e5 40px
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 15px;
+            color: #A8A8A7;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border: 1px solid var(--bs-border-color);
+            transition: all 0.3s ease;
+            overflow: hidden;
+
+            &:hover {
+                border-color: var(--bs-black);
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        }
+    }
+
+    .form-errors {
+        margin-top: 8px;
+        color: var(--bs-danger);
+        font-size: 0.85rem;
+    }
+
 }
+
 
 .form-row-inline {
     min-width: 100%;
@@ -41,12 +95,14 @@
         display: block;
         width: 100%;
         padding: 15px 20px;
-        border: 1px solid var(--bs-secondary);
+        border: 1px solid var(--bs-border-color);
         font-size: 1rem;
         background: transparent;
         outline: none;
         z-index: 2;
         position: relative;
+        transition: all 0.3s ease;
+
 
         &:focus ~ .my-label,
         &:valid ~ .my-label {
@@ -59,6 +115,11 @@
         &:focus ~ .underline,
         &:valid ~ .underline {
             transform: scaleX(1);
+        }
+
+        &:hover {
+            border-color: var(--bs-black);
+            color: var(--bs-black);
         }
     }
 
@@ -119,9 +180,16 @@
 
     .editorjs-holder {
         display: flex;
-        border: 1px solid #A8A8A7;
-        padding: 15px 0 15px 70px;
+        border: 1px solid var(--bs-border-color);
+        padding: 15px 0 100px 70px;
         width: 100%;
+        transition: all 0.3s ease;
+
+
+        &:hover {
+            border-color: var(--bs-black);
+            color: var(--bs-black);
+        }
 
     }
 }
@@ -135,7 +203,7 @@
 .ce-popover__container {
     border-radius: 0;
     background-color: var(--bs-body-bg);
-    border: 1px solid #000;
+    border: 1px solid var(--bs-black);
 }
 
 .ce-popover__search {

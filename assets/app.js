@@ -184,3 +184,33 @@ document.addEventListener('DOMContentLoaded', () => {
         contentElement.innerHTML = '<p class="text-danger">Failed to render content.</p>';
     }
 });
+
+
+//! FORM previewCoverImage
+export function previewCoverImage(event) {
+    const file = event.target.files[0];
+    const id = event.target.id;
+    const previewBox = document.getElementById(`cover-preview-${id}`);
+
+    if (!previewBox) return;
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewBox.innerHTML = `<img src="${e.target.result}" alt="Cover preview">`;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewBox.innerHTML = `<span class="cover-upload-text">Add a cover image</span>`;
+    }
+}
+
+/**
+ * Attach to all cover upload inputs
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const inputs = document.querySelectorAll('.cover-upload-input');
+    inputs.forEach(input => {
+        input.addEventListener('change', previewCoverImage);
+    });
+});
