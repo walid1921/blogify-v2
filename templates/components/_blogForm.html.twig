@@ -1,5 +1,5 @@
 {#    {{ form(formBlog) }} #}
-<div class="px-3 d-flex flex-column gap-4 justify-content-center align-items-center w-100 my-5">
+<div class="px-3 d-flex flex-column gap-4 justify-content-center align-items-center w-100 mb-5">
     <div class="w-100 ">
 
         {# ⚠️ Keep novalidate=false so HTML5 validation also works #}
@@ -11,9 +11,10 @@
         <div class="d-flex flex-column gap-4 w-100">
 
 
-            {{ form_row(formBlog.coverImage, { row_attr: { class: 'form-row-inline' } }) }}
+            {{ form_widget(formBlog.coverImage, { attr: { class: 'cover-upload-input' } }) }}
 
-            <div class="form-inline-group">
+
+            <div class="d-flex gap-3">
                 {{ form_row(formBlog.title, { row_attr: { class: 'form-row-inline' } }) }}
                 {{ form_row(formBlog.readTime,  { row_attr: { class: 'form-row-inline' } }) }}
                 {{ form_row(formBlog.blogLanguage,  { row_attr: { class: 'form-row-inline' } }) }}
@@ -34,10 +35,7 @@
                 {{ form_row(formBlog.save) }}
             </div>
 
-
             {# {{ form_row(formBlog.content) }} #}
-
-
         </div>
 
         {{ form_end(formBlog) }}
