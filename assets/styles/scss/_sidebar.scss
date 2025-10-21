@@ -137,7 +137,7 @@ nav {
         color: var(--bs-primary);
         background-color: var(--bs-body-bg);
         border-left: 2px solid var(--bs-primary);
-        transition: all 200ms ease-in-out;
+        transition: border 200ms ease-in-out, background-color 200ms ease-in-out;
 
         .text {
             color: var(--bs-body-color);
