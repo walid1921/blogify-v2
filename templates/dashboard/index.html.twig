@@ -1,11 +1,6 @@
 {% extends 'base.html.twig' %}
 
-
-
-{% block title %}Admin - Blogs Table{% endblock %}
-
-
-
+{% block title %}Dashboard{% endblock %}
 
 {% block body %}
 
@@ -20,8 +15,6 @@
 
 
     <div class="page-container">
-
-
         <div class="dashboard-layout">
             <!-- Sidebar -->
             <aside class="vertical-sidebar">
@@ -30,10 +23,15 @@
 
             <!-- Main Content -->
             <div class="dashboard-content">
-                {{ include('components/_blogs_table.html.twig') }}
+                {% if  app.request.attributes.get('_route') == 'dashboard.allBlogs' %}
+                    {{ include('components/_blogs_table.html.twig') }}
+                {% elseif app.request.attributes.get('_route') == 'dashboard.allBlogCategories' %}
+                    {{ include('components/_categories_table.html.twig') }}
+                {% elseif app.request.attributes.get('_route') == 'dashboard.users' %}
+                    {{ include('components/_users_table.html.twig') }}
+                {% endif %}
             </div>
         </div>
-
     </div>
 
 {% endblock %}
