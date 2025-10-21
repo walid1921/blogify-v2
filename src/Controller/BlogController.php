@@ -87,24 +87,12 @@ final class BlogController extends AbstractController
 //        $blogs = $br->findAll();
 
 
-        return $this->render('blog/all_blogs.html.twig', [
+        return $this->render('blog/index.html.twig', [
 //            'blogs' => $blogs,
             'blogs' => $this->dummyBlogs,
         ]);
     }
 
-    // ! Blogs table (to update)
-    #[Route('/blogs', name: 'blogsTable', requirements: ['limit' => '\d+'])]
-    public function blogsTable (Request $request, BlogsRepository $br): Response
-    {
-        $order = $request->query->get('order', 'DESC'); // default DESC
-        $blogs = $br->findAllSortedByDate($order);
-
-        return $this->render('blog/index.html.twig', [
-            'blogs' => $blogs,
-            'order' => $order,
-        ]);
-    }
 
     // ! Create a blog
 
@@ -160,7 +148,7 @@ final class BlogController extends AbstractController
             $entityManager->flush(); // flush actually executes the SQL queries to synchronize the in-memory state of managed entities with the database.
 
             $this->addFlash('success', 'Blog added successfully!');
-            return $this->redirectToRoute('blog.blogsTable');
+            return $this->redirectToRoute('dashboard.allBlogs');
         }
 
 
@@ -190,7 +178,7 @@ final class BlogController extends AbstractController
 
             $this->addFlash('success', 'Blog updated successfully!');
 
-            return $this->redirectToRoute('blog.blogsTable');
+            return $this->redirectToRoute('dashboard.allBlogs');
         }
         return $this->render('blog/updateBlog.html.twig', [
             'formBlog' => $form,
@@ -214,7 +202,7 @@ final class BlogController extends AbstractController
 
         $this->addFlash('success', 'Blog status updated successfully!');
 
-        return $this->redirectToRoute('blog.blogsTable');
+        return $this->redirectToRoute('dashboard.allBlogs');
     }
 
     // ! Delete a Blog
@@ -232,7 +220,7 @@ final class BlogController extends AbstractController
 
         $this->addFlash('success', 'Blog deleted successfully!');
 
-        return $this->redirectToRoute('blog.blogsTable');
+        return $this->redirectToRoute('dashboard.allBlogs');
     }
 
     // ! One blog page

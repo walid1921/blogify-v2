@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserProfileRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,96 +15,67 @@ class UserProfile
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $websiteUrl = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $blogName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $bio = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTime $dateOfBirth = null;
+    private ?DateTime $dateOfBirth = null;
 
     #[ORM\OneToOne(inversedBy: 'userProfile', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    public function getId(): ?int
+    public function getId (): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
 
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getWebsiteUrl(): ?string
+    public function getWebsiteUrl (): ?string
     {
         return $this->websiteUrl;
     }
 
-    public function setWebsiteUrl(?string $websiteUrl): static
+    public function setWebsiteUrl (?string $websiteUrl): static
     {
         $this->websiteUrl = $websiteUrl;
 
         return $this;
     }
 
-    public function getBlogName(): ?string
-    {
-        return $this->blogName;
-    }
-
-    public function setBlogName(?string $blogName): static
-    {
-        $this->blogName = $blogName;
-
-        return $this;
-    }
-
-    public function getBio(): ?string
+    public function getBio (): ?string
     {
         return $this->bio;
     }
 
-    public function setBio(?string $bio): static
+    public function setBio (?string $bio): static
     {
         $this->bio = $bio;
 
         return $this;
     }
 
-    public function getDateOfBirth(): ?\DateTime
+    public function getDateOfBirth (): ?DateTime
     {
         return $this->dateOfBirth;
     }
 
-    public function setDateOfBirth(?\DateTime $dateOfBirth): static
+    public function setDateOfBirth (?DateTime $dateOfBirth): static
     {
         $this->dateOfBirth = $dateOfBirth;
 
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser (): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): static
+    public function setUser (User $user): static
     {
         $this->user = $user;
 

@@ -1,0 +1,172 @@
+<div class="d-flex justify-content-between align-items-center w-100">
+
+    <div class="d-flex flex-column justify-content-end  mb-3">
+        <div class="d-flex align-items-start gap-2">
+            <h2 class="text-uppercase">USERS</h2>
+            <small>{{ users|length }}</small>
+        </div>
+        <p class="fw-light">Update and delete users here</p>
+    </div>
+
+
+    <div class="d-flex justify-content-end  mb-3">
+        {% include 'components/_button.html.twig' with {
+            typeButton: 'primary',
+            path: path('blog.create'),
+            textButton: 'New User',
+            iconType: 'add',
+            iconColor: 'white',
+        } %}
+    </div>
+</div>
+
+
+<div class="table-responsive border border-black border-opacity-25 ">
+    <table class="table table-striped table-hover">
+        <caption>List of Users</caption>
+        <thead class="table-light">
+        <tr>
+            <th scope="col" class="ps-3 py-3 2-25">#</th>
+            <th scope="col" class="py-3">Username</th>
+            <th scope="col" class="py-3">Email</th>
+            <th scope="col" class="py-3">Password</th>
+            <th scope="col" class="py-3">Role</th>
+
+
+            {#                <th scope="col" class="py-3"> #}
+            {#                    <a #}
+            {#                        href="{{ path('user.blogsTable', { order: order == 'ASC' ? 'DESC' : 'ASC' }) }}"> #}
+            {#                        Created #}
+            {#                        {% if order == 'ASC' %} #}
+            {#                            <img src="{{ asset('icons/Sort From Bottom To Top.svg') }}" alt="sort icon"> #}
+            {#                        {% else %} #}
+            {#                            <img src="{{ asset('icons/Sort From Top To Bottom.svg') }}" alt="sort icon"> #}
+            {#                        {% endif %} #}
+            {#                    </a> #}
+            {#                </th> #}
+
+
+            {#                <th scope="col" class="py-3">Status</th> #}
+
+
+            <th scope="col" class="pe-3 py-3">Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {# {{ dump(users) }} #}
+        {% if users|length > 0 %}
+            {% for key,user in users %}
+                <tr>
+                    {#   ID   #}
+                    <td colspan="1" class="text-secondary ps-3 py-3 fs-7">{{ user.id }}</td>
+
+                    {#   Username  #}
+                    <td class="py-3 fs-7">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>{{ user.username }}</span>
+                        </div>
+                    </td>
+
+                    {#   Email   #}
+                    <td class="py-3 fs-7">
+                        <a href="{{ path('blog.one_blog', { id: user.id }) }}"
+                           class="link-no-underline-black d-inline-block align-items-center ">
+                            <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
+                            {{ user.username }}
+                        </a>
+                    </td>
+
+                    {#   Password  #}
+                    <td class="py-3 fs-7">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>{{ user.password }}</span>
+                        </div>
+                    </td>
+
+                    {#   Role  #}
+                    <td class="py-3 fs-7">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>{{ user.roles|join(', ') }}</span>
+                        </div>
+                    </td>
+
+
+                    {#   Created_at   #}
+                    {#                        <td class="py-3 fs-7">{{ user.createdAt|date('Y-m-d') }}</td> #}
+
+
+
+                    {#   Status   #}
+                    {#                        <td class="py-3 fs-7"> #}
+                    {#                            {% if (user.is_active) %} #}
+                    {#                                <a #}
+                    {#                                    href="#" #}
+                    {#                                    data-bs-toggle="modal" #}
+                    {#                                    data-bs-target="#updateModal-{{ blog.id }}"> #}
+                    {#                                          <span class="indicator published" #}
+                    {#                                                data-bs-toggle="tooltip" #}
+                    {#                                                data-bs-placement="top" #}
+                    {#                                                data-bs-title="Active" #}
+                    {#                                          > #}
+                    {#                                        </span> #}
+                    {#                                </a> #}
+                    {#                            {% else %} #}
+                    {#                                <a #}
+                    {#                                    href="#" #}
+                    {#                                    data-bs-toggle="modal" #}
+                    {#                                    data-bs-target="#updateModal-{{ blog.id }}"> #}
+                    {#                                         <span class="indicator draft" #}
+                    {#                                               data-bs-toggle="tooltip" #}
+                    {#                                               data-bs-placement="top" #}
+                    {#                                               data-bs-title="Restricted" #}
+                    {#                                         > #}
+                    {#                                        </span> #}
+                    {#                                </a> #}
+                    {#                            {% endif %} #}
+                    {#                        </td> #}
+
+                    {#   Action buttons   #}
+                    <td class="py-3">
+                        {#   delete   #}
+                        <a class="me-3" href="#" data-bs-toggle="modal"
+                           data-bs-target="#deleteModal-{{ user.id }}">
+                            <img
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                data-bs-title="Delete"
+                                src="{{ asset('icons/Trash Bin Trash.svg') }}"
+                                alt="pen icon">
+                        </a>
+                        {#   edit   #}
+                        <a href="#" data-bs-toggle="tooltip"
+                           data-bs-placement="top"
+                           data-bs-title="Edit">
+                            <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
+                        </a>
+                    </td>
+                </tr>
+
+                {% include "components/_modalConfirm.html.twig" with {
+                    modal_id: "deleteModal-" ~ user.id,
+                    title: "Confirm Deletion",
+                    body: "Are you sure you want to delete <strong>" ~ user.username ~ "</strong>?",
+
+                    confirm_text: "Delete"
+                } %}
+
+                {% include "components/_modalConfirm.html.twig" with {
+                    modal_id: "updateModal-" ~ user.id,
+                    title: "Update Status",
+                    body: "Are you sure you want to update <strong>" ~ user.username ~ "</strong>?",
+
+                    confirm_text: "Confirm"
+                } %}
+
+            {% endfor %}
+        {% else %}
+            {{ include('components/_emptyPage.html.twig' , {message : "No Users yet", linkText: "New User", linkPath: "blog.create"}) }}
+        {% endif %}
+
+        </tbody>
+    </table>
+</div>

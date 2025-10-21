@@ -1,0 +1,93 @@
+<div class="d-flex justify-content-between align-items-center w-100">
+
+    <div class="d-flex flex-column justify-content-end  mb-3">
+        <div class="d-flex align-items-start gap-2">
+            <h2 class="text-uppercase">CATEGORIES</h2>
+            <small>{{ blogCategories|length }}</small>
+        </div>
+        <p class="fw-light">Update and delete categories here</p>
+    </div>
+
+
+    <div class="d-flex justify-content-end  mb-3">
+        {% include 'components/_button.html.twig' with {
+            typeButton: 'primary',
+            path: path('blog.create'),
+            textButton: 'New Category',
+            iconType: 'add',
+            iconColor: 'white',
+        } %}
+    </div>
+</div>
+
+<div class="table-responsive border border-black border-opacity-25 ">
+    <table class="table table-striped table-hover">
+        <caption>List of categories</caption>
+        <thead class="table-light">
+        <tr>
+            <th scope="col" class="ps-3 py-3 2-25">#</th>
+            <th scope="col" class="py-3">Category</th>
+            <th scope="col" class="pe-3 py-3">Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {# {{ dump(categories) }} #}
+        {% if blogCategories|length > 0 %}
+            {% for key,category in blogCategories %}
+                <tr>
+                    {#   ID   #}
+                    <td colspan="1" class="text-secondary ps-3 py-3 fs-7">{{ category.id }}</td>
+
+                    {#   category name   #}
+                    <td class="py-3 fs-7">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>{{ category.name }}</span>
+                        </div>
+                    </td>
+
+                    {#   Action buttons   #}
+                    <td class="py-3">
+                        {#   delete   #}
+                        <a class="me-3" href="#" data-bs-toggle="modal"
+                           data-bs-target="#deleteModal-{{ category.id }}">
+                            <img
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                data-bs-title="Delete"
+                                src="{{ asset('icons/Trash Bin Trash.svg') }}"
+                                alt="pen icon">
+                        </a>
+                        {#   edit   #}
+                        <a href="#" data-bs-toggle="tooltip"
+                           data-bs-placement="top"
+                           data-bs-title="Edit">
+                            <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
+                        </a>
+                    </td>
+                </tr>
+
+                {% include "components/_modalConfirm.html.twig" with {
+                    modal_id: "deleteModal-" ~ category.id,
+                    title: "Confirm Deletion",
+                    body: "Are you sure you want to delete <strong>" ~ category.name ~ "</strong>?",
+
+                    confirm_text: "Delete"
+                } %}
+
+                {% include "components/_modalConfirm.html.twig" with {
+                    modal_id: "updateModal-" ~ category.id,
+                    title: "Update Status",
+                    body: "Are you sure you want to update <strong>" ~ category.name ~ "</strong>?",
+
+                    confirm_text: "Confirm"
+                } %}
+
+            {% endfor %}
+        {% else %}
+            {{ include('components/_emptyPage.html.twig' , {message : "No Categories yet", linkText: "New Category", linkPath: "blog.create"}) }}
+
+        {% endif %}
+
+        </tbody>
+    </table>
+</div>
