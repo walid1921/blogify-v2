@@ -32,7 +32,7 @@ final class DashboardController extends AbstractController
     {
         $blogCategories = $categoriesRepository->findAll();
 
-        return $this->render('dashboard/categories.html.twig', [
+        return $this->render('dashboard/index.html.twig', [
             'blogCategories' => $blogCategories,
         ]);
     }
@@ -43,7 +43,7 @@ final class DashboardController extends AbstractController
     {
         $users = $userRepository->findAll();
 
-        return $this->render('dashboard/users.html.twig', [
+        return $this->render('dashboard/index.html.twig', [
             'users' => $users,
         ]);
     }
