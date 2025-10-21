@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Admin - Blogs Table{% endblock %}
+
+
+
+
+{% block body %}
+
+    {# Notifications #}
+    <div class="notification-container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                {% include 'components/_toast.html.twig' with { type: label,  message: message } %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+
+    <div class="page-container">
+
+
+        <div class="dashboard-layout">
+            <!-- Sidebar -->
+            <aside class="vertical-sidebar">
+                {{ include('components/_sidebar.html.twig') }}
+            </aside>
+
+            <!-- Main Content -->
+            <div class="dashboard-content">
+                {{ include('components/_blogs_table.html.twig') }}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

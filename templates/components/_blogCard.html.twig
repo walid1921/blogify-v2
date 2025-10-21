@@ -4,7 +4,7 @@
     <a href="#" class="zoom-wrap position-relative">
         <img src="{{ asset(blog.image) }}" alt="{{ blog.title }}" class="img-fluid w-100">
         {% if date(blog.date) > date('-7day') %}
-            <p class="new_blog_tag">New</p>
+            <small class="new_blog_tag">New</small>
         {% endif %}
     </a>
 

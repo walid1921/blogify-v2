@@ -44,24 +44,20 @@
                         <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
                     </li>
 
-                    <li class="nav-item px-3">
-                        <a class="nav-link" href="{{ path('users') }}">Users</a>
-                    </li>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="{{ path('blog.allBlogs') }}" role="button"
                            data-bs-toggle="dropdown"
                            aria-expanded="false">Blogs</a>
                         <ul class="dropdown-menu fs-7">
                             <li><a class="dropdown-item" href="{{ path('blog.allBlogs') }}">All blogs</a></li>
-                            <li><a class="dropdown-item mt-1" href="{{ path('blog.blogsTable') }}">Blogs Table</a></li>
-                            <li><a class="dropdown-item mt-1" href="{{ path('blog.allBlogCategories') }}">Categories
-                                    Table</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item mt-1" href="#">Something else here</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="{{ path('dashboard.allBlogs') }}">Dashboard</a>
                     </li>
                 </ul>
 
