@@ -6,6 +6,8 @@ use App\Entity\Blog;
 use App\Form\BlogType;
 use App\Repository\BlogCategoriesRepository;
 use App\Repository\BlogsRepository;
+use App\Repository\LikesRepository;
+use App\Repository\UserRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -100,17 +102,22 @@ final class BlogController extends AbstractController
      * @throws JsonException
      */
     #[Route('/create', name: 'create')]
-    public function createBlog (Request $request, EntityManagerInterface $entityManager): Response
+    public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
+
+        $user = $userRepository->find(1);
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
         // creates a blog object and initializes inputs
         $blog = new Blog();
         $blog->setTitle('');
         $blog->setContent(json_encode(['blocks' => []], JSON_THROW_ON_ERROR)); // initialize with an empty JSON string instead of '':
         $blog->setCreatedAt(new DateTimeImmutable());
-        $blog->setLikes(0);
         $blog->setReadTime();
-        // $blog->setAuthor($this->getUser());
-        $blog->setAuthor('Walid Ayad');
+//        $blog->setAuthor($this->getUser());
+        $blog->setAuthor($user);
         $blog->setBlogLanguage('');
         $blog->setIsPublished(false);
 
@@ -154,8 +161,8 @@ final class BlogController extends AbstractController
 
         // return new Response('Saved new blog with id ' . $blog->getId());
         return $this->render('blog/createBlog.html.twig', [
-//            'formBlog' => $form
-            'formBlog' => $form->createView(), // return the FormView so submitted values are preserved
+//            'formBlog' => $form,
+            'formBlog' => $form->createView() // return the FormView so submitted values are preserved
 
         ]);
     }
@@ -225,7 +232,7 @@ final class BlogController extends AbstractController
 
     // ! One blog page
     #[Route('/{id}', name: 'one_blog', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function oneBlog (int $id, BlogsRepository $br): Response
+    public function oneBlog (int $id, BlogsRepository $br, LikesRepository $likesRepository): Response
     {
 
         $blog = $br->find($id);
@@ -235,8 +242,15 @@ final class BlogController extends AbstractController
             throw $this->createNotFoundException('Blog not found');
         }
 
+        // Efficient way: count likes for this specific blog
+        $likesCount = $likesRepository->count(['blog' => $blog]);
+
+        // or you could use $blog->getLikes()->count(); (fine for small data)
+        // $likesCount = $blog->getLikes()->count();
+
         return $this->render('blog/oneBlog.html.twig', [
             'blog' => $blog,
+            'likesCount' => $likesCount,
         ]);
     }
 

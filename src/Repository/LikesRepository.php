@@ -11,7 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class LikesRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct (ManagerRegistry $registry)
     {
         parent::__construct($registry, Likes::class);
     }
@@ -40,4 +40,28 @@ class LikesRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function countLikesForBlogs (array $blogIds): array
+    {
+        if (empty($blogIds)) {
+            return [];
+        }
+
+        $qb = $this->createQueryBuilder('l')
+            ->select('IDENTITY(l.blog) AS blog_id, COUNT(l.id) AS like_count')
+            ->where('l.blog IN (:ids)')
+            ->setParameter('ids', $blogIds)
+            ->groupBy('l.blog');
+
+        $results = $qb->getQuery()->getResult();
+
+        // Convert to [blog_id => like_count] format for easy lookup
+        $counts = [];
+        foreach ($results as $row) {
+            $counts[$row['blog_id']] = $row['like_count'];
+        }
+
+        return $counts;
+    }
+
 }
