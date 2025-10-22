@@ -57,7 +57,7 @@
                     {#   Number of Likes   #}
                     <td class="py-3 fs-7">
                         <div class="d-flex align-items-center gap-1">
-                            <span>{{ blog.likes }}</span>
+                            <span>{{ likesCount[blog.id] ?? 0 }}</span>
                         </div>
                     </td>
 

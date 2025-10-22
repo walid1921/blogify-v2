@@ -133,8 +133,8 @@
                     <span class="text">Archive</span> </a></li>
             <li class="sidebar__item">
                 {# Open the specidc Blog for that "How to write your first blog" #}
-                <a href="#"
-                   class="sidebar__link {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}"
+                <a href="{{ path('dashboard.userGuide') }}"
+                   class="sidebar__link {{ app.request.attributes.get('_route') == 'dashboard.userGuide' ? 'active' : '' }}"
                    data-tooltip="User guide">
                     <span class="icon">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

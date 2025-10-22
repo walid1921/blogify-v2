@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\BlogsRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -37,10 +39,10 @@ class Blog
 //    #[Assert\Type('bool', message: "Published must be true or false.")]
     private ?bool $is_published = null;
 
-    #[ORM\Column]
-    #[Assert\NotNull(message: "Likes cannot be null.")]
-    #[Assert\PositiveOrZero(message: "Likes must be zero or a positive number.")]
-    private ?int $likes = null;
+//    #[ORM\Column]
+//    #[Assert\NotNull(message: "Likes cannot be null.")]
+//    #[Assert\PositiveOrZero(message: "Likes must be zero or a positive number.")]
+//    private ?int $likes = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $coverImage = null;
@@ -49,10 +51,22 @@ class Blog
     private ?int $read_time = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $author = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $blog_language = null;
+
+    /**
+     * @var Collection<int, Likes>
+     */
+    #[ORM\OneToMany(targetEntity: Likes::class, mappedBy: 'blog', cascade: ['persist'], orphanRemoval: true)]
+    private Collection $likes;
+
+    #[ORM\ManyToOne(inversedBy: 'blogs')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $author = null;
+
+    public function __construct ()
+    {
+        $this->likes = new ArrayCollection();
+    }
 
     public function getId (): ?int
     {
@@ -107,17 +121,17 @@ class Blog
         return $this;
     }
 
-    public function getLikes (): ?int
-    {
-        return $this->likes;
-    }
-
-    public function setLikes (int $likes): static
-    {
-        $this->likes = $likes;
-
-        return $this;
-    }
+//    public function getLikes (): ?int
+//    {
+//        return $this->likes;
+//    }
+//
+//    public function setLikes (int $likes): static
+//    {
+//        $this->likes = $likes;
+//
+//        return $this;
+//    }
 
     public function getCoverImage (): ?string
     {
@@ -143,18 +157,6 @@ class Blog
         return $this;
     }
 
-    public function getAuthor (): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor (string $author): static
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
     public function getBlogLanguage (): ?string
     {
         return $this->blog_language;
@@ -163,6 +165,48 @@ class Blog
     public function setBlogLanguage (string $blog_language): static
     {
         $this->blog_language = $blog_language;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Likes>
+     */
+    public function getLikes (): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike (Likes $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setBlog($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike (Likes $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getBlog() === $this) {
+                $like->setBlog(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAuthor (): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor (?User $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }

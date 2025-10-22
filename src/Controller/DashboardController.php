@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Blog;
 use App\Repository\BlogCategoriesRepository;
 use App\Repository\BlogsRepository;
+use App\Repository\LikesRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,14 +17,19 @@ final class DashboardController extends AbstractController
 {
     // ! All Blogs in a table
     #[Route('/blogs', name: 'allBlogs')]
-    public function allBlogs (Request $request, BlogsRepository $blogsRepository): Response
+    public function allBlogs (Request $request, BlogsRepository $blogsRepository, LikesRepository $likesRepository): Response
     {
         $order = $request->query->get('order', 'DESC'); // default DESC
-        $blogs = $blogsRepository->findAllSortedByDate($order);
+        $blogs = $blogsRepository->findAllSortedByDate($order); // Retrieve all blogs sorted by creation date
+
+        $blogIds = array_map(fn ($blog) => $blog->getId(), $blogs); // Collect blog IDs
+
+        $likesCount = $likesRepository->countLikesForBlogs($blogIds); // Fetch like counts for all blogs at once
 
         return $this->render('dashboard/index.html.twig', [
             'blogs' => $blogs,
             'order' => $order,
+            'likesCount' => $likesCount,
         ]);
     }
 
@@ -45,6 +52,17 @@ final class DashboardController extends AbstractController
 
         return $this->render('dashboard/index.html.twig', [
             'users' => $users,
+        ]);
+    }
+
+    // ! User Guide
+    #[Route('/guide', name: 'userGuide')]
+    public function userGuide (): Response
+    {
+        $message = "Hi there";
+
+        return $this->render('dashboard/index.html.twig', [
+            'message' => $message
         ]);
     }
 }
