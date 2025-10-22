@@ -64,7 +64,9 @@
                     {#   Title   #}
                     <td class="py-3 fs-7">
                         <a href="{{ path('blog.one_blog', { id: blog.id }) }}"
-                           class="link-no-underline-black d-inline-block align-items-center ">
+                           class="link-no-underline-black d-inline-block align-items-center"
+                           data-tooltip="Users"
+                           data-tooltip-placement="right">
                             <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
                             {{ blog.title|u.truncate(10, '...') }}
                         </a>
