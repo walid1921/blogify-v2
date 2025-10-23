@@ -1,29 +1,17 @@
-<div class="d-flex justify-content-between align-items-center w-100">
-
-    <div class="d-flex flex-column justify-content-end  mb-3">
-        <div class="d-flex align-items-start gap-2">
-            <h2 class="text-uppercase">BLOGS</h2>
-            <small>{{ blogs|length }}</small>
-        </div>
-        <p class="fw-light">Update and delete blogs here</p>
-    </div>
-
-
-    <div class="d-flex justify-content-end  mb-3">
-        {% include 'components/_button.html.twig' with {
-            typeButton: 'primary',
-            path: path('blog.create'),
-            textButton: 'New Blog',
-            iconType: 'add',
-            iconColor: 'white',
-        } %}
-    </div>
-</div>
+{% include 'components/_section_header.html.twig' with {
+    title: 'BLOGS',
+    count: blogs|length,
+    description: 'Update and delete blogs here',
+    buttonType: 'primary',
+    buttonPath: path('blog.create'),
+    buttonText: 'New Blog',
+    buttonIconType: 'add',
+    buttonIconColor: 'white'
+} %}
 
 
 <div class="table-responsive border border-black border-opacity-25 ">
     <table class="table table-striped table-hover">
-        <caption>List of blogs</caption>
         <thead class="table-light">
         <tr>
             <th scope="col" class="ps-3 py-3 2-25">#</th>

@@ -1,28 +1,15 @@
-<div class="d-flex justify-content-between align-items-center w-100">
+{% include 'components/_section_header.html.twig' with {
+    title: 'CATEGORIES',
+    count: blogCategories|length,
+    description: 'Update and delete categories here',
+    buttonType: 'primary',
+    buttonPath: path('blog.create'),
+    buttonText: 'New Category'
+} %}
 
-    <div class="d-flex flex-column justify-content-end  mb-3">
-        <div class="d-flex align-items-start gap-2">
-            <h2 class="text-uppercase">CATEGORIES</h2>
-            <small>{{ blogCategories|length }}</small>
-        </div>
-        <p class="fw-light">Update and delete categories here</p>
-    </div>
-
-
-    <div class="d-flex justify-content-end  mb-3">
-        {% include 'components/_button.html.twig' with {
-            typeButton: 'primary',
-            path: path('blog.create'),
-            textButton: 'New Category',
-            iconType: 'add',
-            iconColor: 'white',
-        } %}
-    </div>
-</div>
 
 <div class="table-responsive border border-black border-opacity-25 ">
     <table class="table table-striped table-hover">
-        <caption>List of categories</caption>
         <thead class="table-light">
         <tr>
             <th scope="col" class="ps-3 py-3 2-25">#</th>
