@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
     {% block stylesheets %}
@@ -43,18 +43,8 @@
                     <li class="nav-item px-3">
                         <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
                     </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{{ path('blog.allBlogs') }}" role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false">Blogs</a>
-                        <ul class="dropdown-menu fs-7">
-                            <li><a class="dropdown-item" href="{{ path('blog.allBlogs') }}">All blogs</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item mt-1" href="#">Something else here</a></li>
-                        </ul>
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="{{ path('blog.allBlogs') }}">Blogs</a>
                     </li>
                     <li class="nav-item px-3">
                         <a class="nav-link" href="{{ path('dashboard.allBlogs') }}">Dashboard</a>

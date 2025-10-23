@@ -36,6 +36,9 @@
 
 .dashboard-content {
     height: 100%; // fills remaining height
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
     /* the table scrollable if it overflows */
     .table-responsive {
@@ -79,7 +82,7 @@ nav {
 }
 
 .nav__toggle {
-    margin: 1rem 0 0 0.5rem;
+    margin: 1rem 0.2rem 0 0;
 }
 
 .toggle--icons {
