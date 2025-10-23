@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Deprecated;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -51,6 +52,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Blog::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $blogs;
+
+    #[ORM\Column]
+    private ?bool $is_active = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $country = null;
+
+    #[ORM\Column]
+    private ?DateTimeImmutable $created_at = null;
 
     public function __construct ()
     {
@@ -201,12 +211,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Blog>
      */
-    public function getBlogs(): Collection
+    public function getBlogs (): Collection
     {
         return $this->blogs;
     }
 
-    public function addBlog(Blog $blog): static
+    public function addBlog (Blog $blog): static
     {
         if (!$this->blogs->contains($blog)) {
             $this->blogs->add($blog);
@@ -216,7 +226,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeBlog(Blog $blog): static
+    public function removeBlog (Blog $blog): static
     {
         if ($this->blogs->removeElement($blog)) {
             // set the owning side to null (unless already changed)
@@ -224,6 +234,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $blog->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActive (): ?bool
+    {
+        return $this->is_active;
+    }
+
+    public function setIsActive (bool $is_active): static
+    {
+        $this->is_active = $is_active;
+
+        return $this;
+    }
+
+    public function getCountry (): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry (?string $country): static
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getCreatedAt (): ?DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt (DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }
