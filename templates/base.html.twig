@@ -20,51 +20,7 @@
 </head>
 <body>
 <header>
-
-    {# NAVBAR #}
-    <nav
-        class="navbar navbar-expand-lg fixed-top navbar-light bg-white z-index-3 py-3">
-        <div class="container">
-
-            <div class="petarisia-main-logo">
-                <a href="{{ path('home') }}">
-                    <img
-                        src="{{ asset('images/Black logo.png') }}" alt="logo">
-                </a>
-                <span class="sub-logo">Blogs</span>
-            </div>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
-                    aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse gap-5" id="navigation">
-                <ul class="navbar-nav navbar-nav-hover mx-auto">
-                    <li class="nav-item px-3">
-                        <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
-                    </li>
-                    <li class="nav-item px-3">
-                        <a class="nav-link" href="{{ path('blog.allBlogs') }}">Blogs</a>
-                    </li>
-                    <li class="nav-item px-3">
-                        <a class="nav-link" href="{{ path('dashboard.allBlogs') }}">Dashboard</a>
-                    </li>
-                </ul>
-
-
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-
-                {% include 'components/_button.html.twig' with {
-                    typeButton: 'primary',
-                    path: path('login'),
-                    textButton: 'Login',
-                } %}
-            </div>
-        </div>
-    </nav>
+    {{ include('components/_navbar.html.twig') }}
 </header>
 
 {% block body %}{% endblock %}

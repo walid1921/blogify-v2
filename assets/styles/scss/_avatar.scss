@@ -1,0 +1,46 @@
+.avatar-dropdown {
+    position: relative;
+
+    .btn {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .dropdown-toggle::after {
+        display: none !important; // removes the Bootstrap caret
+    }
+
+    .avatar-img {
+        width: 50px; // adjust as needed (32px–48px works well)
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid var(--bs-border-color);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    .dropdown-menu {
+        min-width: 160px;
+        font-size: 0.9rem;
+        background-color: var(--bs-white);
+
+        .dropdown-item {
+            padding: 8px 14px;
+            transition: background 200ms ease-in-out;
+
+            &:hover {
+                background-color: var(--bs-body-bg);
+            }
+        }
+    }
+}
