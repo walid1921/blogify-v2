@@ -105,7 +105,7 @@ final class BlogController extends AbstractController
     public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
 
-        $user = $userRepository->find(1);
+        $user = $userRepository->find(10);
 
         if (!$user) {
             throw $this->createNotFoundException('User not found');
