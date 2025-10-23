@@ -31,6 +31,7 @@ $danger: #DB3545;
 @import "scss/toast";
 @import "scss/buttons";
 @import "scss/logo";
+@import "scss/avatar";
 @import "scss/accordion";
 @import "scss/sidebar";
 @import "~bootstrap/scss/bootstrap";
@@ -145,6 +146,15 @@ ul, ol {
     gap: clamp(0.25rem, 0.8vw, 0.75rem);
     margin-bottom: clamp(1.5rem, 3vw, 3rem);
     padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+//! NAVBAR
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-inline: 2rem;
 }
 
 
