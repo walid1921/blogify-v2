@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Blog;
+use App\Entity\BlogCategories;
+use App\Entity\User;
+use App\Entity\UserProfile;
 use App\Form\BlogType;
+use App\Form\UserType;
 use App\Repository\BlogCategoriesRepository;
 use App\Repository\BlogsRepository;
 use App\Repository\LikesRepository;
@@ -81,12 +85,12 @@ final class BlogController extends AbstractController
 
     // ! Fetch All Blogs
     #[Route('/', name: 'allBlogs', requirements: ['limit' => '\d+'])]
-    public function index (BlogsRepository $br): Response
+    public function index (): Response
     {
 
 
         // Fetch blogs from the repository
-//        $blogs = $br->findAll();
+//        $blogs = $blogRepo->findAll();
 
 
         return $this->render('blog/index.html.twig', [
@@ -102,10 +106,10 @@ final class BlogController extends AbstractController
      * @throws JsonException
      */
     #[Route('/create', name: 'create')]
-    public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
 
-        $user = $userRepository->find(10);
+        $user = $userRepo->find(11);
 
         if (!$user) {
             throw $this->createNotFoundException('User not found');
@@ -117,6 +121,7 @@ final class BlogController extends AbstractController
         $blog->setCreatedAt(new DateTimeImmutable());
         $blog->setReadTime();
 //        $blog->setAuthor($this->getUser());
+
         $blog->setAuthor($user);
         $blog->setBlogLanguage('');
         $blog->setIsPublished(false);
@@ -169,9 +174,9 @@ final class BlogController extends AbstractController
 
     //! Edit a Blog
     #[Route('/edit/{id}', name: 'edit', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
-    public function editBlog (int $id, Request $request, BlogsRepository $br, EntityManagerInterface $entityManager): Response
+    public function editBlog (int $id, Request $request, BlogsRepository $blogRepo, EntityManagerInterface $entityManager): Response
     {
-        $blog = $br->find($id);
+        $blog = $blogRepo->find($id);
         if (!$blog) {
             throw $this->createNotFoundException('Blog not found');
         }
@@ -195,9 +200,9 @@ final class BlogController extends AbstractController
 
     //! Update blog's status
     #[Route('/blog-status/{id}', name: 'blogStatus', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
-    public function updateBlogStatus (int $id, BlogsRepository $br, EntityManagerInterface $entityManager): Response
+    public function updateBlogStatus (int $id, BlogsRepository $blogRepo, EntityManagerInterface $entityManager): Response
     {
-        $blog = $br->find($id);
+        $blog = $blogRepo->find($id);
 
         if (!$blog) {
             throw $this->createNotFoundException('Blog not found');
@@ -214,9 +219,9 @@ final class BlogController extends AbstractController
 
     // ! Delete a Blog
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
-    public function deleteBlog (int $id, BlogsRepository $br, EntityManagerInterface $entityManager): Response
+    public function deleteBlog (int $id, BlogsRepository $blogRepo, EntityManagerInterface $entityManager): Response
     {
-        $blog = $br->find($id);
+        $blog = $blogRepo->find($id);
 
         if (!$blog) {
             throw $this->createNotFoundException('Blog not found');
@@ -232,10 +237,10 @@ final class BlogController extends AbstractController
 
     // ! One blog page
     #[Route('/{id}', name: 'one_blog', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function oneBlog (int $id, BlogsRepository $br, LikesRepository $likesRepository): Response
+    public function oneBlog (int $id, BlogsRepository $blogRepo, LikesRepository $likesRepository): Response
     {
 
-        $blog = $br->find($id);
+        $blog = $blogRepo->find($id);
 
         // Here should redirect to not found page
         if (!$blog) {
@@ -253,18 +258,4 @@ final class BlogController extends AbstractController
             'likesCount' => $likesCount,
         ]);
     }
-
-    //! Fetch All Blog Categories
-    #[Route('/categories', name: 'allBlogCategories')]
-    public function blogCategories (BlogCategoriesRepository $bcr): Response
-    {
-        $blogCategories = $bcr->findAll();
-
-
-        return $this->render('blog/categories.html.twig', [
-            'blogCategories' => $blogCategories
-        ]);
-    }
-
-    //! Create a Blog Category
 }

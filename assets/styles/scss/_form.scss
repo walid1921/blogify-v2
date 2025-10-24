@@ -145,19 +145,21 @@
         transform: scaleX(1);
     }
 
-    .form-errors {
-        color: var(--bs-danger);
-        font-size: 0.85rem;
-        margin-top: 6px;
-        list-style: none;
-        padding-left: 0;
-        animation: fadeIn 0.3s ease-in-out;
 
-        li {
-            background: #ffe5e9;
-            border-left: 2px solid var(--bs-danger);
-            padding: 6px 10px;
-        }
+}
+
+.form-errors {
+    color: var(--bs-danger);
+    font-size: 0.85rem;
+    margin-top: 6px;
+    list-style: none;
+    padding-left: 0;
+    animation: fadeIn 0.3s ease-in-out;
+
+    li {
+        background: #ffe5e9;
+        border-left: 2px solid var(--bs-danger);
+        padding: 6px 10px;
     }
 }
 
@@ -226,6 +228,7 @@
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    position: relative;
 
     input[type="checkbox"] {
         appearance: none;
@@ -252,13 +255,23 @@
                 transform: translate(-50%, -50%);
             }
         }
+
+        &.is-invalid {
+            border-color: var(--bs-danger);
+            background-color: #ffe5e9;
+        }
     }
 
     .my-checkbox-label {
         font-size: 0.95rem;
         color: #444;
     }
+
+    &.is-invalid .my-checkbox-label {
+        color: var(--bs-danger);
+    }
 }
+
 
 .ce-block__content {
     max-width: 100%;

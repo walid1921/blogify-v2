@@ -42,10 +42,9 @@ final class HomeController extends AbstractController
 
 
     #[Route('/', name: 'home')]
-    public function index (BlogsRepository $br): Response
+    public function index (BlogsRepository $blogsRepo): Response
     {
         //  $randomBlogs = $br->findRandomBlogs(3); I used this function to fetch just a specific random blogs from the list , instead all (which is useless)
-
 
         return $this->render(
             'home/index.html.twig', [

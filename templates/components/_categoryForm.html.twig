@@ -1,0 +1,19 @@
+<div class="px-3 d-flex flex-column gap-4 justify-content-center align-items-center w-100 mb-5">
+    <div class="w-100 ">
+
+        {# ⚠️ Keep novalidate=false so HTML5 validation also works #}
+        {{ form_start(formCategory, {'attr': {'novalidate': true}}) }}
+
+        {# 🔹 Global form errors (e.g. if CSRF fails) #}
+        {{ form_errors(formCategory) }}
+
+        <div class="d-flex flex-column gap-4 w-100">
+
+            {{ form_row(formCategory.name, { row_attr: { class: 'form-row-inline' } }) }}
+            {{ form_row(formCategory.save) }}
+
+        </div>
+
+        {{ form_end(formCategory) }}
+    </div>
+</div>

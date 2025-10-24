@@ -8,11 +8,14 @@ use Deprecated;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'This email address is already registered.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,24 +24,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\NotBlank(message: 'Email is required')]
+    #[Assert\Email(message: 'Please enter a valid email')]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Assert\NotNull(message: "Role cannot be empty.")]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Password is required')]
     private ?string $password = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?UserProfile $userProfile = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Username is required')]
+    #[Assert\Length(min: 3, max: 50)]
     private ?string $username = null;
 
     /**
@@ -56,11 +65,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $is_active = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $country = null;
-
     #[ORM\Column]
     private ?DateTimeImmutable $created_at = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: 'You must agree to the terms.')]
+    private ?bool $terms = null;
 
     public function __construct ()
     {
@@ -250,18 +260,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCountry (): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry (?string $country): static
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
     public function getCreatedAt (): ?DateTimeImmutable
     {
         return $this->created_at;
@@ -270,6 +268,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt (DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function isTerms (): ?bool
+    {
+        return $this->terms;
+    }
+
+    public function setTerms (?bool $terms): static
+    {
+        $this->terms = $terms;
 
         return $this;
     }
