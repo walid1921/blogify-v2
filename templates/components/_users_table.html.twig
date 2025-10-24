@@ -3,7 +3,7 @@
     count: users|length,
     description: 'Update and delete users here',
     buttonType: 'primary',
-    buttonPath: path('blog.create'),
+    buttonPath: path('userCreate'),
     buttonText: 'New User'
 } %}
 
@@ -16,9 +16,9 @@
             <th scope="col" class="py-3">Username</th>
             <th scope="col" class="py-3">Email</th>
             <th scope="col" class="py-3">Password</th>
-            <th scope="col" class="py-3">Country</th>
             <th scope="col" class="py-3">Role</th>
             <th scope="col" class="py-3">Status</th>
+            <th scope="col" class="py-3">Terms</th>
             <th scope="col" class="py-3">Created</th>
 
 
@@ -68,14 +68,7 @@
                     {#   Password  #}
                     <td class="py-3 fs-7">
                         <div class="d-flex align-items-center gap-1">
-                            <span>{{ user.password }}</span>
-                        </div>
-                    </td>
-
-                    {#   Country  #}
-                    <td class="py-3 fs-7">
-                        <div class="d-flex align-items-center gap-1">
-                            <span>{{ user.country }}</span>
+                            <span>{{ user.password|u.truncate(10, '...') }}</span>
                         </div>
                     </td>
 
@@ -114,6 +107,19 @@
                                          >
                                         </span>
                                     </a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </td>
+
+                    {#   Terms  #}
+                    <td class="py-3 fs-7">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>
+                                {% if (user.terms) %}
+                                    agreed
+                                {% else %}
+                                    not agreed
                                 {% endif %}
                             </span>
                         </div>

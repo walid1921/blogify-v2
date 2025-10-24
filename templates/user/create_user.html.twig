@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create Blog{% endblock %}
+{% block title %}Create User{% endblock %}
 
 {% block body %}
 
@@ -8,7 +8,7 @@
 
         <div class="d-flex flex-column gap-2 gap-md-4">
             <div class="padding-header">
-                {% include 'components/_button.html.twig' with {
+                {% include '/components/_button.html.twig' with {
                     typeButton: 'secondary',
                     path: 'javascript:history.back()',
                     iconType: 'back',
@@ -18,13 +18,10 @@
 
 
             <div class="blog-header">
-                <h1 class="text-uppercase">Create a New Blog Post</h1>
-                <p class="fw-light">Start writing your amazing blog post</p>
+                <h1 class="text-uppercase">Create a New User</h1>
             </div>
         </div>
 
-        {% include 'components/_blogForm.html.twig' with { formBlog: formBlog } %}
-
+        {{ include('components/_userForm.html.twig') }}
     </div>
-
 {% endblock %}

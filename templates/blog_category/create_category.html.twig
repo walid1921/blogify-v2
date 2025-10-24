@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create Blog{% endblock %}
+{% block title %}Create Category{% endblock %}
 
 {% block body %}
 
@@ -18,13 +18,11 @@
 
 
             <div class="blog-header">
-                <h1 class="text-uppercase">Create a New Blog Post</h1>
-                <p class="fw-light">Start writing your amazing blog post</p>
+                <h1 class="text-uppercase">Create a Category</h1>
             </div>
         </div>
 
-        {% include 'components/_blogForm.html.twig' with { formBlog: formBlog } %}
-
+        {{ include ('components/_categoryForm.html.twig') }}
     </div>
 
 {% endblock %}

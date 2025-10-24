@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Blog;
+use App\Entity\User;
+use App\Form\UserType;
 use App\Repository\BlogCategoriesRepository;
 use App\Repository\BlogsRepository;
 use App\Repository\LikesRepository;
 use App\Repository\UserRepository;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,9 +39,9 @@ final class DashboardController extends AbstractController
 
     // ! All Blog Categories
     #[Route('/categories', name: 'allBlogCategories')]
-    public function allBlogCategories (BlogCategoriesRepository $categoriesRepository): Response
+    public function allBlogCategories (BlogCategoriesRepository $categoriesRepo): Response
     {
-        $blogCategories = $categoriesRepository->findAll();
+        $blogCategories = $categoriesRepo->findAll();
 
         return $this->render('dashboard/index.html.twig', [
             'blogCategories' => $blogCategories,
@@ -46,9 +50,9 @@ final class DashboardController extends AbstractController
 
     // ! All Users
     #[Route('/users', name: 'users')]
-    public function users (UserRepository $userRepository): Response
+    public function users (UserRepository $userRepo): Response
     {
-        $users = $userRepository->findAll();
+        $users = $userRepo->findAll();
 
         return $this->render('dashboard/index.html.twig', [
             'users' => $users,

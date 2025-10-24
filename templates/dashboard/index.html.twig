@@ -31,6 +31,8 @@
                     {{ include('components/_users_table.html.twig') }}
                 {% elseif app.request.attributes.get('_route') == 'dashboard.userGuide' %}
                     {{ include('components/_userGuide.html.twig') }}
+                {% elseif app.request.attributes.get('_route') == 'dashboard.userCreate' %}
+                    {{ include('components/_userForm.html.twig') }}
                 {% endif %}
             </div>
         </div>

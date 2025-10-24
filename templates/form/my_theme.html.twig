@@ -53,24 +53,35 @@
         {% set fieldClass = fieldClass ~ ' is-invalid' %}
     {% endif %}
 
+    {# ✅ Checkbox fields (like terms) #}
     {% if 'checkbox' in form.vars.block_prefixes %}
-        <div class="custom-checkbox">
-            {{ form_widget(form) }}
-            {{ form_label(form, null, { label_attr: { class: 'my-checkbox-label' } }) }}
+        <div class="my-custom-row custom-checkbox-row {% if not form.vars.valid %}is-invalid{% endif %}">
+            <div class="custom-checkbox">
+                {{ form_widget(form) }}
+                {{ form_label(form, null, { label_attr: { class: 'my-checkbox-label' } }) }}
+
+            </div>
             {{ form_errors(form) }}
         </div>
+
+        {#        <div class="custom-checkbox"> #}
+        {#            {{ form_widget(form) }} #}
+        {#            {{ form_errors(form) }} #}
+        {#        </div> #}
     {% else %}
+        {# ✅ Normal fields (username, email, etc.) #}
         <div class="my-custom-row">
             <div class="input-wrapper">
                 {{ form_widget(form, { attr: { class: fieldClass } }) }}
                 {{ form_label(form, null, { label_attr: { class: 'my-label' } }) }}
                 <span class="underline"></span>
             </div>
-
             {{ form_errors(form) }}
         </div>
     {% endif %}
 {% endblock %}
+
+
 
 
 
@@ -96,15 +107,22 @@
 
 
 {# Checkbox customization #}
-{% block checkbox_widget %}
-    <div class="custom-checkbox">
-        <input type="checkbox" {{ block('widget_attributes') }}
-            {% if value is not empty %} value="{{ value }}"{% endif %}
-            {% if checked %} checked="checked"{% endif %}>
-        <span class="checkmark"></span>
-        {{ label|default('') }}
-    </div>
-{% endblock %}
+{# {% block checkbox_widget %} #}
+{#     {% set isInvalid = not form.vars.valid %} #}
+{#     <div class="custom-checkbox {% if isInvalid %}is-invalid{% endif %}"> #}
+{#         <input type="checkbox" #}
+{#             {{ block('widget_attributes') }} #}
+{#                class="{% if isInvalid %}is-invalid{% endif %}" #}
+{#             {% if value is not empty %} value="{{ value }}"{% endif %} #}
+{#             {% if checked %} checked="checked"{% endif %}> #}
+{#         <label for="{{ id }}" class="my-checkbox-label"> #}
+{#             {{ label|default('') }} #}
+{#             {% if required %}<span>*</span>{% endif %} #}
+{#         </label> #}
+{#     </div> #}
+{#     {{ form_errors(form) }} #}
+{# {% endblock %} #}
+
 
 
 

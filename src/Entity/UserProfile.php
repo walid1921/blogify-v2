@@ -37,6 +37,9 @@ class UserProfile
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $country = null;
+
     public function getId (): ?int
     {
         return $this->id;
@@ -123,6 +126,18 @@ class UserProfile
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): static
+    {
+        $this->country = $country;
 
         return $this;
     }
