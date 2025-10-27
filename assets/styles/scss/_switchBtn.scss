@@ -1,11 +1,6 @@
 .glass-radio-group {
-    --bg: rgba(255, 255, 255, 0.06);
-    --text: #71717A;
-    --text-2: #1a1a1a;
-
     display: flex;
     position: relative;
-    background: var(--bg);
     background-color: #E5E5E5;
     overflow: hidden;
     width: fit-content;
@@ -26,19 +21,21 @@
         padding: 0.8rem 1.6rem;
         cursor: pointer;
         letter-spacing: 0.3px;
-        color: var(--text);
+        color: var(--bs-secondary);
         position: relative;
         z-index: 2;
         transition: color 0.3s ease-in-out;
 
         &:hover {
-            color: var(--text-2);
+            color: var(--bs-black);
+
 
         }
     }
 
     input:checked + label {
-        color: var(--text-2);
+        color: var(--bs-black);
+
     }
 
     .glass-glider {
@@ -54,13 +51,13 @@
     // --- Variants ---
     #glass-silver:checked ~ .glass-glider {
         transform: translateX(0%);
-        background-color: #ffffff;
+        background-color: var(--bs-white);
 
     }
 
     #glass-gold:checked ~ .glass-glider {
         transform: translateX(100%);
-        background-color: #fff;
+        background-color: var(--bs-white);
 
     }
 }

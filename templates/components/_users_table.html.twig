@@ -61,7 +61,7 @@
                         <a href="mailto:{{ user.email }}"
                            class="link-no-underline-black d-inline-block align-items-center ">
                             <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
-                            {{ user.email }}
+                            {{ user.email|u.truncate(16, '...') }}
                         </a>
                     </td>
 

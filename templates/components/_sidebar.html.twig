@@ -1,7 +1,8 @@
-<input type="checkbox" role="switch" id="checkbox-input" class="checkbox-input" checked="checked"/>
-<nav>
-    <div class="sidebar__toggle-container">
-        <label tabindex="0" for="checkbox-input" id="label-for-checkbox-input" class="nav__toggle">
+<aside class="vertical-sidebar">
+    <input type="checkbox" role="switch" id="checkbox-input" class="checkbox-input" checked="checked"/>
+    <nav>
+        <div class="sidebar__toggle-container">
+            <label tabindex="0" for="checkbox-input" id="label-for-checkbox-input" class="nav__toggle">
                 <span class="toggle--icons" aria-hidden="true">
                     <svg class="toggle-svg-icon toggle--open" width="20" height="20" viewBox="0 0 24 24" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -16,17 +17,52 @@
                               stroke-width="2"
                               stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-
                 </span>
-        </label>
-    </div>
+            </label>
+        </div>
 
-    <section class="sidebar__wrapper">
-        <ul class="sidebar__list list--primary">
-            <li class="sidebar__item">
-                <a href="{{ path('dashboard.allBlogs') }}"
-                   class="sidebar__link {{ app.request.attributes.get('_route') == 'dashboard.allBlogs' ? 'active' : '' }}"
-                   data-tooltip="Blogs">
+        <div class="d-flex flex-column justify-content-center align-items-center mx-1">
+            <div class="glass-radio-group-sidebar">
+                <input type="radio" name="plan" id="glass-silver" checked=""/>
+                <label for="glass-silver">Admin</label>
+
+                <input type="radio" name="plan" id="glass-gold"/>
+                <label for="glass-gold">User</label>
+
+                <div class="glass-glider"></div>
+            </div>
+        </div>
+
+        <section class="sidebar__wrapper">
+
+
+            <ul class="sidebar__list list--primary">
+                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.users' ? 'active' : '' }}">
+                    <a href="{{ path('dashboard.users') }}"
+                       class="sidebar__link "
+                       data-tooltip="Users">
+                    <span class="icon">
+                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9" cy="6" r="4" stroke="black" stroke-width="1.5"></circle>
+<path d="M15 9C16.6569 9 18 7.65685 18 6C18 4.34315 16.6569 3 15 3" stroke="black" stroke-width="1.5"
+      stroke-linecap="round"></path>
+<path
+    d="M5.88915 20.5843C6.82627 20.8504 7.88256 21 9 21C12.866 21 16 19.2091 16 17C16 14.7909 12.866 13 9 13C5.13401 13 2 14.7909 2 17C2 17.3453 2.07657 17.6804 2.22053 18"
+    stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
+<path d="M18 14C19.7542 14.3847 21 15.3589 21 16.5C21 17.5293 19.9863 18.4229 18.5 18.8704" stroke="black"
+      stroke-width="1.5" stroke-linecap="round"></path>
+</svg>
+
+
+                    </span>
+                        <span class="text">Users</span>
+                    </a>
+                    <small class=" fw-normal text-secondary"> {{ usersCount }}</small>
+                </li>
+                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.allBlogs' ? 'active' : '' }}">
+                    <a href="{{ path('dashboard.allBlogs') }}"
+                       class="sidebar__link"
+                       data-tooltip="Blogs">
                     <span class="icon">
                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path
@@ -50,13 +86,14 @@
 </svg>
 
                     </span>
-                    <span class="text">Blogs</span>
-                </a>
-            </li>
-            <li class="sidebar__item">
-                <a href="{{ path('dashboard.allBlogCategories') }}"
-                   class="sidebar__link {{ app.request.attributes.get('_route') == 'dashboard.allBlogCategories' ? 'active' : '' }}"
-                   data-tooltip="Categories">
+                        <span class="text">Blogs</span>
+                    </a>
+                    <small class=" fw-normal text-secondary"> {{ blogsCount }}</small>
+                </li>
+                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.allBlogCategories' ? 'active' : '' }}">
+                    <a href="{{ path('dashboard.allBlogCategories') }}"
+                       class="sidebar__link "
+                       data-tooltip="Categories">
                     <span class="icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path
@@ -74,13 +111,14 @@
 </svg>
 
                     </span>
-                    <span class="text">Categories</span>
-                </a>
-            </li>
-            <li class="sidebar__item">
-                <a href="#"
-                   class="sidebar__link {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}"
-                   data-tooltip="Favourite">
+                        <span class="text">Categories</span>
+                    </a>
+                    <small class=" fw-normal text-secondary"> {{ blogCategoriesCount }}</small>
+                </li>
+                <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
+                    <a href="#"
+                       class="sidebar__link "
+                       data-tooltip="Favourite">
                     <span class="icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path
@@ -89,35 +127,14 @@
 </svg>
 
                     </span>
-                    <span class="text">Favourite</span>
-                </a>
-            </li>
-            <li class="sidebar__item">
-                <a href="{{ path('dashboard.users') }}"
-                   class="sidebar__link {{ app.request.attributes.get('_route') == 'dashboard.users' ? 'active' : '' }}"
-                   data-tooltip="Users">
-                    <span class="icon">
-                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="9" cy="6" r="4" stroke="black" stroke-width="1.5"></circle>
-<path d="M15 9C16.6569 9 18 7.65685 18 6C18 4.34315 16.6569 3 15 3" stroke="black" stroke-width="1.5"
-      stroke-linecap="round"></path>
-<path
-    d="M5.88915 20.5843C6.82627 20.8504 7.88256 21 9 21C12.866 21 16 19.2091 16 17C16 14.7909 12.866 13 9 13C5.13401 13 2 14.7909 2 17C2 17.3453 2.07657 17.6804 2.22053 18"
-    stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
-<path d="M18 14C19.7542 14.3847 21 15.3589 21 16.5C21 17.5293 19.9863 18.4229 18.5 18.8704" stroke="black"
-      stroke-width="1.5" stroke-linecap="round"></path>
-</svg>
-
-
-                    </span>
-                    <span class="text">Users</span>
-                </a>
-            </li>
-            <li class="sidebar__item">
-                {# Open the specidc Blog for that "How to write your first blog" #}
-                <a href="{{ path('dashboard.userGuide') }}"
-                   class="sidebar__link {{ app.request.attributes.get('_route') == 'dashboard.userGuide' ? 'active' : '' }}"
-                   data-tooltip="User guide">
+                        <span class="text">Favourite</span>
+                    </a>
+                </li>
+                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.userGuide' ? 'active' : '' }}">
+                    {# Open the specidc Blog for that "How to write your first blog" #}
+                    <a href="{{ path('dashboard.userGuide') }}"
+                       class="sidebar__link "
+                       data-tooltip="User guide">
                     <span class="icon">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path
@@ -132,13 +149,14 @@
 </svg>
 
                     </span>
-                    <span class="text">Guide</span> </a></li>
-        </ul>
-        <ul class="sidebar__list list--secondary">
-            <li class="sidebar__item">
-                <a href="#"
-                   class="sidebar__link {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}"
-                   data-tooltip="Profile">
+                        <span class="text">Guide</span> </a>
+                </li>
+            </ul>
+            <ul class="sidebar__list list--secondary">
+                <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
+                    <a href="#"
+                       class="sidebar__link "
+                       data-tooltip="Profile">
                     <span class="icon">
                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="12" cy="6" r="4" stroke="black" stroke-width="1.5"></circle>
@@ -148,11 +166,12 @@
                        </svg>
 
                     </span>
-                    <span class="text">Profile</span> </a></li>
-            <li class="sidebar__item">
-                <a href="#"
-                   class="sidebar__link {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}"
-                   data-tooltip="Settings">
+                        <span class="text">Profile</span> </a>
+                </li>
+                <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
+                    <a href="#"
+                       class="sidebar__link "
+                       data-tooltip="Settings">
                     <span class="icon">
                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="12" cy="12" r="3" stroke="black" stroke-width="1.5"></circle>
@@ -162,13 +181,13 @@
 </svg>
 
                     </span>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
-            <li class="sidebar__item">
-                <a href="#"
-                   class="sidebar__link {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}"
-                   data-tooltip="Logout">
+                        <span class="text">Settings</span>
+                    </a>
+                </li>
+                <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
+                    <a href="#"
+                       class="sidebar__link "
+                       data-tooltip="Logout">
                     <span class="icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path
@@ -182,9 +201,14 @@
 </svg>
 
                     </span>
-                    <span class="text">Logout</span>
-                </a>
-            </li>
-        </ul>
-    </section>
-</nav>
+                        <span class="text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+
+        </section>
+    </nav>
+
+
+</aside>

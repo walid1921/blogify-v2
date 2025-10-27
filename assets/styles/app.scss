@@ -113,6 +113,11 @@ ul, ol {
     list-style: none; // removes bullets or numbers
 }
 
+th {
+    font-size: clamp(0.6rem, 1.1vw, 0.9rem);
+    font-weight: 600;
+}
+
 /* --------------------------------
    RESPONSIVE UTILITY CLASSES
 -------------------------------- */
@@ -133,7 +138,7 @@ ul, ol {
 //! LAYOUT STYLES
 .page-container {
     padding-top: 120px; // space for fixed header
-    padding-bottom: 40px;
+    //padding-bottom: 40px;
     min-height: 100vh;
 }
 
