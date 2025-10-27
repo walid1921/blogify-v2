@@ -214,3 +214,14 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('change', previewCoverImage);
     });
 });
+
+
+//! Sticky categories
+window.addEventListener("scroll", () => {
+    const header = document.querySelector(".sticky-categories");
+    if (window.scrollY > 200) {
+        header.classList.add('scrolled')
+    } else {
+        header.classList.remove("scrolled");
+    }
+})
