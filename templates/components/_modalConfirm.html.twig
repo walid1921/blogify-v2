@@ -1,18 +1,27 @@
-<div class="modal fade " id="{{ modal_id }}" tabindex="-1" aria-labelledby="{{ modal_id }}Label" aria-hidden="true">
+<div class="modal fade " id="{{ modal_id }}" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content px-2">
+
             <div class="modal-header">
-                <h5 class="modal-title" id="{{ modal_id }}Label">{{ title|default('Confirm Action') }}</h5>
-                <button type="button" class="btn-close focus-ring-danger" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                <h5 class="modal-title" id="{{ modal_id }}Label">{{ title }}</h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
             </div>
+
             <div class="modal-body my-4">
                 {{ body|default('Are you sure you want to continue?')|raw }}
             </div>
+
             <div class="modal-footer gap-2">
                 <button type="button" class="button-secondary" data-bs-dismiss="modal">Cancel</button>
-                {% if confirm_path is defined %}
+                {% if confirm_path is defined and confirm_path %}
                     <a href="{{ confirm_path }}" class="button-primary">{{ confirm_text|default('Confirm') }}</a>
+                {% else %}
+                    <form id="confirmActionForm" method="POST" action="" style="display: inline;">
+                        <button type="submit" class="button-primary">{{ confirm_text|default('Confirm') }}</button>
+                    </form>
                 {% endif %}
             </div>
         </div>

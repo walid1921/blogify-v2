@@ -1,21 +1,37 @@
+{% if buttonType is not defined %}
+    <div class="padding-header">
+        {% include '/components/_button.html.twig' with {
+            typeButton: 'secondary',
+            path: 'javascript:history.back()',
+            iconType: 'back',
+            iconColor: 'black',
+        } %}
+    </div>
+{% endif %}
+
 <div class="d-flex justify-content-between align-items-center w-100">
 
     <div class="d-flex flex-column justify-content-end mb-3">
         <div class="d-flex align-items-start gap-2">
             <h2 class="text-uppercase">{{ title }}</h2>
-            <small>{{ count }}</small>
+
+            {% if count is defined %}
+                <small>{{ count }}</small>
+            {% endif %}
         </div>
         <p class="fw-light">{{ description }}</p>
     </div>
 
-    <div class="d-flex justify-content-end mb-3">
-        {% include 'components/_button.html.twig' with {
-            typeButton: buttonType|default('primary'),
-            path: buttonPath,
-            textButton: buttonText,
-            iconType: buttonIconType|default('add'),
-            iconColor: buttonIconColor|default('white')
-        } %}
-    </div>
+    {% if buttonType is defined %}
+        <div class="d-flex justify-content-end mb-3">
+            {% include 'components/_button.html.twig' with {
+                typeButton: buttonType|default('primary'),
+                path: buttonPath,
+                textButton: buttonText,
+                iconType: buttonIconType|default('add'),
+                iconColor: buttonIconColor|default('white')
+            } %}
+        </div>
+    {% endif %}
 
 </div>

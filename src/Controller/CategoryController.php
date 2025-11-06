@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\BlogCategories;
 use App\Form\BlogCategoriesType;
+use App\Repository\BlogCategoriesRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,27 +22,21 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-
-    //! Create a Blog Category
-    #[Route('/categories/create', name: 'createBlogCategories')]
-    public function createCategory (Request $request, EntityManagerInterface $entityManager): Response
+    //! Delete a Category
+    #[Route('/categories/delete/{id}', name: 'deleteBlogCategories', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
+    public function deleteCategory (int $id, EntityManagerInterface $entityManager, BlogCategoriesRepository $blogCategoriesRepository): Response
     {
-        $category = new BlogCategories();
-        $form = $this->createForm(BlogCategoriesType::class, $category);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $category = $blogCategoriesRepository->find($id);
 
-            $entityManager->persist($category);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Category created successfully!');
-            return $this->redirectToRoute('dashboard.allBlogCategories');
+        if (!$category) {
+            throw $this->createNotFoundException('Category not found');
         }
 
-        return $this->render('blog_category/create_category.html.twig', [
-            'formCategory' => $form->createView(),
-        ]);
+        $entityManager->remove($category);
+        $entityManager->flush();
+        $this->addFlash('success', 'Category deleted successfully!');
 
+        return $this->redirectToRoute('dashboard.allBlogCategories');
     }
 }

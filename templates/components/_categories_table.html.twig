@@ -3,7 +3,7 @@
     count: blogCategories|length,
     description: 'Update and delete categories here',
     buttonType: 'primary',
-    buttonPath: path('createBlogCategories'),
+    buttonPath: path('dashboard.createBlogCategories'),
     buttonText: 'New Category'
 } %}
 
@@ -14,6 +14,7 @@
         <tr>
             <th scope="col" class="ps-3 py-3 2-25">#</th>
             <th scope="col" class="py-3">Category</th>
+            <th scope="col" class="py-3">Created</th>
             <th scope="col" class="pe-3 py-3">Update</th>
         </tr>
         </thead>
@@ -32,42 +33,37 @@
                         </div>
                     </td>
 
+                    {#   category created date   #}
+                    <td class="py-3 fs-7">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>{{ category.createdAt|date('Y-m-d') }}</span>
+                        </div>
+                    </td>
+
                     {#   Action buttons   #}
                     <td class="py-3">
                         {#   delete   #}
-                        <a class="me-3" href="#" data-bs-toggle="modal"
-                           data-bs-target="#deleteModal-{{ category.id }}">
+                        <a href="#"
+                           class="me-3 open-delete-category-modal"
+                           data-category-id="{{ category.id }}"
+                           data-category-name="{{ category.name }}"
+                        >
                             <img
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 data-bs-title="Delete"
                                 src="{{ asset('icons/Trash Bin Trash.svg') }}"
-                                alt="pen icon">
+                                alt="bin icon">
                         </a>
                         {#   edit   #}
-                        <a href="#" data-bs-toggle="tooltip"
+                        <a href="{{ path('dashboard.editBlogCategories', {id: category.id} ) }}"
+                           data-bs-toggle="tooltip"
                            data-bs-placement="top"
                            data-bs-title="Edit">
                             <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
                         </a>
                     </td>
                 </tr>
-
-                {% include "components/_modalConfirm.html.twig" with {
-                    modal_id: "deleteModal-" ~ category.id,
-                    title: "Confirm Deletion",
-                    body: "Are you sure you want to delete <strong>" ~ category.name ~ "</strong>?",
-
-                    confirm_text: "Delete"
-                } %}
-
-                {% include "components/_modalConfirm.html.twig" with {
-                    modal_id: "updateModal-" ~ category.id,
-                    title: "Update Status",
-                    body: "Are you sure you want to update <strong>" ~ category.name ~ "</strong>?",
-
-                    confirm_text: "Confirm"
-                } %}
 
             {% endfor %}
         {% else %}
@@ -77,4 +73,39 @@
 
         </tbody>
     </table>
+
+    {% include "components/_modalConfirm.html.twig" with {
+        modal_id: "globalDeleteCategoryModal",
+        title: "Confirm Deletion",
+        body: "Are you sure you want to delete the category '<strong id=\"deleteCategoryName\"></strong>'?",
+        confirm_path: "",
+        confirm_text: "Delete"
+    } %}
 </div>
+
+<script>
+    document.addEventListener('click', function (e) {
+        const delBtn = e.target.closest('.open-delete-category-modal');
+        if (delBtn) {
+            e.preventDefault();
+            const categoryId = delBtn.dataset.categoryId;
+            const categoryName = delBtn.dataset.categoryName;
+            const modalEl = document.getElementById('globalDeleteCategoryModal');
+            const form = modalEl.querySelector('#confirmActionForm');
+            const categoryNameEl = modalEl.querySelector('#deleteCategoryName');
+
+            if (form) {
+                form.action = `/categories/delete/${categoryId}`;
+            }
+            if (categoryNameEl) {
+                categoryNameEl.textContent = categoryName;
+            }
+
+            // Show the modal using Bootstrap
+            if (window.bootstrap && window.bootstrap.Modal) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
+        }
+    });
+</script>

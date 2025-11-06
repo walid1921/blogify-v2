@@ -1,14 +1,12 @@
 .glass-radio-group-sidebar {
-
     display: flex;
     position: relative;
-    background-color: #E5E5E5;
+    background-color: #e5e5e5;
     //overflow: hidden;
     //width: fit-content;
     width: 100%;
     margin-top: 3rem;
     padding: 3px; // <-- padding for inner spacing
-
 
     input {
         display: none;
@@ -45,14 +43,13 @@
         bottom: 3px;
         width: calc(50% - 3px); // full width minus both side paddings
         z-index: 1;
-        transition: transform 0.3s
+        transition: transform 0.3s;
     }
 
     // --- Variants ---
     #glass-silver:checked ~ .glass-glider {
         transform: translateX(0%);
         background-color: var(--bs-white);
-
     }
 
     #glass-gold:checked ~ .glass-glider {
@@ -61,7 +58,6 @@
     }
 }
 
-
 :root {
     --expanded: 14rem;
     --collapsed: 3.2rem;
@@ -69,13 +65,11 @@
     --item: 2.25rem;
 }
 
-
 .checkbox-input {
     position: absolute;
     opacity: 0;
     pointer-events: none;
 }
-
 
 .dashboard-layout {
     display: grid;
@@ -111,6 +105,13 @@
         height: 100%;
         max-height: 75vh;
     }
+
+    .text-editor {
+        flex: 1;
+        overflow-y: auto;
+        height: 100%;
+        max-height: 75vh;
+    }
 }
 
 .vertical-sidebar {
@@ -138,25 +139,21 @@ nav {
     flex-basis: var(--collapsed);
     transition: ease-in-out 200ms;
 
-
     small {
         opacity: 0;
         transition: opacity ease-in-out 200ms;
-
     }
 
     .glass-radio-group-sidebar {
         //opacity: 0;
         display: none;
         transition: display ease-in-out 150ms;
-
     }
 
     .toggle--open {
         transform: rotate(180deg);
         transition: transform ease-in-out 300ms;
     }
-
 }
 
 .sidebar__toggle-container {
@@ -188,7 +185,6 @@ nav {
     grid-area: svg;
 }
 
-
 .sidebar__wrapper {
     padding-top: 3rem;
     display: flex;
@@ -211,7 +207,6 @@ nav {
             width: 100%;
             block-size: var(--item);
             padding-right: 1rem;
-
 
             &:hover {
                 background-color: var(--bs-body-bg);
@@ -247,7 +242,6 @@ nav {
                 gap: 0.5rem;
                 padding: 0 0.5rem;
 
-
                 .icon {
                     aspect-ratio: 1;
                     block-size: 100%;
@@ -266,20 +260,15 @@ nav {
                     transition: color 266ms ease-out;
                 }
             }
-
         }
-
     }
 }
-
 
 aside:not(:has(:checked)) .toggle--open,
 aside:has(:checked) .toggle--close {
     opacity: 0;
     transition: transform 300ms ease-in-out;
-
 }
-
 
 aside:not(:has(:checked)) :where(figcaption, .item--heading) {
     opacity: 0;
@@ -288,7 +277,6 @@ aside:not(:has(:checked)) :where(figcaption, .item--heading) {
 aside:has(:checked) :where(figcaption, .item--heading) {
     transition: opacity 300ms ease-in 200ms;
 }
-
 
 [data-tooltip]::before {
     content: attr(data-tooltip);
@@ -307,7 +295,8 @@ aside:has(:checked) :where(figcaption, .item--heading) {
     transition: all 350ms ease-out;
 }
 
-aside:not(:has(:checked)) .sidebar__link:where(:hover, :focus-visible)[data-tooltip]::before {
+aside:not(:has(:checked))
+.sidebar__link:where(:hover, :focus-visible)[data-tooltip]::before {
     opacity: 1;
     scale: 1;
 }

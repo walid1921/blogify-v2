@@ -1,5 +1,5 @@
-<div class="px-3 d-flex flex-column gap-4 justify-content-center align-items-center w-100 mb-5">
-    <div class="w-100 ">
+<div class="px-3 d-flex flex-column gap-4 justify-content-center align-items-center h-100 w-100 mb-5">
+    <div class="w-25 ">
 
         {# ⚠️ Keep novalidate=false so HTML5 validation also works #}
         {{ form_start(formUser, {'attr': {'novalidate': true}}) }}
@@ -10,15 +10,17 @@
         <div class="d-flex flex-column gap-4 w-100">
 
 
-            <div class="d-flex gap-3">
-                {{ form_row(formUser.username, { row_attr: { class: 'form-row-inline' } }) }}
-                {{ form_row(formUser.email,  { row_attr: { class: 'form-row-inline' }}) }}
-            </div>
+            {{ form_row(formUser.username, { row_attr: { class: 'form-row-inline' } }) }}
 
-            <div class="d-flex gap-3">
+            {{ form_row(formUser.email,  { row_attr: { class: 'form-row-inline' }}) }}
+
+
+
+            {% if formUser.password is defined %}
                 {{ form_row(formUser.password,  { row_attr: { class: 'form-row-inline' } }) }}
-                {{ form_row(formUser.roles) }}
-            </div>
+            {% endif %}
+
+            {{ form_row(formUser.roles) }}
 
             {{ form_row(formUser.terms) }}
 
