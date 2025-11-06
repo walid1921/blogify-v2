@@ -22,8 +22,11 @@ final class UserProfileController extends AbstractController
     {
 
         // finding a Blog and a user
-        $blog = $blogsRepository->find(4);
-        $user = $userRepository->find(12); // You can also use $this->getUser() if you have authentication enabled
+        $blog = $blogsRepository->find(9);
+        $user = $userRepository->find(14); // You can also use $this->getUser() if you have authentication enabled
+
+//        dd($blog, $user);
+
 
         if (!$blog || !$user) {
             throw $this->createNotFoundException('Blog or User not found');
