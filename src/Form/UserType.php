@@ -21,6 +21,8 @@ class UserType extends AbstractType
 {
     public function buildForm (FormBuilderInterface $builder, array $options): void
     {
+        $isEdit = $options['is_edit'] ?? false;
+
         $builder
             ->add('username', TextType::class, [
                 'label' => 'Username',
@@ -29,11 +31,17 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => true,
-            ])
-            ->add('password', PasswordType::class, [
+            ]);
+
+        // Only add password field when creating a new user (not editing)
+        if (!$isEdit) {
+            $builder->add('password', PasswordType::class, [
                 'label' => 'Password',
                 'required' => true,
-            ])
+            ]);
+        }
+
+        $builder
             ->add('roles', ChoiceType::class, [
                 'required' => true,
                 'label' => 'Role',
@@ -47,7 +55,7 @@ class UserType extends AbstractType
             ])
             ->add('terms', CheckboxType::class, ['label' => 'I agree to the Terms of Service', 'required' => true])
             ->add('save', SubmitType::class, [
-                'label' => 'Create User',
+                'attr' => ['class' => 'button-primary button-primary--fullWidth mt-4']
             ]);
 
         // ✅ Convert between string (from form) and array (in entity)
@@ -68,6 +76,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'is_edit' => false,
         ]);
     }
 }

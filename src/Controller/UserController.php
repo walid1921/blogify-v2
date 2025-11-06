@@ -18,9 +18,7 @@ final class UserController extends AbstractController
     #[Route('/user', name: 'app_user')]
     public function index (): Response
     {
-        return $this->render('user/index.html.twig', [
-
-        ]);
+        return $this->render('user/index.html.twig', []);
     }
 
 
@@ -29,13 +27,13 @@ final class UserController extends AbstractController
     public function createUser (Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
 
-//        $user = new User();
-//        $user->setUsername('newuser_' . rand(100, 999));
-//        $user->setEmail('newuser' . rand(100, 999) . '@example.com');
-//        $user->setPassword(password_hash('password123', PASSWORD_BCRYPT));
-//        $user->setRoles(['ROLE_BLOGGER']);
-//        $user->setIsActive(true);
-//        $user->setCreatedAt(new DateTimeImmutable());
+        //        $user = new User();
+        //        $user->setUsername('newuser_' . rand(100, 999));
+        //        $user->setEmail('newuser' . rand(100, 999) . '@example.com');
+        //        $user->setPassword(password_hash('password123', PASSWORD_BCRYPT));
+        //        $user->setRoles(['ROLE_BLOGGER']);
+        //        $user->setIsActive(true);
+        //        $user->setCreatedAt(new DateTimeImmutable());
 
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -64,6 +62,34 @@ final class UserController extends AbstractController
         ]);
     }
 
+    //! Edit a user
+    #[Route('/users/edit/{id}', name: 'userEdit', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
+    public function editUser (int $id, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $userRepository->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        $form = $this->createForm(UserType::class, $user, ['is_edit' => true]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('success', 'User updated successfully!');
+
+            return $this->redirectToRoute('dashboard.users');
+        }
+
+        return $this->render('user/create_user.html.twig', [
+            'formUser' => $form->createView(),
+            'username' => $user->getUsername(),
+        ]);
+    }
+
 
     //! Update user's status
     #[Route('/user-status/{id}', name: 'userStatus', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
@@ -80,6 +106,25 @@ final class UserController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('success', 'User status updated successfully!');
+
+        return $this->redirectToRoute('dashboard.users');
+    }
+
+    //! Delete a User
+    #[Route('/users/delete/{id}', name: 'userDelete', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
+    public function deleteUser (int $id, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    {
+
+        $user = $userRepository->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $this->addFlash('success', 'User deleted successfully!');
+
 
         return $this->redirectToRoute('dashboard.users');
     }

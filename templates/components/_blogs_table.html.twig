@@ -3,7 +3,7 @@
     count: blogs|length,
     description: 'Update and delete blogs here',
     buttonType: 'primary',
-    buttonPath: path('blog.create'),
+    buttonPath: path('dashboard.createBlog'),
     buttonText: 'New Blog',
     buttonIconType: 'add',
     buttonIconColor: 'white'
@@ -68,40 +68,43 @@
                     {#   Created_at   #}
                     <td class="py-3 fs-7">{{ blog.createdAt|date('Y-m-d') }}</td>
 
-                    {#   Status   #}
+                    {#   Status  #}
                     <td class="py-3 fs-7">
-                        {% if (blog.published) %}
-                            <a
-                                href="#"
-                                data-bs-toggle="modal"
-                                data-bs-target="#updateModal-{{ blog.id }}">
-                                          <span class="indicator published"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-placement="top"
-                                                data-bs-title="Published"
-                                          >
+                        <div class="d-flex align-items-center gap-1">
+                            <span>
+                                <a
+                                    href="#"
+                                    class="open-status-blog-modal"
+                                    data-blog-id="{{ blog.id }}"
+                                    data-blog-name="{{ blog.title }}"
+                                >
+                                    {% if (blog.published) %}
+                                        <span class="indicator published"
+                                              data-bs-toggle="tooltip"
+                                              data-bs-placement="top"
+                                              data-bs-title="Active"
+                                        >
                                         </span>
-                            </a>
-                        {% else %}
-                            <a
-                                href="#"
-                                data-bs-toggle="modal"
-                                data-bs-target="#updateModal-{{ blog.id }}">
-                                         <span class="indicator draft"
-                                               data-bs-toggle="tooltip"
-                                               data-bs-placement="top"
-                                               data-bs-title="Unpublished"
-                                         >
+                                    {% else %}
+                                        <span class="indicator danger"
+                                              data-bs-toggle="tooltip"
+                                              data-bs-placement="top"
+                                              data-bs-title="Restricted"
+                                        >
                                         </span>
-                            </a>
-                        {% endif %}
+                                    {% endif %}
+                                </a>
+                            </span>
+                        </div>
                     </td>
 
                     {#   Action buttons   #}
                     <td class="py-3">
                         {#   delete   #}
-                        <a class="me-3" href="#" data-bs-toggle="modal"
-                           data-bs-target="#deleteModal-{{ blog.id }}">
+                        <a class="me-3 open-delete-blog-modal" href="#"
+                           data-blog-id="{{ blog.id }}"
+                           data-blog-name="{{ blog.title }}"
+                        >
                             <img
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
@@ -110,30 +113,13 @@
                                 alt="pen icon">
                         </a>
                         {#   edit   #}
-                        <a href="{{ path('blog.edit', {id: blog.id} ) }}" data-bs-toggle="tooltip"
+                        <a href="{{ path('dashboard.editBlog', {id: blog.id} ) }}" data-bs-toggle="tooltip"
                            data-bs-placement="top"
                            data-bs-title="Edit">
                             <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
                         </a>
                     </td>
                 </tr>
-
-                {% include "components/_modalConfirm.html.twig" with {
-                    modal_id: "deleteModal-" ~ blog.id,
-                    title: "Confirm Deletion",
-                    body: "Are you sure you want to delete <strong>" ~ blog.title ~ "</strong>?",
-                    confirm_path: path('blog.delete', {id: blog.id}),
-                    confirm_text: "Delete"
-                } %}
-
-                {% include "components/_modalConfirm.html.twig" with {
-                    modal_id: "updateModal-" ~ blog.id,
-                    title: "Update Status",
-                    body: "Are you sure you want to update <strong>" ~ blog.title ~ "</strong>?",
-                    confirm_path: path('blog.blogStatus', {id: blog.id}),
-                    confirm_text: "Confirm"
-                } %}
-
             {% endfor %}
         {% else %}
             {{ include('components/_emptyPage.html.twig' , {message : "No Blogs yet", linkText: "New Blog", linkPath: "blog.create"}) }}
@@ -141,4 +127,73 @@
 
         </tbody>
     </table>
+
+    {% include "components/_modalConfirm.html.twig" with {
+        modal_id: "globalDeleteBlogModal",
+        title: "Confirm Deletion",
+        body: "Are you sure you want to delete the blog '<strong id=\"deleteBlog\"></strong>'?",
+        confirm_path: "",
+        confirm_text: "Delete"
+    } %}
+
+    {% include "components/_modalConfirm.html.twig" with {
+        modal_id: "globalStatusBlogModal",
+        title: "Update Status",
+        body: "Are you sure you want to update the blog '<strong id=\"statusBlog\"></strong>' status?",
+        confirm_path: "",
+        confirm_text: "Confirm"
+    } %}
 </div>
+
+
+<script>
+    document.addEventListener('click', function (e) {
+
+        const delBtn = e.target.closest('.open-delete-blog-modal');
+        if (delBtn) {
+            e.preventDefault();
+            const blogId = delBtn.dataset.blogId;
+            const blogName = delBtn.dataset.blogName;
+            const modalEl = document.getElementById('globalDeleteBlogModal');
+            const form = modalEl.querySelector('#confirmActionForm');
+            const blogNameEl = modalEl.querySelector('#deleteBlog');
+
+            if (form) {
+                form.action = `/blog/delete/${blogId}`;
+            }
+            if (blogNameEl) {
+                blogNameEl.textContent = blogName;
+            }
+
+            // Show the modal using Bootstrap
+            if (window.bootstrap && window.bootstrap.Modal) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
+        }
+
+        const statusBtn = e.target.closest('.open-status-blog-modal');
+        if (statusBtn) {
+            e.preventDefault();
+            const blogId = statusBtn.dataset.blogId;
+            const blogName = statusBtn.dataset.blogName;
+            const modalEl = document.getElementById('globalStatusBlogModal');
+            const form = modalEl.querySelector('#confirmActionForm');
+            const blogNameEl = modalEl.querySelector('#statusBlog');
+
+            if (form) {
+                form.action = `/blog/blog-status/${blogId}`;
+            }
+            if (blogNameEl) {
+                blogNameEl.textContent = blogName;
+            }
+
+            // Show the modal using Bootstrap
+            if (window.bootstrap && window.bootstrap.Modal) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
+        }
+    });
+
+</script>

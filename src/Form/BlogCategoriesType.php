@@ -25,7 +25,9 @@ class BlogCategoriesType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, [
+                'attr' => ['class' => 'button-primary button-primary--fullWidth mt-4']
+            ]);
     }
 
     public function configureOptions (OptionsResolver $resolver): void

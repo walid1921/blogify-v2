@@ -3,7 +3,7 @@
     count: users|length,
     description: 'Update and delete users here',
     buttonType: 'primary',
-    buttonPath: path('userCreate'),
+    buttonPath: path('dashboard.userCreate'),
     buttonText: 'New User'
 } %}
 
@@ -34,9 +34,7 @@
             {#                    </a> #}
             {#                </th> #}
 
-
             {#                <th scope="col" class="py-3">Status</th> #}
-
 
             <th scope="col" class="pe-3 py-3">Update</th>
         </tr>
@@ -83,31 +81,28 @@
                     <td class="py-3 fs-7">
                         <div class="d-flex align-items-center gap-1">
                             <span>
-                                {% if (user.active) %}
-                                    <a
-                                        href="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#updateModal-{{ user.id }}">
-                                          <span class="indicator published"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-placement="top"
-                                                data-bs-title="Active"
-                                          >
+                                <a
+                                    href="#"
+                                    class="open-status-modal"
+                                    data-user-id="{{ user.id }}"
+                                    data-username="{{ user.username }}"
+                                >
+                                    {% if (user.active) %}
+                                        <span class="indicator published"
+                                              data-bs-toggle="tooltip"
+                                              data-bs-placement="top"
+                                              data-bs-title="Active"
+                                        >
                                         </span>
-                                     </a>
-                                {% else %}
-                                    <a
-                                        href="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#updateModal-{{ user.id }}">
-                                         <span class="indicator danger"
-                                               data-bs-toggle="tooltip"
-                                               data-bs-placement="top"
-                                               data-bs-title="Restricted"
-                                         >
+                                    {% else %}
+                                        <span class="indicator danger"
+                                              data-bs-toggle="tooltip"
+                                              data-bs-placement="top"
+                                              data-bs-title="Restricted"
+                                        >
                                         </span>
-                                    </a>
-                                {% endif %}
+                                    {% endif %}
+                                </a>
                             </span>
                         </div>
                     </td>
@@ -131,39 +126,44 @@
                     {#   Action buttons   #}
                     <td class="py-3">
                         {#   delete   #}
-                        <a class="me-3" href="#" data-bs-toggle="modal"
-                           data-bs-target="#deleteModal-{{ user.id }}">
+                        <a href="#" class="me-3 open-delete-modal"
+                           data-user-id="{{ user.id }}"
+                           data-username="{{ user.username }}"
+                        >
                             <img
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 data-bs-title="Delete"
                                 src="{{ asset('icons/Trash Bin Trash.svg') }}"
-                                alt="pen icon">
+                                alt="bin icon">
                         </a>
+
                         {#   edit   #}
-                        <a href="#" data-bs-toggle="tooltip"
+                        <a href="{{ path('dashboard.userEdit', {id: user.id} ) }}"
+                           data-bs-toggle="tooltip"
                            data-bs-placement="top"
-                           data-bs-title="Edit">
+                           data-bs-title="Edit"
+                        >
                             <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
                         </a>
                     </td>
                 </tr>
 
-                {% include "components/_modalConfirm.html.twig" with {
-                    modal_id: "deleteModal-" ~ user.id,
-                    title: "Confirm Deletion",
-                    body: "Are you sure you want to delete <strong>" ~ user.username ~ "</strong>?",
+                {#                {% include "components/_modalConfirm.html.twig" with { #}
+                {#                    modal_id: "deleteModal-" ~ user.id, #}
+                {#                    title: "Confirm Deletion", #}
+                {#                    body: "Are you sure you want to delete the user '<strong>"~ user.username ~"</strong>'?", #}
+                {#                    confirm_path: path('userDelete', {id: user.id}), #}
+                {#                    confirm_text: "Delete" #}
+                {#                } %} #}
 
-                    confirm_text: "Delete"
-                } %}
-
-                {% include "components/_modalConfirm.html.twig" with {
-                    modal_id: "updateModal-" ~ user.id,
-                    title: "Update Status",
-                    body: "Are you sure you want to update <strong>" ~ user.username ~ "</strong> status?",
-                    confirm_path: path('userStatus', {id: user.id}),
-                    confirm_text: "Confirm"
-                } %}
+                {#                {% include "components/_modalConfirm.html.twig" with { #}
+                {#                    modal_id: "updateModal-" ~ user.id, #}
+                {#                    title: "Update Status", #}
+                {#                    body: "Are you sure you want to update the user '<strong>"~ user.username~ "</strong>' status?", #}
+                {#                    confirm_path: path('userStatus', {id: user.id}), #}
+                {#                    confirm_text: "Confirm" #}
+                {#                } %} #}
 
             {% endfor %}
         {% else %}
@@ -172,4 +172,74 @@
 
         </tbody>
     </table>
+
+
+    {% include "components/_modalConfirm.html.twig" with {
+        modal_id: "globalDeleteModal",
+        title: "Confirm Deletion",
+        body: "Are you sure you want to delete the user '<strong id=\"deleteUsername\"></strong>'?",
+        confirm_path: "",
+        confirm_text: "Delete"
+    } %}
+
+    {% include "components/_modalConfirm.html.twig" with {
+        modal_id: "globalStatusModal",
+        title: "Update Status",
+        body: "Are you sure you want to update the user '<strong id=\"statusUsername\"></strong>' status?",
+        confirm_path: "",
+        confirm_text: "Confirm"
+    } %}
 </div>
+
+
+<script>
+    document.addEventListener('click', function (e) {
+
+        const delBtn = e.target.closest('.open-delete-modal');
+        if (delBtn) {
+            e.preventDefault();
+            const userId = delBtn.dataset.userId;
+            const username = delBtn.dataset.username;
+            const modalEl = document.getElementById('globalDeleteModal');
+            const form = modalEl.querySelector('#confirmActionForm');
+            const usernameEl = modalEl.querySelector('#deleteUsername');
+
+            if (form) {
+                form.action = `/users/delete/${userId}`;
+            }
+            if (usernameEl) {
+                usernameEl.textContent = username;
+            }
+
+            // Show the modal using Bootstrap
+            if (window.bootstrap && window.bootstrap.Modal) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
+        }
+
+        const statusBtn = e.target.closest('.open-status-modal');
+        if (statusBtn) {
+            e.preventDefault();
+            const userId = statusBtn.dataset.userId;
+            const username = statusBtn.dataset.username;
+            const modalEl = document.getElementById('globalStatusModal');
+            const form = modalEl.querySelector('#confirmActionForm');
+            const usernameEl = modalEl.querySelector('#statusUsername');
+
+            if (form) {
+                form.action = `/user-status/${userId}`;
+            }
+            if (usernameEl) {
+                usernameEl.textContent = username;
+            }
+
+            // Show the modal using Bootstrap
+            if (window.bootstrap && window.bootstrap.Modal) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
+        }
+    });
+
+</script>
