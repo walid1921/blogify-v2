@@ -5,9 +5,9 @@
     flex-direction: column;
     align-items: flex-end;
     position: fixed;
-    top: 100px;
-    right: 0;
-    transform: translateX(-20%);
+    bottom: 50px;
+    right: 20px;
+    transform: translateY(-20%);
     max-width: 600px;
     z-index: 999;
     gap: 20px;
@@ -84,17 +84,17 @@
 @keyframes fadeInOut {
     0% {
         opacity: 0;
-        transform: translateX(20px);
+        transform: translateY(20px);
     }
     10% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
     }
     90% {
         opacity: 1;
     }
     100% {
         opacity: 0;
-        transform: translateX(20px);
+        transform: translateY(20px);
     }
 }

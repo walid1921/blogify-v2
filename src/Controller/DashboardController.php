@@ -52,7 +52,7 @@ final class DashboardController extends AbstractController
     public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
 
-        $user = $userRepo->find(11);
+        $user = $userRepo->find(16);
 
         if (!$user) {
             throw $this->createNotFoundException('User not found');
@@ -205,7 +205,6 @@ final class DashboardController extends AbstractController
         ]);
     }
 
-
     // ! All Users
     #[Route('/users', name: 'users')]
     public function users (UserRepository $userRepo): Response
@@ -276,7 +275,6 @@ final class DashboardController extends AbstractController
             'username' => $user->getUsername(),
         ]);
     }
-
 
     // ! User Guide
     #[Route('/guide', name: 'userGuide')]
