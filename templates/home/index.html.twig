@@ -52,8 +52,18 @@
             {# TOP LEFT BLOG #}
             <div
                 class="col-12 col-md-5 p-0 pe-md-3 d-flex flex-column justify-content-between">
-                <a href="#" class="zoom-wrap">
-                    <img src="{{ asset('images/252-15041-4036_2.png') }}" alt="Blog image" class="img-fluid w-100">
+
+                <a href="{{ path('blog.one_blog', { id: blogHighlightedHome.id }) }}"
+                   class="zoom-wrap position-relative blog-highlighted-image">
+                    {% if blogHighlightedHome.coverImage %}
+                        <img src="{{ asset('uploads/blogs/' ~ blogHighlightedHome.coverImage) }}"
+                             alt="{{ blogHighlightedHome.title }}"
+                             class="w-100 h-100 object-cover">
+                    {% endif %}
+
+                    {% if date(blogHighlightedHome.createdAt) > date('-7day') %}
+                        <small class="new_blog_tag">New</small>
+                    {% endif %}
                 </a>
 
                 <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4 ">
@@ -63,21 +73,24 @@
 
                         <div class="w-100 bg-secondary" style="height: 1px;"></div>
                     </div>
-                    <h3>The fascination of texture: fringes <small class=" fw-normal text-secondary">- 4 min
-                            read</small></h3>
+
+                    <h3>{{ blogHighlightedHome.title }}
+                        <small class="fw-normal text-secondary"> - {{ blogHighlightedHome.readTime }} min read</small>
+                    </h3>
+
                     <p class="fw-light ">
-                        Welcome to REVA – where fashion isn’t just clothing, but a passion,
-                        an expression of youth, and a journey of self-expression. Since our start in 2020, we’ve
-                        been...
+
+                        {{ blogHighlightedHome.excerpt|striptags|u.truncate(140, '...') }}
 
                     </p>
                 </div>
                 <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-md-auto mt-5">
                     <div class="d-flex align-items-center gap-2">
-                        <p>Walid Ayad</p>
-                        <small class=" fw-normal text-secondary">- Feb 20, 2025</small>
+                        <p>{{ blogHighlightedHome.author.username }}</p>
+                        {{ include('components/_blogDate.html.twig', { createdAt: blogHighlightedHome.createdAt }) }}
                     </div>
-                    <a href='#'
+
+                    <a href="{{ path('blog.one_blog', { id: blogHighlightedHome.id }) }}"
                        class="text-decoration-none  link-underline-black align-items-center gap-2">
                         Read more
                         <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
@@ -88,6 +101,10 @@
                     </a>
                 </div>
             </div>
+
+
+            {#            {{ include('components/_blogCard.html.twig', {blog: blogHighlightedHome}) }} #}
+
 
             {# Three most liked blogs from the list #}
             {# CAROUSEL #}
@@ -176,10 +193,16 @@
         {# BLOGS #}
         <section class="d-flex flex-column pt-3 w-100 mt-3 mt-md-5">
 
+            <div class="blog-header mb-4">
+                <h2 class="text-uppercase">Latest Blogs</h2>
+            </div>
+
+            {#            <h2 class="text-uppercase mb-4">Latest Blogs</h2> #}
+
             {# Three random blogs from the list #}
             <div class="row g-3 align-items-stretch">
                 {% for blog in blogs %}
-                    {{ include('components/_blogCard.html.twig') }}
+                    {{ include('components/_blogCard.html.twig', {blog: blog}) }}
                 {% endfor %}
             </div>
 

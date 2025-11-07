@@ -62,7 +62,7 @@
                     </td>
 
                     {#   Content   #}
-                    <td class="py-3 fs-7">{{ blog.content|u.truncate(40, '...') }}</td>
+                    <td class="py-3 fs-7">{{ blog.excerpt|striptags|u.truncate(40, '...') }}</td>
 
                     <td class="py-3 fs-7">New, Java, something,</td>
 
@@ -83,14 +83,14 @@
                                             <span class="indicator published"
                                                   data-bs-toggle="tooltip"
                                                   data-bs-placement="top"
-                                                  data-bs-title="Active"
+                                                  data-bs-title="Published"
                                             >
                                             </span>
                                         {% else %}
                                             <span class="indicator danger"
                                                   data-bs-toggle="tooltip"
                                                   data-bs-placement="top"
-                                                  data-bs-title="Restricted"
+                                                  data-bs-title="Unpublished"
                                             >
                                             </span>
                                         {% endif %}

@@ -1,40 +1,65 @@
-<div class=" col-12 col-md-6 col-lg-4 pe-0 pb-5 d-flex flex-column justify-content-between">
+<div class="col-12 col-md-6 col-lg-4 pe-0 pb-5 d-flex flex-column justify-content-between">
 
 
-    <a href="#" class="zoom-wrap position-relative">
-        <img src="{{ asset(blog.image) }}" alt="{{ blog.title }}" class="img-fluid w-100">
-        {% if date(blog.date) > date('-7day') %}
+    <a href="{{ path('blog.one_blog', { id: blog.id }) }}" class="zoom-wrap position-relative blog-image">
+        {% if blog.coverImage %}
+            <img src="{{ asset('uploads/blogs/' ~ blog.coverImage) }}"
+                 alt="{{ blog.title }}"
+                 class="w-100 h-100 object-cover">
+        {% endif %}
+
+
+        {% if date(blog.createdAt) > date('-7day') %}
             <small class="new_blog_tag">New</small>
         {% endif %}
+
     </a>
 
-    <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4">
-        <div class="d-flex align-items-center gap-2">
-            <p class="fw-medium">{{ blog.category }}</p>
-            <div class="w-100 bg-secondary" style="height: 1px;"></div>
+    <div class="d-flex flex-column justify-content-between flex-grow-1">
+        <div class="px-4 d-flex flex-column justify-content-between gap-3 mt-4">
+            <div class="d-flex align-items-center gap-4">
+                <p class="fw-medium">Event</p>
+                <div class="w-100 bg-secondary" style="height: 1px;"></div>
+
+                <div class="d-flex gap-3 align-items-center">
+                    {% include 'components/_likes.html.twig' with {
+                        iconHeightWidth: '25',
+                        heartColor: 'black',
+                    } %}
+
+                    <a href="#">
+                        <img
+                            src="{{ asset('icons/Plain.svg') }}"
+                            alt="share icon"
+                        >
+                    </a>
+
+                </div>
+            </div>
+
+            <h3>{{ blog.title }}
+                <small class="fw-normal text-secondary"> - {{ blog.readTime }} min read</small>
+            </h3>
+
+            <p class="fw-light">{{ blog.excerpt|striptags|u.truncate(140, '...') }}</p>
         </div>
 
-        <h3>{{ blog.title }}
-            <small class="fw-normal text-secondary"> - {{ blog.readTime }}</small>
-        </h3>
+        <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-4">
+            <div class="d-flex align-items-center gap-2">
+                <p>{{ blog.author.username }}</p> -
+                {{ include('components/_blogDate.html.twig', { createdAt: blog.createdAt }) }}
+            </div>
 
-        <p class="fw-light">{{ blog.content|u.truncate(140, '...') }}</p>
-    </div>
-
-    <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-4">
-        <div class="d-flex align-items-center gap-2">
-            <p>{{ blog.author }}</p>
-            <small class="text-secondary">- {{ blog.date|date('M j, Y') }}</small>
+            <a href="{{ path('blog.one_blog', { id: blog.id }) }}"
+               class="text-decoration-none link-underline-black align-items-center gap-2">
+                Read more
+                <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
+                          stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"></path>
+                </svg>
+            </a>
         </div>
-
-        <a href="#" class="text-decoration-none link-underline-black align-items-center gap-2">
-            Read more
-            <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
-                      stroke="black" stroke-width="2" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-            </svg>
-        </a>
     </div>
 </div>
