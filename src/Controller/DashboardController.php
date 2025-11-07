@@ -36,6 +36,19 @@ final class DashboardController extends AbstractController
 
         $likesCount = $likesRepository->countLikesForBlogs($blogIds); // Fetch like counts for all blogs at once
 
+        foreach ($blogs as $blog) {
+            $json = json_decode($blog->getContent() ?? '""', true, 512, JSON_THROW_ON_ERROR) ?? [];
+
+            $blog->excerpt = '';
+
+            foreach ($json['blocks'] ?? [] as $block) {
+                if (($block['type'] ?? '') === 'paragraph' && !empty($block['data']['text'])) {
+                    $blog->excerpt = $block['data']['text'];
+                    break;
+                }
+            }
+        }
+
         return $this->render('dashboard/index.html.twig', [
             'blogs' => $blogs,
             'order' => $order,

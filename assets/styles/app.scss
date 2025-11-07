@@ -465,3 +465,28 @@ th {
     background-color: var(--bs-primary);
     color: var(--bs-white);
 }
+
+
+.blog-image {
+    height: 350px; // or whatever height you want
+    overflow: hidden;
+
+    img.object-cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+.blog-highlighted-image {
+    height: 550px;
+    overflow: hidden;
+
+    img.object-cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}

@@ -49,39 +49,47 @@ class BlogsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findRandomBlogs (int $limit = 3): array
+    public function findAllPublished (): array
     {
-        // Get total count of blogs
-        $total = $this->count([]);
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.is_published = :published')
+            ->setParameter('published', true)
+            ->orderBy('b.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
-        if ($total === 0) {
-            return [];
-        }
+    public function findLatestPublished (int $limit = 3): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.is_published = :published')
+            ->setParameter('published', true)
+            ->orderBy('b.created_at', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 
-        // Pick random offsets (make sure we don't exceed total)
-        $offsets = [];
-        while (count($offsets) < $limit && count($offsets) < $total) {
-            $offset = random_int(0, $total - 1);
-            if (!in_array($offset, $offsets, true)) {
-                $offsets[] = $offset;
-            }
-        }
+//    public function findRandomBlogs (int $limit = 3): array
+//    {
+//        return $this->createQueryBuilder('b')
+//            ->andWhere('b.is_published = :published')
+//            ->setParameter('published', true)
+//            ->orderBy('b.created_at', 'DESC')
+//            ->setMaxResults($limit)
+//            ->getQuery()
+//            ->getResult();
+//    }
 
-        // Fetch each blog by offset (Doctrine QueryBuilder supports setFirstResult + setMaxResults)
-        $randomBlogs = [];
-        foreach ($offsets as $offset) {
-            $blog = $this->createQueryBuilder('b')
-                ->setFirstResult($offset)
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
-
-            if ($blog) {
-                $randomBlogs[] = $blog;
-            }
-        }
-
-        return $randomBlogs;
+    public function findHighlitedBlogs (int $limit = 3): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.is_published = :published')
+            ->setParameter('published', true)
+            ->orderBy('b.created_at', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 
 
