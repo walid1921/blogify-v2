@@ -61,6 +61,8 @@ final class HomeController extends AbstractController
             }
         }
 
+
+        //! Highlighting a specific blog for the home page, will be controlled later from the settings panel
         $blogHighlightedHome = $blogRepo->find(10);
 
         // Here should redirect to not found page
@@ -70,8 +72,8 @@ final class HomeController extends AbstractController
 
 
         return $this->render('home/index.html.twig', [
-            'blogs' => $blogs,
             //'blogs' => $this->dummyBlogs,
+            'blogs' => $blogs,
             'blogHighlightedHome' => $blogHighlightedHome,
         ]);
 
