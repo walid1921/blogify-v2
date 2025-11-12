@@ -48,7 +48,7 @@
 
         <div class="d-flex flex-column gap-4 mt-4 mb-4 px-4">
             <div class="d-flex align-items-center justify-content-between">
-                <h1 class="text-uppercase fs-3">{{ blog.title }}</h1>
+                <h1 class="fs-3">{{ blog.title }}</h1>
 
                 <div class="d-flex align-items-center gap-4">
                     {% include 'components/_likes.html.twig' with {
@@ -68,9 +68,15 @@
             </div>
 
             <div class="d-flex align-items-end gap-2">
-                <div class="border border-black px-2 ">
-                    <p class="fs-7">Event</p>
-                </div>
+
+                {% for category in blog.categories %}
+                    <div class="border border-black px-2 ">
+                            <span class="fs-7">
+                                {{ category.name }}
+                            </span>
+                    </div>
+                {% endfor %}
+
 
                 {{ include('components/_blogDate.html.twig', { createdAt: blog.createdAt }) }}
             </div>
@@ -79,9 +85,11 @@
                 <p class="fs-7"><span class="fw-semibold">Original language:</span> {{ blog.blogLanguage }} -</p>
                 <p class="text-secondary fs-7">{{ blog.readTime }} min read</p>
             </div>
+
+            <div class="w-100 bg-secondary opacity-50" style="height: 1px;"></div>
         </div>
 
-        <div class="d-flex flex-column mt-5 align-items-center justify-content-center w-100 px-4">
+        <div class="d-flex flex-column align-items-center justify-content-center w-100 px-4">
 
             <div class="js-blog-content" data-content="{{ blog.content|e('html_attr') }}"></div>
 

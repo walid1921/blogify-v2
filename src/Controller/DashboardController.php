@@ -144,6 +144,26 @@ final class DashboardController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageFile = $form->get('coverImage')->getData();
+            if ($imageFile) {
+                // create a unique name for the file
+                $newFilename = uniqid('', true) . '.' . $imageFile->guessExtension();
+
+                // move the file to /public/uploads/blogs
+                try {
+                    $imageFile->move(
+                        $this->getParameter('kernel.project_dir') . '/public/uploads/blogs',
+                        $newFilename
+                    );
+                } catch (Exception $e) {
+                    $this->addFlash('error', 'Image upload failed: ' . $e->getMessage());
+                }
+
+                // set filename in the entity
+                $blog->setCoverImage($newFilename);
+            }
+
             $entityManager->persist($blog);
             $entityManager->flush();
 
