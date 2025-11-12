@@ -63,7 +63,7 @@ final class HomeController extends AbstractController
 
 
         //! Highlighting a specific blog for the home page, will be controlled later from the settings panel
-        $blogHighlightedHome = $blogRepo->find(10);
+        $blogHighlightedHome = $blogRepo->find(23);
 
         // Here should redirect to not found page
         if (!$blogHighlightedHome) {

@@ -17,13 +17,14 @@
             <div class="d-flex gap-3">
                 {{ form_row(formBlog.title, { row_attr: { class: 'form-row-inline' } }) }}
                 {{ form_row(formBlog.readTime,  { row_attr: { class: 'form-row-inline' } }) }}
-                {{ form_row(formBlog.blogLanguage,  { row_attr: { class: 'form-row-inline' } }) }}
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 d-flex gap-3">
                 {# <pre>{{ dump(formBlog.categories.vars.attr) }}</pre> #}
 
                 {{ form_widget(formBlog.categories) }}
+                {{ form_row(formBlog.blogLanguage,  { row_attr: { class: 'form-row-inline' } }) }}
+
             </div>
 
 

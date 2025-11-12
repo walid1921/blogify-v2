@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new TomSelect(el, {
             plugins: ['remove_button'],
             //     create: true,        // 🔒 for now: no “create new” (prevents invalid choice)
-            maxItems: null,
+            maxItems: 3,
             placeholder: 'Select categories',
         });
     });
