@@ -64,7 +64,13 @@
                     {#   Content   #}
                     <td class="py-3 fs-7">{{ blog.excerpt|striptags|u.truncate(40, '...') }}</td>
 
-                    <td class="py-3 fs-7">New, Java, something,</td>
+                    <td class="py-3 fs-7">
+                        {% if blog.categories|length > 0 %}
+                            {{ blog.categories|map(c => c.name)|join(', ') }}
+                        {% else %}
+                            <span class="text-secondary">No categories</span>
+                        {% endif %}
+                    </td>
 
                     {#   Created_at   #}
                     <td class="py-3 fs-7">{{ blog.createdAt|date('Y-m-d') }}</td>

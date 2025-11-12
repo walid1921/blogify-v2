@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Blog;
+use App\Entity\BlogCategories;
+use JsonException;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -12,9 +15,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Throwable;
 
 class BlogType extends AbstractType
 {
+
+    /**
+     * @throws JsonException
+     */
     public function buildForm (FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -25,6 +33,19 @@ class BlogType extends AbstractType
                     'class' => 'js-editorjs',
                     'hidden' => true,
                 ],
+            ])
+            ->add('categories', EntityType::class, [
+                'class' => BlogCategories::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => false,
+                'required' => false,
+                'by_reference' => false,
+                'attr' => [
+                    'class' => 'form-select',
+                    'multiple' => 'multiple',
+                ],
+                'placeholder' => 'Select or create categories...',
             ])
             ->add('coverImage', FileType::class, [
                 'mapped' => false,   // we'll move the file in the controller
@@ -37,12 +58,14 @@ class BlogType extends AbstractType
             ->add('readTime', IntegerType::class, ['required' => true, 'label' => 'Estimated read time (3 min)'])
             ->add('blogLanguage', TextType::class, ['required' => true, 'label' => "Blog's Language (English)"])
             ->add('save', SubmitType::class);
+
     }
 
     public function configureOptions (OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Blog::class,
+            'categories' => [],
         ]);
     }
 }
