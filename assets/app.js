@@ -9,6 +9,8 @@ import "./bootstrap.js";
 import "./styles/app.css";
 import "./styles/app.scss";
 import * as bootstrap from "bootstrap"; // Import Bootstrap's JS API
+import TomSelect from 'tom-select';
+import 'tom-select/dist/css/tom-select.bootstrap5.css';
 
 // Make Bootstrap available globally for inline scripts
 window.bootstrap = bootstrap;
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const editorContainer = document.querySelector(".js-editorjs");
     if (!editorContainer) return;
 
-    let initialData = { blocks: [] };
+    let initialData = {blocks: []};
     try {
         if (editorContainer.value && editorContainer.value.trim() !== "") {
             initialData = JSON.parse(editorContainer.value);
@@ -137,7 +139,7 @@ https://wallpapercave.com/wp/wp9100484.jpg`;
             }
         });
 
-        observer.observe(holder, { childList: true, subtree: true });
+        observer.observe(holder, {childList: true, subtree: true});
     })();
 });
 
@@ -237,4 +239,16 @@ window.addEventListener("scroll", () => {
     } else {
         header.classList.remove("scrolled");
     }
+});
+
+//! Multi-select
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('select[multiple]').forEach((el) => {
+        new TomSelect(el, {
+            plugins: ['remove_button'],
+            //     create: true,        // 🔒 for now: no “create new” (prevents invalid choice)
+            maxItems: null,
+            placeholder: 'Select categories',
+        });
+    });
 });

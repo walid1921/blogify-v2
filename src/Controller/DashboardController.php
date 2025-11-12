@@ -62,30 +62,31 @@ final class DashboardController extends AbstractController
      * @throws JsonException
      */
     #[Route('create', name: 'createBlog')]
-    public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
+    public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepo, BlogCategoriesRepository $blogCategoriesRepository): Response
     {
 
+        // 👤 Get or validate user
         $user = $userRepo->find(16);
-
         if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
+
         // creates a blog object and initializes inputs
         $blog = new Blog();
         $blog->setTitle('');
         $blog->setContent(json_encode(['blocks' => []], JSON_THROW_ON_ERROR)); // initialize with an empty JSON string instead of '':
         $blog->setCreatedAt(new DateTimeImmutable());
         $blog->setReadTime();
-//        $blog->setAuthor($this->getUser());
-
-        $blog->setAuthor($user);
+        $blog->setAuthor($user); //  $blog->setAuthor($this->getUser());
         $blog->setBlogLanguage('');
         $blog->setIsPublished(false);
-
 
         // Create the form using the BlogType form class
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
+
+//        dd($request->request->all('blog'));
+
 
         // Handle the form submission, validation, and saving the data to the database
         if ($form->isSubmitted() && $form->isValid()) {
@@ -139,6 +140,7 @@ final class DashboardController extends AbstractController
         }
 
         $form = $this->createForm(BlogType::class, $blog);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

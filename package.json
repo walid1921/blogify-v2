@@ -8,7 +8,8 @@
         "@popperjs/core": "^2.11.8",
         "bootstrap": "^5.3.8",
         "core-js": "^3.45.1",
-        "editorjs-html": "^4.0.5"
+        "editorjs-html": "^4.0.5",
+        "tom-select": "^2.4.3"
     },
     "scripts": {
         "dev": "encore dev",

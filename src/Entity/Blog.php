@@ -63,9 +63,16 @@ class Blog
     #[ORM\JoinColumn(nullable: true)]
     private ?User $author = null;
 
+    /**
+     * @var Collection<int, BlogCategories>
+     */
+    #[ORM\ManyToMany(targetEntity: BlogCategories::class, inversedBy: 'blogs')]
+    private Collection $categories;
+
     public function __construct ()
     {
         $this->likes = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId (): ?int
@@ -207,6 +214,30 @@ class Blog
     public function setAuthor (?User $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BlogCategories>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(BlogCategories $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(BlogCategories $category): static
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }

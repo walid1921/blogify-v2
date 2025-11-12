@@ -20,6 +20,12 @@
                 {{ form_row(formBlog.blogLanguage,  { row_attr: { class: 'form-row-inline' } }) }}
             </div>
 
+            <div class="mb-3">
+                {# <pre>{{ dump(formBlog.categories.vars.attr) }}</pre> #}
+
+                {{ form_widget(formBlog.categories) }}
+            </div>
+
 
             <div class=" editorjs-holder-wrapper">
                 <label for="editorjs-holder" class="editorjs-holder-label">Content *</label>
