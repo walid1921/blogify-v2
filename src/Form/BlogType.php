@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Blog;
 use App\Entity\BlogCategories;
+use Doctrine\DBAL\Types\BooleanType;
 use JsonException;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -15,7 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Throwable;
 
 class BlogType extends AbstractType
 {
@@ -26,12 +27,22 @@ class BlogType extends AbstractType
     public function buildForm (FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, ['required' => true, 'label' => 'Title'])
-            ->add('content', TextareaType::class, [
+            ->add('coverImage', FileType::class, [
+                'mapped' => false,   // we'll move the file in the controller
                 'required' => false,
+                'constraints' => [
+                    new Image(maxSize: '4M', mimeTypesMessage: 'Please upload a valid image'),
+                ],
+            ])
+            ->add('title', TextType::class, ['required' => true, 'label' => 'Title'])
+            ->add('readTime', IntegerType::class, [
+                'required' => true,
+                'label' => 'Estimated read time (3 min)',
+                'data' => 3,
                 'attr' => [
-                    'class' => 'js-editorjs',
-                    'hidden' => true,
+                    'min' => 1,
+                    'max' => 60,
+                    'step' => 1,
                 ],
             ])
             ->add('categories', EntityType::class, [
@@ -45,18 +56,20 @@ class BlogType extends AbstractType
                     'class' => 'form-select',
                     'multiple' => 'multiple',
                 ],
-                'placeholder' => 'Select or create categories...',
             ])
-            ->add('coverImage', FileType::class, [
-                'mapped' => false,   // we'll move the file in the controller
+            ->add('blogLanguage', TextType::class, ['required' => true, 'label' => "Blog's Language (English)"])
+            ->add('content', TextareaType::class, [
                 'required' => false,
-                'constraints' => [
-                    new Image(maxSize: '4M', mimeTypesMessage: 'Please upload a valid image'),
+                'attr' => [
+                    'class' => 'js-editorjs',
+                    'hidden' => true,
                 ],
             ])
-            ->add('is_published')
-            ->add('readTime', IntegerType::class, ['required' => true, 'label' => 'Estimated read time (3 min)'])
-            ->add('blogLanguage', TextType::class, ['required' => true, 'label' => "Blog's Language (English)"])
+            ->add('is_published', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Published',
+                'help' => 'When checked, your blog will be visible publicly.',
+            ])
             ->add('save', SubmitType::class);
 
     }

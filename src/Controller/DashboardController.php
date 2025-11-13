@@ -62,7 +62,7 @@ final class DashboardController extends AbstractController
      * @throws JsonException
      */
     #[Route('create', name: 'createBlog')]
-    public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepo, BlogCategoriesRepository $blogCategoriesRepository): Response
+    public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
 
         // 👤 Get or validate user
@@ -76,9 +76,7 @@ final class DashboardController extends AbstractController
         $blog->setTitle('');
         $blog->setContent(json_encode(['blocks' => []], JSON_THROW_ON_ERROR)); // initialize with an empty JSON string instead of '':
         $blog->setCreatedAt(new DateTimeImmutable());
-        $blog->setReadTime();
         $blog->setAuthor($user); //  $blog->setAuthor($this->getUser());
-        $blog->setBlogLanguage('');
         $blog->setIsPublished(false);
 
         // Create the form using the BlogType form class

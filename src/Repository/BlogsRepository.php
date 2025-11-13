@@ -44,9 +44,13 @@ class BlogsRepository extends ServiceEntityRepository
     public function findAllSortedByDate (string $order = 'DESC'): array
     {
         return $this->createQueryBuilder('b')
-            ->orderBy('b.created_at', $order) // ASC or DESC
+            ->addSelect('a', 'c') // select joined entities
+            ->leftJoin('b.author', 'a')
+            ->leftJoin('b.categories', 'c')
+            ->orderBy('b.created_at', $order)
             ->getQuery()
             ->getResult();
+
     }
 
     public function findAllPublished (): array
@@ -59,7 +63,23 @@ class BlogsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findLatestPublished (int $limit = 3): array
+//    public function findAllPublished (?int $limit = null): array
+//    {
+//        $qb = $this->createQueryBuilder('b')
+//            ->andWhere('b.is_published = :published')
+//            ->setParameter('published', true)
+//            ->orderBy('b.created_at', 'DESC');
+//
+//        if ($limit !== null) {
+//            $qb->setMaxResults($limit);
+//        }
+//
+//        return $qb
+//            ->getQuery()
+//            ->getResult();
+//    }
+
+    public function findLatestPublished (?int $limit = 3): array
     {
         return $this->createQueryBuilder('b')
             ->andWhere('b.is_published = :published')
@@ -69,17 +89,6 @@ class BlogsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-//    public function findRandomBlogs (int $limit = 3): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.is_published = :published')
-//            ->setParameter('published', true)
-//            ->orderBy('b.created_at', 'DESC')
-//            ->setMaxResults($limit)
-//            ->getQuery()
-//            ->getResult();
-//    }
 
     public function findHighlitedBlogs (int $limit = 3): array
     {

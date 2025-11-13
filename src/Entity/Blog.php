@@ -48,9 +48,23 @@ class Blog
     private ?string $coverImage = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotNull(message: "Read time cannot be empty.")]
+    #[Assert\Positive(message: "Read time must be greater than 0.")]
+    #[Assert\LessThanOrEqual(
+        value: 60,
+        message: "Read time cannot be longer than {{ compared_value }} minutes."
+    )]
     private ?int $read_time = null;
 
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 5,
+        max: 20,
+        minMessage: "The language must be at least {{ limit }} characters long.",
+        maxMessage: "The language cannot be longer than {{ limit }} characters."
+    )]
+    #[Assert\NotBlank(message: 'Language cannot be empty.')]
     private ?string $blog_language = null;
 
     /**
@@ -67,6 +81,10 @@ class Blog
      * @var Collection<int, BlogCategories>
      */
     #[ORM\ManyToMany(targetEntity: BlogCategories::class, inversedBy: 'blogs')]
+    #[Assert\Count(
+        min: 1,
+        minMessage: 'You must select at least {{ limit }} category.'
+    )]
     private Collection $categories;
 
     public function __construct ()
@@ -221,12 +239,12 @@ class Blog
     /**
      * @return Collection<int, BlogCategories>
      */
-    public function getCategories(): Collection
+    public function getCategories (): Collection
     {
         return $this->categories;
     }
 
-    public function addCategory(BlogCategories $category): static
+    public function addCategory (BlogCategories $category): static
     {
         if (!$this->categories->contains($category)) {
             $this->categories->add($category);
@@ -235,7 +253,7 @@ class Blog
         return $this;
     }
 
-    public function removeCategory(BlogCategories $category): static
+    public function removeCategory (BlogCategories $category): static
     {
         $this->categories->removeElement($category);
 

@@ -5,7 +5,7 @@
         {# ⚠️ Keep novalidate=false so HTML5 validation also works #}
         {{ form_start(formBlog, {'attr': {'novalidate': true}}) }}
 
-        {# 🔹 Global form errors (e.g. if CSRF fails) #}
+        {# 🔹 Global form errors REMOVED: {{ form_errors(formBlog) }} - This was showing ALL errors at the top #}
         {{ form_errors(formBlog) }}
 
         <div class="d-flex flex-column gap-4 w-100">
@@ -23,8 +23,7 @@
                 {# <pre>{{ dump(formBlog.categories.vars.attr) }}</pre> #}
 
                 {{ form_widget(formBlog.categories) }}
-                {{ form_row(formBlog.blogLanguage,  { row_attr: { class: 'form-row-inline' } }) }}
-
+                {{ form_row(formBlog.blogLanguage, { row_attr: { class: 'form-row-inline' } }) }}
             </div>
 
 
@@ -38,7 +37,7 @@
             {{ form_row(formBlog.is_published) }}
 
             <div class="d-flex flex-column gap-1">
-                <p class="text-secondary fs-7">You can save it now and edit it later</p>
+                <p class="form-help">You can save it now and edit it later</p>
                 {{ form_row(formBlog.save) }}
             </div>
 
