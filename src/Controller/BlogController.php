@@ -2,19 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Blog;
-use App\Entity\BlogCategories;
-use App\Entity\User;
-use App\Entity\UserProfile;
-use App\Form\BlogType;
-use App\Form\UserType;
-use App\Repository\BlogCategoriesRepository;
 use App\Repository\BlogsRepository;
 use App\Repository\LikesRepository;
-use App\Repository\UserRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

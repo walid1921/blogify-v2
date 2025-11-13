@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('select[multiple]').forEach((el) => {
         new TomSelect(el, {
             plugins: ['remove_button'],
-            //     create: true,        // 🔒 for now: no “create new” (prevents invalid choice)
+            // create: true,        // for now: no “create new”
             maxItems: 3,
             placeholder: 'Select categories',
         });
