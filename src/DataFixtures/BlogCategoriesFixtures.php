@@ -11,18 +11,18 @@ class BlogCategoriesFixtures extends Fixture
 {
     public function load (ObjectManager $manager): void
     {
-        $faker = Factory::create();
-
-        // Generate 10 Categories
-        for ($i = 0; $i < 10; $i++) {
-            $category = new BlogCategories();
-
-            $category->setName($faker->word());
-            $category->setCreatedAt($faker->dateTime());
-
-            $manager->persist($category);
-        }
-
-        $manager->flush();
+//        $faker = Factory::create();
+//
+//        // Generate 10 Categories
+//        for ($i = 0; $i < 10; $i++) {
+//            $category = new BlogCategories();
+//
+//            $category->setName($faker->word());
+//            $category->setCreatedAt($faker->dateTime());
+//
+//            $manager->persist($category);
+//        }
+//
+//        $manager->flush();
     }
 }

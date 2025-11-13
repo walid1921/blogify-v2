@@ -1,20 +1,106 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="page-container mt-5">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/walid.kouider-ayad/Desktop/Projects/Blogify-v2/src/Controller/LoginController.php</code></li>
-        <li>Your template at <code>/Users/walid.kouider-ayad/Desktop/Projects/Blogify-v2/templates/login/index.html.twig</code></li>
-    </ul>
-</div>
+        <form action="{{ path('app_login') }}"
+              method="post"
+              class="d-flex flex-column justify-content-center align-items-center">
+
+            {# --- Switcher (Login / Register) --- #}
+            <div class="glass-radio-group mb-5">
+                <input type="radio" name="plan" id="glass-silver" checked>
+                <label for="glass-silver">Login</label>
+
+                <input type="radio" name="plan" id="glass-gold">
+                <label for="glass-gold">Register</label>
+
+                <div class="glass-glider"></div>
+            </div>
+
+            <div class="w-25 d-flex flex-column form-wrapper mt-5">
+
+                {# --- Error Message --- #}
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                {# ======================== GOOGLE LOGIN BUTTON ======================== #}
+                <button type="button" class="google-btn mb-4">
+                    <img src="{{ asset('icons/google.svg') }}" class="google-icon" alt="Google">
+                    Login with Google
+                </button>
+
+                {# ======================== DIVIDER ======================== #}
+                <div class="divider my-4">
+                    <span>or continue with email</span>
+                </div>
+
+                {# ======================== EMAIL FIELD ======================== #}
+                <div class="my-custom-row mt-4">
+                    <div class="input-wrapper">
+                        <input type="text"
+                               id="username"
+                               name="_username"
+                               class="my-input"
+                               value="{{ lastUsername }}"
+                               required
+                               autofocus>
+                        <label for="username" class="my-label">Email</label>
+                        <span class="underline"></span>
+                    </div>
+                </div>
+
+                {# ======================== PASSWORD FIELD ======================== #}
+                <div class="my-custom-row mt-4">
+                    <div class="input-wrapper">
+                        <input type="password"
+                               id="password"
+                               name="_password"
+                               class="my-input"
+                               required>
+                        <label for="password" class="my-label">Password</label>
+                        <span class="underline"></span>
+                    </div>
+                </div>
+
+                {# --- Forgot Password link --- #}
+                <div class="d-flex align-items-center gap-2 mt-2">
+                    <p class="text-secondary fs-8"> Forgot your password?</p>
+                    <a href="{{ path('dashboard.allBlogs') }}"
+                       class="link-underline-black fs-8">
+                        Reset password
+                    </a>
+                </div>
+
+                {# --- CSRF Token --- #}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                {# --- Redirect path after login --- #}
+                <input type="hidden" name="_target_path" value="{{ path('dashboard.allBlogs') }}">
+
+                {# ======================== SUBMIT BUTTON ======================== #}
+                <button type="submit" class="button-primary mt-5 py-2 px-4">
+                    Login
+                </button>
+
+                {# ======================== ADVANTAGES SECTION ======================== #}
+                <div class="login-advantages mt-5">
+                    <h6>Login advantages:</h6>
+                    <ul>
+                        <li>Express shopping</li>
+                        <li>Save your data and settings</li>
+                        <li>Order overview and shipping information</li>
+                        <li>Manage your newsletter subscription</li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+
 {% endblock %}
