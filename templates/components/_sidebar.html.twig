@@ -21,26 +21,53 @@
             </label>
         </div>
 
-        <div class="d-flex flex-column justify-content-center align-items-center mx-1">
-            <div class="glass-radio-group-sidebar">
-                <input type="radio" name="plan" id="glass-silver" checked=""/>
-                <label for="glass-silver">Admin</label>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="d-flex flex-column justify-content-center align-items-center mx-1">
+                <div class="glass-radio-group-sidebar">
+                    <input type="radio" name="plan" id="glass-silver" checked=""/>
+                    <label for="glass-silver">Admin</label>
 
-                <input type="radio" name="plan" id="glass-gold"/>
-                <label for="glass-gold">User</label>
+                    <input type="radio" name="plan" id="glass-gold"/>
+                    <label for="glass-gold">User</label>
 
-                <div class="glass-glider"></div>
+                    <div class="glass-glider"></div>
+                </div>
             </div>
-        </div>
+        {% endif %}
 
         <section class="sidebar__wrapper">
 
-
             <ul class="sidebar__list list--primary">
-                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.allBlogs' ? 'active' : '' }}">
-                    <a href="{{ path('dashboard.allBlogs') }}"
-                       class="sidebar__link"
-                       data-tooltip="Blogs">
+
+                {% if is_granted('ROLE_USER') %}
+                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.home' ? 'active' : '' }}">
+                        <a href="{{ path('dashboard.home') }}"
+                           class="sidebar__link"
+                           data-tooltip="Home">
+                            <span class="icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path
+    d="M18.18 8.03933L18.6435 7.57589C19.4113 6.80804 20.6563 6.80804 21.4241 7.57589C22.192 8.34374 22.192 9.58868 21.4241 10.3565L20.9607 10.82M18.18 8.03933C18.18 8.03933 18.238 9.02414 19.1069 9.89309C19.9759 10.762 20.9607 10.82 20.9607 10.82M18.18 8.03933L13.9194 12.2999C13.6308 12.5885 13.4865 12.7328 13.3624 12.8919C13.2161 13.0796 13.0906 13.2827 12.9882 13.4975C12.9014 13.6797 12.8368 13.8732 12.7078 14.2604L12.2946 15.5L12.1609 15.901M20.9607 10.82L16.7001 15.0806C16.4115 15.3692 16.2672 15.5135 16.1081 15.6376C15.9204 15.7839 15.7173 15.9094 15.5025 16.0118C15.3203 16.0986 15.1268 16.1632 14.7396 16.2922L13.5 16.7054L13.099 16.8391M13.099 16.8391L12.6979 16.9728C12.5074 17.0363 12.2973 16.9867 12.1553 16.8447C12.0133 16.7027 11.9637 16.4926 12.0272 16.3021L12.1609 15.901M13.099 16.8391L12.1609 15.901"
+    stroke="black" stroke-width="1.5"></path>
+<path d="M8 13H10.5" stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
+<path d="M8 9H14.5" stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
+<path d="M8 17H9.5" stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
+<path
+    d="M3 14V10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157M21 14C21 17.7712 21 19.6569 19.8284 20.8284M4.17157 20.8284C5.34315 22 7.22876 22 11 22H13C16.7712 22 18.6569 22 19.8284 20.8284M19.8284 20.8284C20.7715 19.8853 20.9554 18.4796 20.9913 16"
+    stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
+</svg>
+
+                    </span>
+                            <span class="text">Home</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_BLOGGER') %}
+                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.allBlogs' ? 'active' : '' }}">
+                        <a href="{{ path('dashboard.allBlogs') }}"
+                           class="sidebar__link"
+                           data-tooltip="Blogs">
                     <span class="icon">
                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path
@@ -64,14 +91,17 @@
 </svg>
 
                     </span>
-                        <span class="text">Blogs</span>
-                    </a>
-                    <small class=" fw-normal text-secondary"> {{ blogsCount }}</small>
-                </li>
-                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.allBlogCategories' ? 'active' : '' }}">
-                    <a href="{{ path('dashboard.allBlogCategories') }}"
-                       class="sidebar__link "
-                       data-tooltip="Categories">
+                            <span class="text">Blogs</span>
+                        </a>
+                        <small class=" fw-normal text-secondary"> {{ blogsCount }}</small>
+                    </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.allBlogCategories' ? 'active' : '' }}">
+                        <a href="{{ path('dashboard.allBlogCategories') }}"
+                           class="sidebar__link "
+                           data-tooltip="Categories">
                     <span class="icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path
@@ -89,15 +119,17 @@
 </svg>
 
                     </span>
-                        <span class="text">Categories</span>
-                    </a>
-                    <small class=" fw-normal text-secondary"> {{ blogCategoriesCount }}</small>
-                </li>
+                            <span class="text">Categories</span>
+                        </a>
+                        <small class=" fw-normal text-secondary"> {{ blogCategoriesCount }}</small>
+                    </li>
+                {% endif %}
 
-                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.users' ? 'active' : '' }}">
-                    <a href="{{ path('dashboard.users') }}"
-                       class="sidebar__link "
-                       data-tooltip="Users">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.users' ? 'active' : '' }}">
+                        <a href="{{ path('dashboard.users') }}"
+                           class="sidebar__link "
+                           data-tooltip="Users">
                     <span class="icon">
                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="9" cy="6" r="4" stroke="black" stroke-width="1.5"></circle>
@@ -112,10 +144,12 @@
 
 
                     </span>
-                        <span class="text">Users</span>
-                    </a>
-                    <small class=" fw-normal text-secondary"> {{ usersCount }}</small>
-                </li>
+                            <span class="text">Users</span>
+                        </a>
+                        <small class=" fw-normal text-secondary"> {{ usersCount }}</small>
+                    </li>
+                {% endif %}
+
                 <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
                     <a href="#"
                        class="sidebar__link "
@@ -130,27 +164,6 @@
                     </span>
                         <span class="text">Favourite</span>
                     </a>
-                </li>
-                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.userGuide' ? 'active' : '' }}">
-                    {# Open the specidc Blog for that "How to write your first blog" #}
-                    <a href="{{ path('dashboard.userGuide') }}"
-                       class="sidebar__link "
-                       data-tooltip="User guide">
-                    <span class="icon">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path
-    d="M18.18 8.03933L18.6435 7.57589C19.4113 6.80804 20.6563 6.80804 21.4241 7.57589C22.192 8.34374 22.192 9.58868 21.4241 10.3565L20.9607 10.82M18.18 8.03933C18.18 8.03933 18.238 9.02414 19.1069 9.89309C19.9759 10.762 20.9607 10.82 20.9607 10.82M18.18 8.03933L13.9194 12.2999C13.6308 12.5885 13.4865 12.7328 13.3624 12.8919C13.2161 13.0796 13.0906 13.2827 12.9882 13.4975C12.9014 13.6797 12.8368 13.8732 12.7078 14.2604L12.2946 15.5L12.1609 15.901M20.9607 10.82L16.7001 15.0806C16.4115 15.3692 16.2672 15.5135 16.1081 15.6376C15.9204 15.7839 15.7173 15.9094 15.5025 16.0118C15.3203 16.0986 15.1268 16.1632 14.7396 16.2922L13.5 16.7054L13.099 16.8391M13.099 16.8391L12.6979 16.9728C12.5074 17.0363 12.2973 16.9867 12.1553 16.8447C12.0133 16.7027 11.9637 16.4926 12.0272 16.3021L12.1609 15.901M13.099 16.8391L12.1609 15.901"
-    stroke="black" stroke-width="1.5"></path>
-<path d="M8 13H10.5" stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
-<path d="M8 9H14.5" stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
-<path d="M8 17H9.5" stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
-<path
-    d="M3 14V10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157M21 14C21 17.7712 21 19.6569 19.8284 20.8284M4.17157 20.8284C5.34315 22 7.22876 22 11 22H13C16.7712 22 18.6569 22 19.8284 20.8284M19.8284 20.8284C20.7715 19.8853 20.9554 18.4796 20.9913 16"
-    stroke="black" stroke-width="1.5" stroke-linecap="round"></path>
-</svg>
-
-                    </span>
-                        <span class="text">Guide</span> </a>
                 </li>
             </ul>
             <ul class="sidebar__list list--secondary">
@@ -169,10 +182,12 @@
                     </span>
                         <span class="text">Profile</span> </a>
                 </li>
-                <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
-                    <a href="#"
-                       class="sidebar__link "
-                       data-tooltip="Settings">
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
+                        <a href="#"
+                           class="sidebar__link "
+                           data-tooltip="Settings">
                     <span class="icon">
                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="12" cy="12" r="3" stroke="black" stroke-width="1.5"></circle>
@@ -182,9 +197,11 @@
 </svg>
 
                     </span>
-                        <span class="text">Settings</span>
-                    </a>
-                </li>
+                            <span class="text">Settings</span>
+                        </a>
+                    </li>
+                {% endif %}
+
                 <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
                     <a href="#"
                        class="sidebar__link "

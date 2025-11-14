@@ -309,6 +309,7 @@ th {
     background-color: var(--bs-primary);
     transition: background-color 0.3s ease;
     opacity: 80%;
+    cursor: pointer;
 
     &:hover {
         opacity: 100%;

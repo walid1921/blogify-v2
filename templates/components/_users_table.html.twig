@@ -50,9 +50,30 @@
                     {#   Username  #}
                     <td class="py-3 fs-7">
                         <div class="d-flex align-items-center gap-1">
-                            <span>{{ user.username }}</span>
+                            <span class="position-relative">
+
+                                {% if is_granted('ROLE_ADMIN') and user.id == app.user.id %}
+                                    <img src="{{ asset('icons/Arrow Right.svg') }}" alt="Arrow right">
+                                {% endif %}
+
+                                {{ user.username }}
+
+                                {# Show badge if CURRENTLY LOGGED-IN user is ADMIN #}
+
+                                {% if 'ROLE_ADMIN' in user.roles %}
+
+                                    <span class="new_category_indicator"
+                                          data-bs-toggle="tooltip"
+                                          data-bs-placement="top"
+                                          data-bs-title="Admin"></span>
+                                {% endif %}
+
+                            </span>
+
+
                         </div>
                     </td>
+
 
                     {#   Email   #}
                     <td class="py-3 fs-7">

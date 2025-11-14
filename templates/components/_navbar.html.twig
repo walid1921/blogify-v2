@@ -23,34 +23,51 @@
                 <li class="nav-item px-3">
                     <a class="nav-link" href="{{ path('blog.allBlogs') }}">All Blogs</a>
                 </li>
-                <li class="nav-item px-3">
-                    <a class="nav-link" href="{{ path('dashboard.allBlogs') }}">Dashboard</a>
-                </li>
+
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="{{ path('dashboard.home') }}">Dashboard</a>
+                    </li>
+                {% endif %}
             </ul>
 
-            {% include 'components/_button.html.twig' with {
-                typeButton: 'primary',
-                path: path('app_login'),
-                textButton: 'Login',
-            } %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-            <div class="dropdown avatar-dropdown">
-                <button
-                    class="btn dropdown-toggle p-0 border-0"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
-                    <img
-                        src="https://api.dicebear.com/8.x/adventurer/svg?seed=your-custom-seed"
-                        alt="User Avatar"
-                        class="avatar-img"
+                {% include 'components/_button.html.twig' with {
+                    typeButton: 'primary',
+                    path: path('app_logout'),
+                    textButton: 'Logout',
+                } %}
+
+            {% else %}
+
+                {% include 'components/_button.html.twig' with {
+                    typeButton: 'primary',
+                    path: path('app_login'),
+                    textButton: 'Login',
+                } %}
+
+            {% endif %}
+
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="dropdown avatar-dropdown">
+                    <button
+                        class="btn dropdown-toggle p-0 border-0"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
                     >
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center gap-2"
-                           href="{{ path('dashboard.createBlog') }}">
+                        <img
+                            src="https://api.dicebear.com/8.x/adventurer/svg?seed=your-custom-seed"
+                            alt="User Avatar"
+                            class="avatar-img"
+                        >
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2"
+                               href="{{ path('dashboard.createBlog') }}">
                             <span class="icon">
                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -61,13 +78,13 @@
                                </svg>
                             </span>
 
-                            <span>Profile</span>
+                                <span>Profile</span>
 
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center gap-2"
-                           href="{{ path('dashboard.createBlog') }}">
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2"
+                               href="{{ path('dashboard.createBlog') }}">
                             <span class="icon">
                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="12" cy="12" r="3" stroke="black" stroke-width="1.5"></circle>
@@ -77,15 +94,15 @@
 </svg>
 
                     </span>
-                            <span class="text">Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center gap-2 text-danger"
-                           href="{{ path('dashboard.createBlog') }}">
+                                <span class="text">Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2 text-danger"
+                               href="{{ path('dashboard.createBlog') }}">
                             <span class="icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path
@@ -99,11 +116,12 @@
 </svg>
 
                     </span>
-                            <span class="text">Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                                <span class="text">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
 
         </div>
     </div>

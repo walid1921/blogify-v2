@@ -21,12 +21,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/dashboard', name: 'dashboard.')]
+//#[isGranted('IS_AUTHENTICATED_FULLY ')]
 final class DashboardController extends AbstractController
 {
+
+    #[Route('', name: 'home')]
+    #[IsGranted('ROLE_USER')]
+    public function dashboardHome (): Response
+    {
+        $message = "WOOOOW";
+        $currentUser = $this->getUser();
+
+
+        return $this->render('dashboard/index.html.twig', [
+            'currentUser' => $currentUser,
+            'message' => $message
+        ]);
+    }
+
     // ! All Blogs in a table
     #[Route('/blogs', name: 'allBlogs')]
+    #[IsGranted('ROLE_BLOGGER')]
     public function allBlogs (Request $request, BlogsRepository $blogsRepository, LikesRepository $likesRepository): Response
     {
         $order = $request->query->get('order', 'DESC'); // default DESC
@@ -62,21 +80,23 @@ final class DashboardController extends AbstractController
      * @throws JsonException
      */
     #[Route('create', name: 'createBlog')]
+    #[IsGranted('ROLE_BLOGGER')]
     public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
 
         // 👤 Get or validate user
-        $user = $userRepo->find(16);
-        if (!$user) {
-            throw $this->createNotFoundException('User not found');
-        }
+//        $user = $userRepo->find(16);
+//        if (!$user) {
+//            throw $this->createNotFoundException('User not found');
+//        }
 
         // creates a blog object and initializes inputs
         $blog = new Blog();
         $blog->setTitle('');
         $blog->setContent(json_encode(['blocks' => []], JSON_THROW_ON_ERROR)); // initialize with an empty JSON string instead of '':
         $blog->setCreatedAt(new DateTimeImmutable());
-        $blog->setAuthor($user); //  $blog->setAuthor($this->getUser());
+//        $blog->setAuthor($user);
+        $blog->setAuthor($this->getUser());
         $blog->setIsPublished(false);
 
         // Create the form using the BlogType form class
@@ -128,6 +148,7 @@ final class DashboardController extends AbstractController
     }
 
     //! Edit a Blog
+    #[IsGranted('ROLE_BLOGGER')]
     #[Route('/edit/{id}', name: 'editBlog', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
     public function editBlog (int $id, Request $request, BlogsRepository $blogRepo, EntityManagerInterface $entityManager): Response
     {
@@ -177,6 +198,7 @@ final class DashboardController extends AbstractController
 
     // ! All Blog Categories
     #[Route('/categories', name: 'allBlogCategories')]
+    #[isGranted('ROLE_ADMIN')]
     public function allBlogCategories (BlogCategoriesRepository $categoriesRepo): Response
     {
         $blogCategories = $categoriesRepo->findAll();
@@ -188,6 +210,7 @@ final class DashboardController extends AbstractController
 
     //! Create a Blog Category
     #[Route('/categories/create', name: 'createBlogCategories')]
+    #[isGranted('ROLE_ADMIN')]
     public function createCategory (Request $request, EntityManagerInterface $entityManager): Response
     {
         $category = new BlogCategories();
@@ -213,6 +236,7 @@ final class DashboardController extends AbstractController
 
     //! Edit a Blog Category
     #[Route('/categories/edit/{id}', 'editBlogCategories', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
+    #[isGranted('ROLE_ADMIN')]
     public function editCategory (int $id, Request $request, EntityManagerInterface $entityManager, BlogCategoriesRepository $blogCategoriesRepository): Response
     {
 
@@ -240,17 +264,21 @@ final class DashboardController extends AbstractController
 
     // ! All Users
     #[Route('/users', name: 'users')]
+    #[isGranted('ROLE_ADMIN')]
     public function users (UserRepository $userRepo): Response
     {
         $users = $userRepo->findAll();
+        $currentUser = $this->getUser();
 
         return $this->render('dashboard/index.html.twig', [
             'users' => $users,
+            'currentUser' => $currentUser,
         ]);
     }
 
     // ! Create a User
     #[Route('/users/create', name: 'userCreate', methods: ['GET', 'POST'])]
+    #[isGranted('ROLE_ADMIN')]
     public function createUser (Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
 
@@ -283,6 +311,7 @@ final class DashboardController extends AbstractController
 
     //! Edit a user
     #[Route('/users/edit/{id}', name: 'userEdit', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
+    #[isGranted('ROLE_ADMIN')]
     public function editUser (int $id, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $user = $userRepository->find($id);
@@ -306,17 +335,6 @@ final class DashboardController extends AbstractController
         return $this->render('dashboard/index.html.twig', [
             'formUser' => $form->createView(),
             'username' => $user->getUsername(),
-        ]);
-    }
-
-    // ! User Guide
-    #[Route('/guide', name: 'userGuide')]
-    public function userGuide (): Response
-    {
-        $message = "Hi there";
-
-        return $this->render('dashboard/index.html.twig', [
-            'message' => $message
         ]);
     }
 }
