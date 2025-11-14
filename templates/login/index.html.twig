@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="page-container mt-5">
+    <div class="page-container mt-4">
 
         <form action="{{ path('app_login') }}"
               method="post"
@@ -78,11 +78,12 @@
                     </a>
                 </div>
 
-                {# --- CSRF Token --- #}
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <input type="hidden" name="_csrf_token" data-controller="csrf-protection"
+                       value="{{ csrf_token('authenticate') }}">
 
                 {# --- Redirect path after login --- #}
-                <input type="hidden" name="_target_path" value="{{ path('dashboard.allBlogs') }}">
+                <input type="hidden" name="_target_path" value="{{ path('dashboard.home') }}">
 
                 {# ======================== SUBMIT BUTTON ======================== #}
                 <button type="submit" class="button-primary mt-5 py-2 px-4">
@@ -93,10 +94,10 @@
                 <div class="login-advantages mt-5">
                     <h6>Login advantages:</h6>
                     <ul>
-                        <li>Express shopping</li>
-                        <li>Save your data and settings</li>
-                        <li>Order overview and shipping information</li>
-                        <li>Manage your newsletter subscription</li>
+                        <li>Save your favorite articles</li>
+                        <li>Receive personalized blog suggestions</li>
+                        <li>Get notified when new blogs are published</li>
+                        <li>Interact with the blogging community</li>
                     </ul>
                 </div>
             </div>

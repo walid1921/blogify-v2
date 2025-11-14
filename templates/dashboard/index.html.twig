@@ -22,6 +22,15 @@
             <!-- Main Content -->
             <div class="dashboard-content">
 
+                {# Home #}
+                {% if app.request.attributes.get('_route') == 'dashboard.home' %}
+                    {% include 'components/_section_header.html.twig' with {
+                        title: 'DASHBOARD OVERVIEW',
+                        description: 'Welcome to your dashboard! Here you can manage your blog posts, categories, and users. Use the sidebar to navigate through different sections.',
+                    } %}
+                    {{ include('components/_userGuide.html.twig') }}
+                {% endif %}
+
                 {# Blogs #}
                 {% if  app.request.attributes.get('_route') == 'dashboard.allBlogs' %}
                     {{ include('components/_blogs_table.html.twig') }}
@@ -72,11 +81,6 @@
                         description: 'Fill in the form to create a new user',
                     } %}
                     {{ include('components/_userForm.html.twig') }}
-                {% endif %}
-
-                {# User Guide #}
-                {% if app.request.attributes.get('_route') == 'dashboard.userGuide' %}
-                    {{ include('components/_userGuide.html.twig') }}
                 {% endif %}
 
             </div>
