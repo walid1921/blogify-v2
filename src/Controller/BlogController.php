@@ -10,11 +10,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Security\ActionDenyTrait;
 
 
 #[Route('/blog', name: 'blog.')]
 final class BlogController extends AbstractController
 {
+
+    use ActionDenyTrait;
 
     private array $dummyBlogs = [
         [
@@ -78,6 +82,7 @@ final class BlogController extends AbstractController
     /**
      * @throws JsonException
      */
+    #[IsGranted('ROLE_BLOGGER')]
     #[Route('/', name: 'allBlogs', requirements: ['limit' => '\d+'])]
     public function index (BlogsRepository $blogRepo): Response
     {
@@ -108,6 +113,7 @@ final class BlogController extends AbstractController
 
 
     //! Update blog's status
+    #[IsGranted('ROLE_BLOGGER')]
     #[Route('/blog-status/{id}', name: 'blogStatus', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
     public function updateBlogStatus (int $id, BlogsRepository $blogRepo, EntityManagerInterface $entityManager): Response
     {
@@ -116,6 +122,9 @@ final class BlogController extends AbstractController
         if (!$blog) {
             throw $this->createNotFoundException('Blog not found');
         }
+
+        // deny if blog belongs to another admin, or if non-admin modifies others
+        $this->denyIfCannotManageBlog($blog);
 
         $blog->setIsPublished(!$blog->isPublished());
         $entityManager->persist($blog);
@@ -127,6 +136,7 @@ final class BlogController extends AbstractController
     }
 
     // ! Delete a Blog
+    #[IsGranted('ROLE_BLOGGER')]
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
     public function deleteBlog (int $id, BlogsRepository $blogRepo, EntityManagerInterface $entityManager): Response
     {
@@ -135,6 +145,8 @@ final class BlogController extends AbstractController
         if (!$blog) {
             throw $this->createNotFoundException('Blog not found');
         }
+
+        $this->denyIfCannotManageBlog($blog);
 
         $entityManager->remove($blog);
         $entityManager->flush();
@@ -145,6 +157,7 @@ final class BlogController extends AbstractController
     }
 
     // ! One blog page
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}', name: 'one_blog', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function oneBlog (int $id, BlogsRepository $blogRepo, LikesRepository $likesRepository): Response
     {

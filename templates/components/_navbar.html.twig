@@ -33,24 +33,6 @@
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-                {% include 'components/_button.html.twig' with {
-                    typeButton: 'primary',
-                    path: path('app_logout'),
-                    textButton: 'Logout',
-                } %}
-
-            {% else %}
-
-                {% include 'components/_button.html.twig' with {
-                    typeButton: 'primary',
-                    path: path('app_login'),
-                    textButton: 'Login',
-                } %}
-
-            {% endif %}
-
-
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <div class="dropdown avatar-dropdown">
                     <button
                         class="btn dropdown-toggle p-0 border-0"
@@ -102,7 +84,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2 text-danger"
-                               href="{{ path('dashboard.createBlog') }}">
+                               href="{{ path('app_logout') }}">
                             <span class="icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path
@@ -121,8 +103,16 @@
                         </li>
                     </ul>
                 </div>
-            {% endif %}
 
+            {% else %}
+
+                {% include 'components/_button.html.twig' with {
+                    typeButton: 'primary',
+                    path: path('app_login'),
+                    textButton: 'Login',
+                } %}
+
+            {% endif %}
         </div>
     </div>
 </nav>

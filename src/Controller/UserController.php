@@ -12,17 +12,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Security\ActionDenyTrait;
 
 final class UserController extends AbstractController
 {
+
+    use ActionDenyTrait;
+
+
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/user', name: 'app_user')]
     public function index (): Response
     {
         return $this->render('user/index.html.twig', []);
     }
 
-
     // ! Create a User
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/users/create', name: 'userCreate', methods: ['GET', 'POST'])]
     public function createUser (Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
@@ -63,6 +70,7 @@ final class UserController extends AbstractController
     }
 
     //! Edit a user
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/users/edit/{id}', name: 'userEdit', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
     public function editUser (int $id, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
@@ -71,6 +79,8 @@ final class UserController extends AbstractController
         if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
+
+        $this->denyIfCannotManageUser($user);
 
         $form = $this->createForm(UserType::class, $user, ['is_edit' => true]);
         $form->handleRequest($request);
@@ -90,8 +100,8 @@ final class UserController extends AbstractController
         ]);
     }
 
-
     //! Update user's status
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/user-status/{id}', name: 'userStatus', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
     public function updateUserStatus (int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
@@ -100,6 +110,8 @@ final class UserController extends AbstractController
         if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
+
+        $this->denyIfCannotManageUser($user);
 
         $user->setIsActive(!$user->isActive());
         $entityManager->persist($user);
@@ -111,6 +123,7 @@ final class UserController extends AbstractController
     }
 
     //! Delete a User
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/users/delete/{id}', name: 'userDelete', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
     public function deleteUser (int $id, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
@@ -121,6 +134,8 @@ final class UserController extends AbstractController
             throw $this->createNotFoundException('User not found');
         }
 
+        $this->denyIfCannotManageUser($user);
+
         $entityManager->remove($user);
         $entityManager->flush();
         $this->addFlash('success', 'User deleted successfully!');
@@ -128,4 +143,6 @@ final class UserController extends AbstractController
 
         return $this->redirectToRoute('dashboard.users');
     }
+
+
 }

@@ -11,9 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class CategoryController extends AbstractController
 {
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/blog/category', name: 'app_blog_category')]
     public function index (): Response
     {
@@ -23,6 +25,7 @@ final class CategoryController extends AbstractController
     }
 
     //! Delete a Category
+    #[isGranted('ROLE_ADMIN')]
     #[Route('/categories/delete/{id}', name: 'deleteBlogCategories', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
     public function deleteCategory (int $id, EntityManagerInterface $entityManager, BlogCategoriesRepository $blogCategoriesRepository): Response
     {
