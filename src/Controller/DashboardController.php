@@ -22,11 +22,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Security\ActionDenyTrait;
 
 #[Route('/dashboard', name: 'dashboard.')]
 //#[isGranted('IS_AUTHENTICATED_FULLY ')]
 final class DashboardController extends AbstractController
 {
+    use ActionDenyTrait;
 
     #[Route('', name: 'home')]
     #[IsGranted('ROLE_USER')]
@@ -158,6 +160,8 @@ final class DashboardController extends AbstractController
             throw $this->createNotFoundException('Blog not found');
         }
 
+        $this->denyIfCannotManageBlog($blog);
+
         $form = $this->createForm(BlogType::class, $blog);
 
         $form->handleRequest($request);
@@ -279,7 +283,7 @@ final class DashboardController extends AbstractController
     // ! Create a User
     #[Route('/users/create', name: 'userCreate', methods: ['GET', 'POST'])]
     #[isGranted('ROLE_ADMIN')]
-    public function createUser (Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function createUser (Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $user = new User();
@@ -320,6 +324,9 @@ final class DashboardController extends AbstractController
             throw $this->createNotFoundException('User not found');
         }
 
+        $this->denyIfCannotManageUser($user);
+
+
         $form = $this->createForm(UserType::class, $user, ['is_edit' => true]);
         $form->handleRequest($request);
 
@@ -335,6 +342,16 @@ final class DashboardController extends AbstractController
         return $this->render('dashboard/index.html.twig', [
             'formUser' => $form->createView(),
             'username' => $user->getUsername(),
+        ]);
+    }
+
+    //! Settings
+    #[Route('/settings', name: 'settings')]
+    #[isGranted('ROLE_USER')]
+    public function settings (): Response
+    {
+        return $this->render('dashboard/index.html.twig', [
+            'settingsPage' => true,
         ]);
     }
 }
