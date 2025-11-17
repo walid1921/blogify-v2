@@ -65,12 +65,12 @@
                            data-tooltip="Users"
                            data-tooltip-placement="right">
                             <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
-                            {{ blog.title|u.truncate(30, '...') }}
+                            {{ blog.title|u.truncate(15, '...') }}
                         </a>
                     </td>
 
                     {#   Content   #}
-                    <td class="p-3 fs-7">{{ blog.excerpt|striptags|u.truncate(30, '...') }}</td>
+                    <td class="p-3 fs-7">{{ blog.excerpt|striptags|u.truncate(15, '...') }}</td>
 
                     {#   Categories   #}
                     <td class="p-3 fs-7">
@@ -130,7 +130,7 @@
                         </a>
 
                         {# EDIT RULE:
-                           - Normal users/bloggers: can edit (here you can refine)
+                           - Normal users/bloggers: can edit
                            - Admin: can ONLY edit if they are the author
                         #}
                         {% if isOwner or not is_granted('ROLE_ADMIN') %}
