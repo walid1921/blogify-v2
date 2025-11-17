@@ -82,7 +82,7 @@ final class BlogController extends AbstractController
     /**
      * @throws JsonException
      */
-    #[IsGranted('ROLE_BLOGGER')]
+    #[IsGranted('ROLE_USER')]
     #[Route('/', name: 'allBlogs', requirements: ['limit' => '\d+'])]
     public function index (BlogsRepository $blogRepo): Response
     {
