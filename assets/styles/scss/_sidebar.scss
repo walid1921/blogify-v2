@@ -218,6 +218,7 @@ nav {
                 }
             }
 
+
             &:active {
                 background-color: var(--bs-border-color);
                 color: var(--bs-primary);
@@ -261,6 +262,22 @@ nav {
                 }
             }
         }
+
+        .sidebar__item.logout {
+            &:hover {
+                background-color: rgba(255, 229, 229, 0.4); // light red (optional)
+                border-left: 2px solid var(--bs-danger);
+
+                .text {
+                    color: var(--bs-danger);
+                }
+
+                svg path {
+                    stroke: var(--bs-danger);
+                }
+            }
+        }
+
     }
 }
 
