@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Throwable;
 
 #[ORM\Entity(repositoryClass: BlogsRepository::class)]
 class Blog
@@ -86,6 +87,7 @@ class Blog
         minMessage: 'You must select at least {{ limit }} category.'
     )]
     private Collection $categories;
+    private ?string $excerpt = null;
 
     public function __construct ()
     {
@@ -139,13 +141,6 @@ class Blog
         return $this->is_published;
     }
 
-    public function setIsPublished (bool $is_published): static
-    {
-        $this->is_published = $is_published;
-
-        return $this;
-    }
-
 //    public function getLikes (): ?int
 //    {
 //        return $this->likes;
@@ -157,6 +152,13 @@ class Blog
 //
 //        return $this;
 //    }
+
+    public function setIsPublished (bool $is_published): static
+    {
+        $this->is_published = $is_published;
+
+        return $this;
+    }
 
     public function getCoverImage (): ?string
     {
@@ -259,4 +261,37 @@ class Blog
 
         return $this;
     }
+
+
+    public function getExcerpt (): ?string
+    {
+        // If excerpt already extracted, return it
+        if ($this->excerpt !== null) {
+            return $this->excerpt;
+        }
+
+        // Extract from content JSON
+        try {
+            $json = json_decode($this->content ?? '', true);
+
+            foreach ($json['blocks'] ?? [] as $block) {
+                if (($block['type'] ?? '') === 'paragraph' && !empty($block['data']['text'])) {
+                    $this->excerpt = $block['data']['text'];
+                    return $this->excerpt;
+                }
+            }
+        } catch (Throwable $e) {
+            // ignore errors, fallback to empty excerpt
+        }
+
+        return $this->excerpt = ''; // fallback
+    }
+
+    public function setExcerpt (?string $excerpt): static
+    {
+        $this->excerpt = $excerpt;
+        return $this;
+    }
+
+
 }

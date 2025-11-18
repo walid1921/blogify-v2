@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Security\ActionDenyTrait;
 
@@ -80,7 +81,12 @@ final class UserController extends AbstractController
             throw $this->createNotFoundException('User not found');
         }
 
-        $this->denyIfCannotManageUser($user);
+        try {
+            $this->denyIfCannotManageUser($user);
+        } catch (AccessDeniedException $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('dashboard.users');
+        }
 
         $form = $this->createForm(UserType::class, $user, ['is_edit' => true]);
         $form->handleRequest($request);
@@ -111,7 +117,12 @@ final class UserController extends AbstractController
             throw $this->createNotFoundException('User not found');
         }
 
-        $this->denyIfCannotManageUser($user);
+        try {
+            $this->denyIfCannotManageUser($user);
+        } catch (AccessDeniedException $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('dashboard.users');
+        }
 
         $user->setIsActive(!$user->isActive());
         $entityManager->persist($user);
@@ -134,7 +145,12 @@ final class UserController extends AbstractController
             throw $this->createNotFoundException('User not found');
         }
 
-        $this->denyIfCannotManageUser($user);
+        try {
+            $this->denyIfCannotManageUser($user);
+        } catch (AccessDeniedException $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('dashboard.users');
+        }
 
         $entityManager->remove($user);
         $entityManager->flush();

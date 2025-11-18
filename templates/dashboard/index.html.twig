@@ -17,7 +17,12 @@
     <div class="page-container">
         <div class="dashboard-layout">
 
-            {{ include('components/_sidebar.html.twig') }}
+            {% set sidebarBlogsCount = blogsCount is defined ? blogsCount : 0 %}
+
+            {% include 'components/_sidebar.html.twig' with {
+                blogsCount: sidebarBlogsCount,
+            } %}
+
 
             <!-- Main Content -->
             <div class="dashboard-content">
@@ -87,7 +92,6 @@
                     {{ include('components/_categoryForm.html.twig') }}
                 {% endif %}
 
-
                 {# Users #}
                 {% if app.request.attributes.get('_route') == 'dashboard.users' %}
                     {% include 'components/_section_header.html.twig' with {
@@ -115,6 +119,7 @@
                     {{ include('components/_userForm.html.twig') }}
                 {% endif %}
 
+                {# Settings #}
                 {% if app.request.attributes.get('_route') == 'dashboard.settings' and settingsPage %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'SETTINGS',

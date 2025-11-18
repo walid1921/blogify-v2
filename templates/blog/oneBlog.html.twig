@@ -107,7 +107,11 @@
                         </svg>
                     </a>
                     <div>
-                        <p class="mb-0">{{ blog.author.username }}</p>
+                        {% if blog.author %}
+                            <p class="mb-0">{{ blog.author.username }}</p>
+                        {% else %}
+                            <p>Unknown</p>
+                        {% endif %}
                         <p class="text-secondary fs-7 mb-0">Author</p>
                     </div>
                 </div>

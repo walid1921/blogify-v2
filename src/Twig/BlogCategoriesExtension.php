@@ -23,6 +23,7 @@ class BlogCategoriesExtension extends AbstractExtension implements GlobalsInterf
 
     public function getGlobals (): array
     {
+
         return [
             // this will be available in ALL twig templates
             'blogCategories' => $this->blogCategoriesRepository->findAll(),
