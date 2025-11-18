@@ -101,13 +101,19 @@
 
                     <p class="fw-light ">
 
-                        {{ blogHighlightedHome.excerpt|striptags|u.truncate(140, '...') }}
+                        {{ blogHighlightedHome.excerpt|striptags|u.truncate(100, '...') }}
 
                     </p>
                 </div>
-                <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-md-auto mt-5">
+                <div class="px-4 d-flex justify-content-between gap-0 gap-md-3 mt-5">
                     <div class="d-flex align-items-center gap-2">
-                        <p>{{ blogHighlightedHome.author.username }}</p>
+
+                        {% if blogHighlightedHome.author %}
+                            <p>{{ blogHighlightedHome.author.username }}</p>
+                        {% else %}
+                            <p>Unknown</p>
+                        {% endif %}
+
                         {{ include('components/_blogDate.html.twig', { createdAt: blogHighlightedHome.createdAt }) }}
                     </div>
 
@@ -222,7 +228,7 @@
 
             {# Three random blogs from the list #}
             <div class="row g-3 align-items-stretch">
-                {% for blog in blogs %}
+                {% for blog in latestBlogs %}
                     {{ include('components/_blogCard.html.twig', {blog: blog}) }}
                 {% endfor %}
             </div>

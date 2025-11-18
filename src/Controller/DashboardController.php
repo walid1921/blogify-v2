@@ -21,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Security\ActionDenyTrait;
 
@@ -30,6 +31,8 @@ final class DashboardController extends AbstractController
 {
     use ActionDenyTrait;
 
+
+    // ! Dashboard Home
     #[Route('', name: 'home')]
     #[IsGranted('ROLE_USER')]
     public function dashboardHome (): Response
@@ -50,29 +53,33 @@ final class DashboardController extends AbstractController
     public function allBlogs (Request $request, BlogsRepository $blogsRepository, LikesRepository $likesRepository): Response
     {
         $order = $request->query->get('order', 'DESC'); // default DESC
-        $blogs = $blogsRepository->findAllSortedByDate($order); // Retrieve all blogs sorted by creation date
+        $currentUser = $this->getUser();
 
+        // ADMIN → sees everything
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $blogs = $blogsRepository->findAllSortedByDate($order); // Retrieve all blogs sorted by creation date
+            $blogsCount = $blogsRepository->count([]); // count ALL blogs
+        } // BLOGGER → sees only their own blogs
+        else {
+            $blogs = $blogsRepository->findByAuthorSortedByDate($currentUser, $order);
+            $blogsCount = $blogsRepository->count(['author' => $currentUser]);
+        }
+
+
+        // Likes count
         $blogIds = array_map(fn ($blog) => $blog->getId(), $blogs); // Collect blog IDs
-
         $likesCount = $likesRepository->countLikesForBlogs($blogIds); // Fetch like counts for all blogs at once
 
         foreach ($blogs as $blog) {
-            $json = json_decode($blog->getContent() ?? '""', true, 512, JSON_THROW_ON_ERROR) ?? [];
-
-            $blog->excerpt = '';
-
-            foreach ($json['blocks'] ?? [] as $block) {
-                if (($block['type'] ?? '') === 'paragraph' && !empty($block['data']['text'])) {
-                    $blog->excerpt = $block['data']['text'];
-                    break;
-                }
-            }
+            $blog->getExcerpt();
         }
+
 
         return $this->render('dashboard/index.html.twig', [
             'blogs' => $blogs,
             'order' => $order,
             'likesCount' => $likesCount,
+            'blogsCount' => $blogsCount,
         ]);
     }
 
@@ -160,7 +167,12 @@ final class DashboardController extends AbstractController
             throw $this->createNotFoundException('Blog not found');
         }
 
-        $this->denyIfCannotManageBlog($blog);
+        try {
+            $this->denyIfCannotManageBlog($blog);
+        } catch (AccessDeniedException $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('dashboard.allBlogs');
+        }
 
         $form = $this->createForm(BlogType::class, $blog);
 
@@ -324,7 +336,12 @@ final class DashboardController extends AbstractController
             throw $this->createNotFoundException('User not found');
         }
 
-        $this->denyIfCannotManageUser($user);
+        try {
+            $this->denyIfCannotManageUser($user);
+        } catch (AccessDeniedException $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('dashboard.users');
+        }
 
 
         $form = $this->createForm(UserType::class, $user, ['is_edit' => true]);

@@ -23,7 +23,7 @@ trait ActionDenyTrait
             in_array('ROLE_ADMIN', $target->getRoles(), true) &&
             $target->getId() !== $current->getId()
         ) {
-            throw $this->createAccessDeniedException('You cannot manage another administrator.');
+            throw $this->createAccessDeniedException('Access denied.');
         }
     }
 
@@ -42,21 +42,25 @@ trait ActionDenyTrait
 
         $author = $blog->getAuthor();
 
-        // If blog author is an admin and it's not you -> forbidden
+        // --- RULE 1: No one can manage an admin’s blog except that admin ---
         if (
             $author instanceof User &&
             in_array('ROLE_ADMIN', $author->getRoles(), true) &&
             $author->getId() !== $current->getId()
         ) {
-            throw $this->createAccessDeniedException('You cannot manage a blog owned by an administrator.');
+            throw $this->createAccessDeniedException('Access denied.');
         }
 
-        // If you're NOT admin, you can only manage your own blogs
+        // --- RULE 2: Bloggers can manage only their own blogs ---
         if (
-            !in_array('ROLE_ADMIN', $current->getRoles(), true) &&
-            $author !== $current
+            !in_array('ROLE_ADMIN', $current->getRoles(), true) && // current user is NOT admin
+            $author !== $current                                  // and doesn't own the blog
         ) {
-            throw $this->createAccessDeniedException('You can manage only your own blogs.');
+            throw $this->createAccessDeniedException('Access denied.');
         }
+
+        // If none of the rules block → access allowed
     }
+
+
 }

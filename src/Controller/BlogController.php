@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Security\ActionDenyTrait;
 
@@ -82,7 +83,6 @@ final class BlogController extends AbstractController
     /**
      * @throws JsonException
      */
-    #[IsGranted('ROLE_USER')]
     #[Route('/', name: 'allBlogs', requirements: ['limit' => '\d+'])]
     public function index (BlogsRepository $blogRepo): Response
     {
@@ -92,16 +92,7 @@ final class BlogController extends AbstractController
         $blogs = $blogRepo->findAllPublished();
 
         foreach ($blogs as $blog) {
-            $json = json_decode($blog->getContent() ?? '""', true, 512, JSON_THROW_ON_ERROR) ?? [];
-
-            $blog->excerpt = '';
-
-            foreach ($json['blocks'] ?? [] as $block) {
-                if (($block['type'] ?? '') === 'paragraph' && !empty($block['data']['text'])) {
-                    $blog->excerpt = $block['data']['text'];
-                    break;
-                }
-            }
+            $blog->getExcerpt();
         }
 
 
@@ -110,7 +101,6 @@ final class BlogController extends AbstractController
 //            'blogs' => $this->dummyBlogs,
         ]);
     }
-
 
     //! Update blog's status
     #[IsGranted('ROLE_BLOGGER')]
@@ -124,7 +114,13 @@ final class BlogController extends AbstractController
         }
 
         // deny if blog belongs to another admin, or if non-admin modifies others
-        $this->denyIfCannotManageBlog($blog);
+        try {
+            $this->denyIfCannotManageBlog($blog);
+        } catch (AccessDeniedException $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('dashboard.allBlogs');
+        }
+
 
         $blog->setIsPublished(!$blog->isPublished());
         $entityManager->persist($blog);
@@ -146,7 +142,12 @@ final class BlogController extends AbstractController
             throw $this->createNotFoundException('Blog not found');
         }
 
-        $this->denyIfCannotManageBlog($blog);
+        try {
+            $this->denyIfCannotManageBlog($blog);
+        } catch (AccessDeniedException $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('dashboard.allBlogs');
+        }
 
         $entityManager->remove($blog);
         $entityManager->flush();

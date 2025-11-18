@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Blog;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -97,6 +98,19 @@ class BlogsRepository extends ServiceEntityRepository
             ->setParameter('published', true)
             ->orderBy('b.created_at', 'DESC')
             ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByAuthorSortedByDate (User $author, string $order = 'DESC'): array
+    {
+        return $this->createQueryBuilder('b')
+            ->addSelect('a', 'c')
+            ->leftJoin('b.author', 'a')
+            ->leftJoin('b.categories', 'c')
+            ->andWhere('b.author = :author')
+            ->setParameter('author', $author)
+            ->orderBy('b.created_at', $order)
             ->getQuery()
             ->getResult();
     }

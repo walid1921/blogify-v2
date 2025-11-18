@@ -44,21 +44,12 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index (BlogsRepository $blogRepo): Response
     {
-        //  $randomBlogs = $br->findRandomBlogs(3); I used this function to fetch just a specific random blogs from the list , instead all (which is useless)
 
-        $blogs = $blogRepo->findLatestPublished();
+        //! Fetch latest published blogs
+        $latestBlogs = $blogRepo->findLatestPublished();
 
-        foreach ($blogs as $blog) {
-            $json = json_decode($blog->getContent() ?? '""', true, 512, JSON_THROW_ON_ERROR) ?? [];
-
-            $blog->excerpt = '';
-
-            foreach ($json['blocks'] ?? [] as $block) {
-                if (($block['type'] ?? '') === 'paragraph' && !empty($block['data']['text'])) {
-                    $blog->excerpt = $block['data']['text'];
-                    break;
-                }
-            }
+        foreach ($latestBlogs as $blog) {
+            $blog->getExcerpt();
         }
 
 
@@ -70,10 +61,12 @@ final class HomeController extends AbstractController
             throw $this->createNotFoundException('Blog not found');
         }
 
+        $blogHighlightedHome->getExcerpt();
+
 
         return $this->render('home/index.html.twig', [
             //'blogs' => $this->dummyBlogs,
-            'blogs' => $blogs,
+            'latestBlogs' => $latestBlogs,
             'blogHighlightedHome' => $blogHighlightedHome,
         ]);
 

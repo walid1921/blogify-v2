@@ -27,7 +27,11 @@
             <tbody>
 
             {% for key,blog in blogs %}
-                {% set isOwner = blog.author and blog.author.id == app.user.id %}
+                {% set isOwner   = blog.author and blog.author.id == app.user.id %}
+                {% set isAdmin   = 'ROLE_ADMIN' in app.user.roles %}
+                {% set isBlogger = 'ROLE_BLOGGER' in app.user.roles %}
+                {% set authorIsAdmin = blog.author and ('ROLE_ADMIN' in blog.author.roles) %}
+
 
                 <tr>
                     {#   Author   #}
@@ -39,7 +43,7 @@
                                data-tooltip-placement="right">
                                 {{ blog.author.username|u.truncate(15, '...') }}
 
-                                {% if isOwner or not is_granted('ROLE_ADMIN') %}
+                                {% if isOwner %}
                                     <span class="new_category_indicator"
                                           data-bs-toggle="tooltip"
                                           data-bs-placement="top"
@@ -116,24 +120,30 @@
 
                     {#   Action buttons   #}
                     <td class="p-3">
-                        {# delete #}
-                        <a class="me-3 open-delete-blog-modal" href="#"
-                           data-blog-id="{{ blog.id }}"
-                           data-blog-name="{{ blog.title }}"
-                        >
-                            <img
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                data-bs-title="Delete"
-                                src="{{ asset('icons/Trash Bin Trash.svg') }}"
-                                alt="delete icon">
-                        </a>
+                        {# DELETE BUTTON: visible to any logged-in user (ROLE_USER, ROLE_BLOGGER, ROLE_ADMIN) #}
+                        {% if
+                            (isAdmin and not authorIsAdmin) or (isOwner) %}
+                            {# admin can delete blogger’s blog || owner can delete own blog #}
+                            <a class="me-3 open-delete-blog-modal"
+                               href="#"
+                               data-blog-id="{{ blog.id }}"
+                               data-blog-name="{{ blog.title }}">
+                                <img
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    data-bs-title="Delete"
+                                    src="{{ asset('icons/Trash Bin Trash.svg') }}"
+                                    alt="delete icon">
+                            </a>
+                        {% endif %}
+
 
                         {# EDIT RULE:
                            - Normal users/bloggers: can edit
                            - Admin: can ONLY edit if they are the author
                         #}
-                        {% if isOwner or not is_granted('ROLE_ADMIN') %}
+                        {% if isOwner %}
+                            {# edit #}
                             <a href="{{ path('dashboard.editBlog', {id: blog.id} ) }}"
                                data-bs-toggle="tooltip"
                                data-bs-placement="top"
