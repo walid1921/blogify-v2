@@ -162,6 +162,24 @@ th {
 }
 
 
+.dropdown-item.logout {
+
+    &:hover {
+        background-color: rgba(255, 229, 229, 0.4); // light red (optional)
+        border-left: 2px solid var(--bs-danger);
+
+        .text {
+            color: var(--bs-danger);
+        }
+
+        span {
+            color: var(--bs-danger);
+        }
+    }
+
+}
+
+
 //! Categories style
 .sticky-categories {
     position: sticky;
@@ -342,9 +360,9 @@ th {
 
 .user {
 
-    padding: 10px;
+    padding: 5px 10px;
     background-color: var(--bs-white);
-    border-radius: 50%;
+    border-radius: 100%;
 }
 
 
@@ -488,5 +506,30 @@ th {
         height: 100%;
         object-fit: cover;
         object-position: center;
+    }
+}
+
+
+// DELETE BUTTON
+a.delete-btn {
+    i {
+        opacity: 50%;
+        transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    &:hover i {
+        color: var(--bs-danger) !important;
+        opacity: 1 !important;
+    }
+}
+
+// EDIT BUTTON
+a.edit-btn i {
+    transition: color .2s ease, opacity .2s ease;
+    opacity: 50%;
+
+    &:hover i {
+        color: var(--bs-black) !important;
+        opacity: 1 !important;
     }
 }

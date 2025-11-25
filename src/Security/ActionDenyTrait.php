@@ -8,7 +8,7 @@ use App\Entity\Blog;
 trait ActionDenyTrait
 {
     /**
-     * Deny when trying to manage another admin (except yourself).
+     * Explanation in Notion/PHP/OOP/Traits
      */
     private function denyIfCannotManageUser (User $target): void
     {
@@ -61,6 +61,4 @@ trait ActionDenyTrait
 
         // If none of the rules block → access allowed
     }
-
-
 }

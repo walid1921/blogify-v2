@@ -7,6 +7,7 @@
         "@editorjs/underline": "^1.2.1",
         "@popperjs/core": "^2.11.8",
         "bootstrap": "^5.3.8",
+        "bootstrap-icons": "^1.13.1",
         "core-js": "^3.45.1",
         "editorjs-html": "^4.0.5",
         "tom-select": "^2.4.3"

@@ -161,6 +161,12 @@ nav {
     display: flex;
     justify-content: end;
     padding: 1rem 0.5rem;
+    opacity: 50%;
+
+    &:hover {
+        opacity: 100%;
+        cursor: pointer;
+    }
 }
 
 .nav__toggle {
@@ -240,17 +246,15 @@ nav {
                 text-decoration: none;
                 width: 100%;
                 block-size: 100%;
-                gap: 0.5rem;
+                gap: 0.75rem;
                 padding: 0 0.5rem;
 
                 .icon {
-                    aspect-ratio: 1;
-                    block-size: 100%;
-                    display: inline-grid;
+                    margin-left: 0.5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
 
-                    svg {
-                        place-self: center;
-                    }
                 }
 
                 .text {
@@ -272,8 +276,8 @@ nav {
                     color: var(--bs-danger);
                 }
 
-                svg path {
-                    stroke: var(--bs-danger);
+                a span {
+                    color: var(--bs-danger);
                 }
             }
         }

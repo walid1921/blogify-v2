@@ -79,19 +79,9 @@
                         </div>
                         <div class="w-100 bg-secondary" style="height: 1px;"></div>
 
-                        <div class="d-flex gap-3 align-items-center">
-                            {% include 'components/_likes.html.twig' with {
-                                iconHeightWidth: '25',
-                                heartColor: 'black',
-                            } %}
-
-                            <a href="#">
-                                <img
-                                    src="{{ asset('icons/Plain.svg') }}"
-                                    alt="share icon"
-                                >
-                            </a>
-                        </div>
+                        {% include 'components/_likes.html.twig' with {
+                            iconSize: 'fs-3',
+                        } %}
                     </div>
 
 
@@ -120,11 +110,7 @@
                     <a href="{{ path('blog.one_blog', { id: blogHighlightedHome.id }) }}"
                        class="text-decoration-none  link-underline-black align-items-center gap-2">
                         Read more
-                        <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415" stroke="black"
-                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
+                        <i class="bi bi-chevron-right"></i>
                     </a>
                 </div>
             </div>
@@ -185,13 +171,7 @@
                                             <a href="#"
                                                class="text-decoration-none link-underline-white align-items-center gap-2">
                                                 Read more
-                                                <svg width="19" height="18" viewBox="0 0 21 20" fill="none"
-                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M8 4.1665L9.66667 6.11095M8 15.8332L13 9.99984L11.75 8.5415"
-                                                        stroke="white" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round"></path>
-                                                </svg>
+                                                <i class="bi bi-chevron-right"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -239,7 +219,7 @@
                     typeButton: 'primary',
                     path: path('blog.allBlogs'),
                     textButton: 'See All Blogs',
-                    iconType: 'corner',
+                    iconType: 'chevron-right',
                     iconColor: 'white'
                 } %}
             </div>

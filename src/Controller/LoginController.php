@@ -13,6 +13,7 @@ final class LoginController extends AbstractController
     public function index (AuthenticationUtils $utils): Response
     {
 
+
         $lastUsername = $utils->getLastUsername();
         $error = $utils->getLastAuthenticationError();
 

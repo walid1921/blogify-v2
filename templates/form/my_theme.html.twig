@@ -30,15 +30,8 @@
             data-bs-title="{{ help|trans({}, translation_domain) }}"
             style="cursor: pointer; color: var(--bs-secondary);"
         >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 17V11" stroke="#A8A8A7" stroke-width="1.5" stroke-linecap="round"></path>
-<circle cx="1" cy="1" r="1" transform="matrix(1 0 0 -1 11 9)" fill="#A8A8A7"></circle>
-<path
-    d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7"
-    stroke="#A8A8A7" stroke-width="1.5" stroke-linecap="round"></path>
-</svg>
-
-                </span>
+            <i class="bi bi-info-circle"></i>
+        </span>
     {% endif %}
 {% endblock %}
 
@@ -163,16 +156,7 @@
             <label class="cover-upload-label" for="{{ id }}">
                 {{ block('form_widget_simple') }}
                 <div class="cover-upload-box" id="cover-preview-{{ id }}">
-                    <span>
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#6c757d" stroke-width="1.5"
-                                  stroke-linecap="round"></path>
-                            <path
-                                d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
-                                stroke="#6c757d" stroke-width="1.5" stroke-linecap="round"></path>
-                        </svg>
-                    </span>
-                    <span class="cover-upload-text">Add a cover image</span>
+                    <i class="bi bi-image fs-1"></i>
                 </div>
             </label>
 

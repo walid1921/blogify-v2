@@ -73,7 +73,9 @@
                         description: 'Update and delete categories here',
                         buttonType: 'primary',
                         buttonPath: path('dashboard.createBlogCategories'),
-                        buttonText: 'New Category'
+                        buttonText: 'New Category',
+                        buttonIconType: 'add',
+                        buttonIconColor: 'white'
                     } %}
                     {{ include('components/_categories_table.html.twig') }}
                 {% elseif app.request.attributes.get('_route') == 'dashboard.createBlogCategories' %}
@@ -100,7 +102,9 @@
                         description: 'Update and delete users here',
                         buttonType: 'primary',
                         buttonPath: path('dashboard.userCreate'),
-                        buttonText: 'New User'
+                        buttonText: 'New User',
+                        buttonIconType: 'addUser',
+                        buttonIconColor: 'white'
                     } %}
                     {{ include('components/_users_table.html.twig') }}
                 {% elseif app.request.attributes.get('_route') == 'dashboard.userEdit' %}
