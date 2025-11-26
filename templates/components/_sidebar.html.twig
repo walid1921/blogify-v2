@@ -101,7 +101,7 @@
                     </li>
                 {% endif %}
 
-                <li class="sidebar__item logout {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
+                <li class="sidebar__item logout">
                     <a href="{{ path('app_logout') }}"
                        class="sidebar__link "
                        data-tooltip="Logout">
