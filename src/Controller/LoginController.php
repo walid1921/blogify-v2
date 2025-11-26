@@ -13,7 +13,10 @@ final class LoginController extends AbstractController
     public function index (AuthenticationUtils $utils): Response
     {
 
+        // last username entered by the user
         $lastUsername = $utils->getLastUsername();
+
+        // get the login error if there is one (invalid password or email)
         $error = $utils->getLastAuthenticationError();
 
 
@@ -26,7 +29,6 @@ final class LoginController extends AbstractController
     #[Route('/logout', name: 'app_logout')]
     public function logout ()
     {
-
     }
 
 

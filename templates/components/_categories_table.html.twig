@@ -1,4 +1,4 @@
-<div class="table-responsive border border-black border-opacity-25 ">
+<div class=" table-responsive border border-black border-opacity-25 ">
     {# {{ dump(categories) }} #}
     {% if blogCategories|length > 0 %}
         <table class="table table-striped table-hover">
@@ -30,23 +30,24 @@
                     <td class="p-3">
                         {#   delete   #}
                         <a href="#"
-                           class="me-3 open-delete-category-modal"
+                           class="me-3 open-delete-category-modal delete-btn"
                            data-category-id="{{ category.id }}"
                            data-category-name="{{ category.name }}"
                         >
-                            <img
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                data-bs-title="Delete"
-                                src="{{ asset('icons/Trash Bin Trash.svg') }}"
-                                alt="bin icon">
+                            <i data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               data-bs-title="Delete"
+                               class="bi bi-x-circle fs-5">
+                            </i>
                         </a>
                         {#   edit   #}
-                        <a href="{{ path('dashboard.editBlogCategories', {id: category.id} ) }}"
-                           data-bs-toggle="tooltip"
-                           data-bs-placement="top"
-                           data-bs-title="Edit">
-                            <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
+                        <a
+                            class="edit-btn"
+                            href="{{ path('dashboard.editBlogCategories', {id: category.id} ) }}"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-title="Edit">
+                            <i class="bi bi-pencil-square fs-5"></i>
                         </a>
                     </td>
                 </tr>

@@ -126,7 +126,7 @@ final class BlogController extends AbstractController
         $entityManager->persist($blog);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Blog status updated successfully!');
+        $this->addFlash('info', 'Blog status updated successfully!');
 
         return $this->redirectToRoute('dashboard.allBlogs');
     }
@@ -158,7 +158,6 @@ final class BlogController extends AbstractController
     }
 
     // ! One blog page
-    #[IsGranted('ROLE_USER')]
     #[Route('/{id}', name: 'one_blog', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function oneBlog (int $id, BlogsRepository $blogRepo, LikesRepository $likesRepository): Response
     {

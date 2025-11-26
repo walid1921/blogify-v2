@@ -5,7 +5,8 @@
             <thead class="table-light">
             <tr>
                 <th scope="col" class="p-3">Author</th>
-                <th scope="col" class="p-3 "><img src="{{ asset('icons/Heart_filled.svg') }}" alt="Likes"> Likes</th>
+                <th scope="col" class="p-3"><i class="bi bi-heart-fill fs-8 me-2"></i>Likes
+                </th>
                 <th scope="col" class="p-3">Title</th>
                 <th scope="col" class="p-3">Content</th>
                 <th scope="col" class="p-3">Categories</th>
@@ -14,9 +15,9 @@
                         href="{{ path('dashboard.allBlogs', { order: order == 'ASC' ? 'DESC' : 'ASC' }) }}">
                         Created
                         {% if order == 'ASC' %}
-                            <img src="{{ asset('icons/Sort From Bottom To Top.svg') }}" alt="sort icon">
+                            <i class="bi bi-sort-up-alt fs-6"></i>
                         {% else %}
-                            <img src="{{ asset('icons/Sort From Top To Bottom.svg') }}" alt="sort icon">
+                            <i class="bi bi-sort-down-alt fs-6"></i>
                         {% endif %}
                     </a>
                 </th>
@@ -68,7 +69,7 @@
                            class="link-no-underline-black d-inline-block align-items-center"
                            data-tooltip="Users"
                            data-tooltip-placement="right">
-                            <img class="me-2" src="{{ asset('icons/Link Square.svg') }}" alt="pen icon">
+                            <i class="bi bi-link"></i>
                             {{ blog.title|u.truncate(15, '...') }}
                         </a>
                     </td>
@@ -124,16 +125,15 @@
                         {% if
                             (isAdmin and not authorIsAdmin) or (isOwner) %}
                             {# admin can delete blogger’s blog || owner can delete own blog #}
-                            <a class="me-3 open-delete-blog-modal"
+                            <a class="me-3 open-delete-blog-modal delete-btn"
                                href="#"
                                data-blog-id="{{ blog.id }}"
                                data-blog-name="{{ blog.title }}">
-                                <img
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-title="Delete"
-                                    src="{{ asset('icons/Trash Bin Trash.svg') }}"
-                                    alt="delete icon">
+                                <i data-bs-toggle="tooltip"
+                                   data-bs-placement="top"
+                                   data-bs-title="Delete"
+                                   class="bi bi-x-circle fs-5">
+                                </i>
                             </a>
                         {% endif %}
 
@@ -144,11 +144,13 @@
                         #}
                         {% if isOwner %}
                             {# edit #}
-                            <a href="{{ path('dashboard.editBlog', {id: blog.id} ) }}"
-                               data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               data-bs-title="Edit">
-                                <img src="{{ asset('icons/Pen New Square.svg') }}" alt="pen icon">
+                            <a
+                                class="edit-btn"
+                                href="{{ path('dashboard.editBlog', {id: blog.id} ) }}"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                data-bs-title="Edit">
+                                <i class="bi bi-pencil-square fs-5"></i>
                             </a>
                         {% endif %}
                     </td>
