@@ -1,0 +1,30 @@
+{% set current = app.request.attributes.get('_route') %}
+{% set isLogin = current == 'app_login' %}
+{% set isRegister = current == 'app_register' %}
+
+<div class="glass-radio-group mb-5">
+
+    {# --- LOGIN BUTTON --- #}
+    <input type="radio"
+           name="auth-switch"
+           id="glass-silver"
+        {{ isLogin ? 'checked' : '' }}>
+
+    <label for="glass-silver" onclick="window.location='{{ path('app_login') }}'">
+        Login
+    </label>
+
+    {# --- REGISTER BUTTON --- #}
+    <input type="radio"
+           name="auth-switch"
+           id="glass-gold"
+        {{ isRegister ? 'checked' : '' }}>
+
+    <label for="glass-gold" onclick="window.location='{{ path('app_register') }}'">
+        Register
+    </label>
+
+    {# --- ANIMATED GLIDER --- #}
+    <div class="glass-glider"></div>
+
+</div>
