@@ -72,6 +72,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'You must agree to the terms.')]
     private ?bool $terms = null;
 
+    #[ORM\Column]
+    private bool $isVerified = false;
+
     public function __construct ()
     {
         $this->likes = new ArrayCollection();
@@ -280,6 +283,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTerms (?bool $terms): static
     {
         $this->terms = $terms;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

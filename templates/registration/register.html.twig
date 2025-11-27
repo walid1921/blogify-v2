@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="page-container mt-4">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+
+            {# --- Switcher (Login / Register) --- #}
+            {% include 'components/_auth_switcher.html.twig' %}
+
+            <div class="w-25 d-flex flex-column form-wrapper mt-3">
+
+                {# --- Error Message --- #}
+                {% for flash_error in app.flashes('verify_email_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                {% endfor %}
+
+
+                {{ form_errors(registrationForm) }}
+
+                {# ======================== GOOGLE LOGIN BUTTON ======================== #}
+                <button type="button" class="google-btn mb-4">
+                    <img src="{{ asset('icons/google.svg') }}" class="google-icon" alt="Google">
+                    Register with Google
+                </button>
+
+                {# ======================== DIVIDER ======================== #}
+                <div class="divider my-4">
+                    <span>or continue with email</span>
+                </div>
+
+                {{ form_start(registrationForm, {'attr': {'novalidate': true}}) }}
+
+                <div class="d-flex flex-column gap-4 mt-4">
+                    {{ form_row(registrationForm.email) }}
+
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+
+                    {{ form_row(registrationForm.agreeTerms, {
+                        label: 'I agree to the Terms and Conditions'
+                    }
+                    ) }}
+                </div>
+
+
+                <div>
+                    {# --- Submit button --- #}
+                    <button type="submit" class="button-primary mt-5 py-2 px-4 w-100">Register</button>
+
+                    {# --- Already have an account --- #}
+                    <div class="d-flex align-items-center gap-2 mt-2">
+                        <p class="text-secondary fs-8"> Already have an account?</p>
+                        <a href="{{ path('app_login') }}"
+                           class="link-underline-black fs-8">
+                            Login here
+                        </a>
+                    </div>
+                </div>
+
+
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
