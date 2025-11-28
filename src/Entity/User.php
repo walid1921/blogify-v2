@@ -39,7 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Password is required')]
+//    #[Assert\NotBlank(message: 'Password is required')]
     private ?string $password = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
@@ -69,7 +69,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?DateTimeImmutable $created_at = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\NotBlank(message: 'You must agree to the terms.')]
     private ?bool $terms = null;
 
     #[ORM\Column]
@@ -287,12 +286,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
+    public function isVerified (): bool
     {
         return $this->isVerified;
     }
 
-    public function setIsVerified(bool $isVerified): static
+    public function setIsVerified (bool $isVerified): static
     {
         $this->isVerified = $isVerified;
 

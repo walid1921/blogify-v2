@@ -308,6 +308,7 @@ final class DashboardController extends AbstractController
             $user->setPassword($hashedPassword);
             $user->setIsActive(true);
             $user->setCreatedAt(new DateTimeImmutable());
+            $user->setTerms(true);
 
             $profile = new UserProfile();
             $profile->setUser($user);

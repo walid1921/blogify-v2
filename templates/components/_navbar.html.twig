@@ -55,6 +55,24 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
+                            <a class="dropdown-item d-flex flex-column align-items-start"
+                               href="{{ path('dashboard.createBlog') }}">
+                                <span>{{ app.user.username }}</span>
+                                <span class="text-secondary">{{ app.user.email }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2"
+                               href="{{ path('dashboard.home') }}">
+                                <span class="icon"><i class="bi bi-window-sidebar fs-5"></i></span>
+                                <span>Dashboard</span>
+
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item d-flex align-items-center gap-2"
                                href="{{ path('dashboard.createBlog') }}">
                                 <span class="icon"><i class="bi bi-person fs-5"></i></span>
