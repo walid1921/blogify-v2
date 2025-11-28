@@ -17,7 +17,7 @@
                 {% endfor %}
 
 
-                {{ form_errors(registrationForm) }}
+                {#  {{ form_errors(registrationForm) }} #}
 
                 {# ======================== GOOGLE LOGIN BUTTON ======================== #}
                 <button type="button" class="google-btn mb-4">
@@ -33,16 +33,14 @@
                 {{ form_start(registrationForm, {'attr': {'novalidate': true}}) }}
 
                 <div class="d-flex flex-column gap-4 mt-4">
+
+                    {{ form_row(registrationForm.username) }}
+
                     {{ form_row(registrationForm.email) }}
 
-                    {{ form_row(registrationForm.plainPassword, {
-                        label: 'Password'
-                    }) }}
+                    {{ form_row(registrationForm.plainPassword) }}
 
-                    {{ form_row(registrationForm.agreeTerms, {
-                        label: 'I agree to the Terms and Conditions'
-                    }
-                    ) }}
+                    {{ form_row(registrationForm.terms) }}
                 </div>
 
 

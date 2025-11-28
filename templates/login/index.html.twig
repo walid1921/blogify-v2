@@ -6,14 +6,13 @@
 
     <div class="page-container mt-4">
 
-        {# --- Switcher (Login / Register) --- #}
-        {% include 'components/_auth_switcher.html.twig' %}
-
 
         <form action="{{ path('app_login') }}"
               method="post"
               class="d-flex flex-column justify-content-center align-items-center">
 
+            {# --- Switcher (Login / Register) --- #}
+            {% include 'components/_auth_switcher.html.twig' %}
 
             {# --- Login Form --- #}
             <div class="w-25 d-flex flex-column form-wrapper mt-3">

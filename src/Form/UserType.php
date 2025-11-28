@@ -53,7 +53,6 @@ class UserType extends AbstractType
                 'multiple' => false,   // ⬅️ only one value
                 'expanded' => false,   // ⬅️ renders as a <select>
             ])
-            ->add('terms', CheckboxType::class, ['label' => 'I agree to the Terms of Service', 'required' => true])
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'button-primary button-primary--fullWidth mt-4']
             ]);

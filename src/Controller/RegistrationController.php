@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserProfile;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,14 +33,27 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
+
+            //  dd($form->getData());
+
             $plainPassword = $form->get('plainPassword')->getData();
 
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            $user->setIsActive(true);
+//            $user->setUsername("user_" . bin2hex(random_bytes(4)));
+//            $user->setUsername('walid');
+            $user->setCreatedAt(new DateTimeImmutable());
+
+            $profile = new UserProfile();
+            $profile->setUser($user);
+            $profile->setCreatedAt(new DateTimeImmutable());
 
             $entityManager->persist($user);
+            $entityManager->persist($profile);
             $entityManager->flush();
 
             // generate a signed url and email it to the user
@@ -85,8 +100,8 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Your account has been verified.');
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('dashboard.home');
     }
 }
