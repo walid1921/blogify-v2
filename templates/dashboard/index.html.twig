@@ -27,27 +27,36 @@
             <!-- Main Content -->
             <div class="dashboard-content">
 
+                {# Verification Alert #}
+                {% if not app.user.verified %}
+                    {% include 'components/_verificationAlert.html.twig' %}
+                {% endif %}
+
                 {# Home #}
                 {% if app.request.attributes.get('_route') == 'dashboard.home' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'DASHBOARD OVERVIEW',
                         description: 'Welcome to your dashboard! Here you can manage your blog posts, categories, and users. Use the sidebar to navigate through different sections.',
                     } %}
-                    {{ include('components/_userGuide.html.twig') }}
+                    {% include 'components/_userGuide.html.twig' with {
+                        currentUser: currentUser
+                    } %}
                 {% endif %}
 
                 {# Blogs #}
                 {% if  app.request.attributes.get('_route') == 'dashboard.allBlogs' %}
-                    {% include 'components/_section_header.html.twig' with {
-                        title: 'BLOGS',
-                        count: blogs|length,
-                        description: 'Update and delete blogs here',
-                        buttonType: 'primary',
-                        buttonPath: path('dashboard.createBlog'),
-                        buttonText: 'New Blog',
-                        buttonIconType: 'add',
-                        buttonIconColor: 'white'
-                    } %}
+                    {% if app.user.verified is true %}
+                        {% include 'components/_section_header.html.twig' with {
+                            title: 'BLOGS',
+                            count: blogs|length,
+                            description: 'Update and delete blogs here',
+                            buttonType: 'primary',
+                            buttonPath: path('dashboard.createBlog'),
+                            buttonText: 'New Blog',
+                            buttonIconType: 'add',
+                            buttonIconColor: 'white',
+                        } %}
+                    {% endif %}
                     {{ include('components/_blogs_table.html.twig') }}
                 {% elseif app.request.attributes.get('_route') == 'dashboard.editBlog' %}
                     {% include 'components/_section_header.html.twig' with {
@@ -129,6 +138,26 @@
                         title: 'SETTINGS',
                         description: 'Manage your account settings here',
                     } %}
+                {% endif %}
+
+                {# Profile #}
+                {% if app.request.attributes.get('_route') == 'dashboard.profile' %}
+                    {% include 'components/_section_header.html.twig' with {
+                        title: 'PROFILE',
+                        description: 'Manage your profile here',
+                    } %}
+                    {{ include('components/_profileForm.html.twig') }}
+                {% endif %}
+
+
+                {# Newsletter #}
+                {% if app.request.attributes.get('_route') == 'dashboard.newsletter' %}
+                    {% include 'components/_section_header.html.twig' with {
+                        title: 'NEWSLETTER',
+                        description: 'Manage your newsletter here',
+                    } %}
+
+                    {{ include('components/_newsletter_table.html.twig') }}
                 {% endif %}
 
             </div>

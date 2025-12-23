@@ -21,9 +21,13 @@
     "devDependencies": {
         "@rodrigoodhin/editorjs-image-gallery": "^0.1.0",
         "@symfony/webpack-encore": "^5.2.0",
+        "@types/node": "^24.10.2",
         "concurrently": "^9.2.1",
+        "cypress": "^15.7.1",
         "sass": "^1.92.1",
         "sass-loader": "^16.0.5",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3",
         "webpack-dev-server": "^5.2.2"
     }
 }

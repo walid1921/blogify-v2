@@ -37,12 +37,9 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
 
-            //  dd($form->getData());
-
             $plainPassword = $form->get('plainPassword')->getData();
 
-            // encode the plain password
-            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword)); // encode the plain password
             $user->setIsActive(true);
 //            $user->setUsername("user_" . bin2hex(random_bytes(4)));
 //            $user->setUsername('walid');
@@ -65,6 +62,7 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
+            $this->addFlash('warning', 'Please check your email to verify your account.');
             // do anything else you need here, like send an email
 
             return $security->login($user, 'form_login', 'main');

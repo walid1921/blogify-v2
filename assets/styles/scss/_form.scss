@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 
     .cover-upload-label {
         width: 100%;
@@ -47,11 +48,47 @@
             }
         }
     }
+}
 
-    .form-errors {
-        margin-top: 8px;
-        color: var(--bs-danger);
-        font-size: 0.85rem;
+//! Profile Avatar Upload
+.profile-avatar-wrapper {
+    position: absolute;
+    right: 40px;
+    bottom: -60px;
+    z-index: 5;
+}
+
+.profile-avatar-label {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+    input[type="file"] {
+        display: none;
+    }
+}
+
+.profile-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--bs-white);
+    border: 1px solid var(--bs-border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.03);
+        border-color: var(--bs-black);
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
 
@@ -80,10 +117,10 @@
         left: 20px;
         top: 15px;
         font-size: 1rem;
-        color: #a8a8a7;
+        color: var(--form-muted);
         pointer-events: none;
         transition: all 0.3s ease;
-        background-color: var(--bs-body-bg);
+        background-color: var(--form-bg);
         z-index: 4;
     }
 
@@ -91,7 +128,8 @@
         display: block;
         width: 100%;
         padding: 15px 20px;
-        border: 1px solid var(--bs-border-color);
+        border: 1px solid var(--form-border);
+        color: var(--form-text);
         font-size: 1rem;
         background: transparent;
         outline: none;
@@ -103,7 +141,7 @@
         &:valid ~ .my-label {
             top: -10px;
             font-size: 0.85rem;
-            color: var(--bs-black);
+            color: var(--form-hover);
         }
 
         &:focus ~ .underline,
@@ -112,8 +150,7 @@
         }
 
         &:hover {
-            border-color: var(--bs-black);
-            color: var(--bs-black);
+            border-color: var(--form-hover);
         }
     }
 
@@ -123,7 +160,7 @@
         left: 0;
         height: 2px;
         width: 100%;
-        background-color: var(--bs-black);
+        background-color: var(--form-hover);
         transform: scaleX(0);
         transition: transform 0.3s ease;
         z-index: 3;
@@ -160,7 +197,6 @@
     font-size: 0.8rem;
     color: var(--bs-secondary);
 }
-
 
 .editorjs-holder-wrapper {
     position: relative;

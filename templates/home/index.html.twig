@@ -37,18 +37,29 @@
 
 {% block body %}
 
+    {# Notifications #}
+    <div class="notification-container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                {% include 'components/_toast.html.twig' with { type: label,  message: message } %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
     <div class="page-container">
 
-        <div class="blog-header">
-            <h1 class="text-uppercase">Blogs</h1>
-            <p class="fw-light">I think in this page its not needed to have a header to find something else</p>
-        </div>
+        {# Hero Section #}
+        <section class="row g-3 g-md-0 align-items-stretch pt-3 w-100" data-test="hero">
 
-        <div class="sticky-categories px-2 px-md-4">
-            {% include 'components/_blogCategories.html.twig' %}
-        </div>
+            <div class="blog-header">
+                <h1 class="text-uppercase" data-test="hero-heading">Blogs</h1>
+                <p class="fw-light">I think in this page its not needed to have a header to find something else</p>
+            </div>
 
-        <section class="row g-3 g-md-0 align-items-stretch pt-3 w-100">
+            <div class="sticky-categories px-2 px-md-4 mb-2 mb-md-3">
+                {% include 'components/_blogCategories.html.twig' %}
+            </div>
+
             {# TOP LEFT BLOG #}
             <div
                 class="col-12 col-md-5 p-0 pe-md-3 d-flex flex-column justify-content-between">
@@ -197,16 +208,16 @@
             </div>
         </section>
 
-        {# BLOGS #}
-        <section class="d-flex flex-column pt-3 w-100 mt-3 mt-md-5">
+        {# MOST READ BLOGS #}
+        <section class="d-flex flex-column pt-3 w-100 mt-3 mt-md-5" data-test="most-read-blogs">
 
             <div class="blog-header mb-4">
-                <h2 class="text-uppercase">Latest Blogs</h2>
+                <h2 class="text-uppercase">Most Read Blogs</h2>
             </div>
 
             {#            <h2 class="text-uppercase mb-4">Latest Blogs</h2> #}
 
-            {# Three random blogs from the list #}
+            {# Three recommended blogs #}
             <div class="row g-3 align-items-stretch">
                 {% for blog in latestBlogs %}
                     {{ include('components/_blogCard.html.twig', {blog: blog}) }}
@@ -224,6 +235,35 @@
                 } %}
             </div>
         </section>
+
+        {# LATEST BLOGS #}
+        <section class="d-flex flex-column pt-3 w-100 mt-3 mt-md-5">
+
+            <div class="blog-header mb-4">
+                <h2 class="text-uppercase">Latest Blogs</h2>
+            </div>
+
+            {#            <h2 class="text-uppercase mb-4">Latest Blogs</h2> #}
+
+            {# Three latest blogs #}
+            <div class="row g-3 align-items-stretch">
+                {% for blog in latestBlogs %}
+                    {{ include('components/_blogCard.html.twig', {blog: blog}) }}
+                {% endfor %}
+            </div>
+
+
+            <div class="d-flex justify-content-end mt-3 mt-md-5 me-3">
+                {% include 'components/_button.html.twig' with {
+                    typeButton: 'primary',
+                    path: path('blog.allBlogs'),
+                    textButton: 'See All Blogs',
+                    iconType: 'chevron-right',
+                    iconColor: 'white'
+                } %}
+            </div>
+        </section>
+
 
         <section class="section">
             {% include 'components/_joinToday.html.twig' %}
@@ -505,8 +545,10 @@
     {#        </div> #}
     {#    </header> #}
     <!-- -------- END HEADER 5 w/ text and illustration ------- -->
+{% endblock %}
 
-
-
-
+{% block footer %}
+    <footer>
+        {{ include('components/_footer.html.twig') }}
+    </footer>
 {% endblock %}

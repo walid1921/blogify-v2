@@ -4,6 +4,27 @@
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/utilities";
 
+:root {
+    --form-bg: var(--bs-body-bg);
+    --form-text: var(--bs-black);
+    --form-border: var(--bs-border-color);
+    --form-muted: var(--bs-secondary);
+    --form-hover: var(--bs-black);
+    --form-inverse-text: var(--bs-white);
+}
+
+/* Dark background context */
+.theme-dark,
+.bg-dark,
+[data-theme="dark"] {
+    --form-bg: var(--bs-primary);
+    --form-text: var(--bs-white);
+    --form-border: rgba(255, 255, 255, 0.4);
+    --form-muted: rgba(255, 255, 255, 0.6);
+    --form-hover: var(--bs-white);
+    --form-inverse-text: var(--bs-black);
+}
+
 // Extend Bootstrap utilities
 $utilities: map-merge(
         $utilities,

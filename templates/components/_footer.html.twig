@@ -1,0 +1,106 @@
+<footer class="site-footer theme-dark mt-auto" id="footer">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row gy-5">
+
+            {# HELP #}
+            <div class="col-6 col-md-3 col-lg-2">
+                <h6 class="footer-title">HELP</h6>
+                <ul class="footer-list">
+                    <li><a href="#" class="link-no-underline-white">FAQ</a></li>
+                    <li><a href="#" class="link-no-underline-white">Contact us</a></li>
+                    <li><a href="#" class="link-no-underline-white">Shipping</a></li>
+                    <li><a href="#" class="link-no-underline-white">Payment</a></li>
+                    <li><a href="#" class="link-no-underline-white">Refund policy</a></li>
+                    <li><a href="#" class="link-no-underline-white">Returns and exchanges</a></li>
+                </ul>
+            </div>
+
+            {# HELP (duplicate column as in screenshot) #}
+            <div class="col-6 col-md-3 col-lg-2">
+                <h6 class="footer-title">HELP</h6>
+                <ul class="footer-list">
+                    <li><a href="#" class="link-no-underline-white">FAQ</a></li>
+                    <li><a href="#" class="link-no-underline-white">Contact us</a></li>
+                    <li><a href="#" class="link-no-underline-white">Shipping</a></li>
+                    <li><a href="#" class="link-no-underline-white">Payment</a></li>
+                    <li><a href="#" class="link-no-underline-white">Refund policy</a></li>
+                    <li><a href="#" class="link-no-underline-white">Returns and exchanges</a></li>
+                </ul>
+            </div>
+
+            {# BRAND #}
+            <div class="col-6 col-md-3 col-lg-2">
+                <h6 class="footer-title">BRAND</h6>
+                <ul class="footer-list">
+                    <li><a href="#" class="link-no-underline-white">About us</a></li>
+                    <li><a href="#" class="link-no-underline-white">Blog</a></li>
+                    <li><a href="#" class="link-no-underline-white">Newsletter</a></li>
+                    <li><a href="#" class="link-no-underline-white">Our vision</a></li>
+                    <li><a href="#" class="link-no-underline-white">Collaboration</a></li>
+                </ul>
+            </div>
+
+            {# CATEGORIES #}
+            <div class="col-6 col-md-3 col-lg-2">
+                <h6 class="footer-title">CATEGORIES</h6>
+                <ul class="footer-list">
+                    <li><a href="#" class="link-no-underline-white">Men</a></li>
+                    <li><a href="#" class="link-no-underline-white">Women</a></li>
+                    <li><a href="#" class="link-no-underline-white">Bestseller</a></li>
+                    <li><a href="#" class="link-no-underline-white">Sale</a></li>
+                    <li><a href="#" class="link-no-underline-white">Gifts</a></li>
+                    <li><a href="#" class="link-no-underline-white">Explore</a></li>
+                </ul>
+            </div>
+
+            {# NEWSLETTER #}
+            <div class="col-12 col-lg-4">
+                <h6 class="footer-title">JOIN THE FAMILY</h6>
+                <p class="footer-subtitle">Don’t miss new drops and sales</p>
+
+                {{ form_start(newsletterForm, { action: path('newsletter_subscribe')}) }}
+                {{ form_errors(newsletterForm) }}
+                <div class="my-custom-row gap-3 mb-2">
+                    {{ form_row(newsletterForm.username, { row_attr: { class: 'form-row-inline' } }) }}
+                    {{ form_row(newsletterForm.email, { row_attr: { class: 'form-row-inline' } }) }}
+                    {{ form_row(newsletterForm.save) }}
+                </div>
+
+                {{ form_end(newsletterForm) }}
+
+                <p class="footer-legal">
+                    By entering the e-mail, you accept the
+                    <a href="#">terms and conditions</a> and the
+                    <a href="#">privacy policy</a>.
+                </p>
+            </div>
+
+        </div>
+
+        {# SOCIALS #}
+        <div class="footer-socials">
+            <a href="#" class="link-no-underline-white"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="link-no-underline-white"><i class="bi bi-tiktok"></i></a>
+            <a href="#" class="link-no-underline-white"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="link-no-underline-white"><i class="bi bi-whatsapp"></i></a>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-links">
+                <a href="#" class="link-no-underline-white">Terms & Conditions</a>
+                <span>|</span>
+                <a href="#" class="link-no-underline-white">Imprint</a>
+                <span>|</span>
+                <a href="#" class="link-no-underline-white">Data Protection</a>
+                <span>|</span>
+                <a href="#" class="link-no-underline-white">Privacy</a>
+                <span>|</span>
+                <a href="#" class="link-no-underline-white">Cookies Policy</a>
+                <span>|</span>
+                <a href="#" class="link-no-underline-white">AGB</a>
+            </div>
+
+            <small>© 2025 - PETARISIA · all rights reserved</small>
+        </div>
+    </div>
+</footer>

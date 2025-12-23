@@ -1,0 +1,18 @@
+<div>
+    <div class="alert alert-warning d-flex align-items-center justify-content-between" role="alert">
+        <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-exclamation-triangle-fill fs-4"></i>
+            <div>
+                <strong>Your account is not verified.</strong>
+                <p class="mb-0">Please check your email to verify your account.</p>
+            </div>
+        </div>
+        {#        <form method="post" action="{{ path('app_resend_verification') }}"> #}
+        <form method="post" action="">
+            <button type="submit" class="btn border border-warning text-warning-emphasis">Resend
+                Verification Email
+            </button>
+        </form>
+    </div>
+
+</div>

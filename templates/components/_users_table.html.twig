@@ -2,30 +2,15 @@
     {# {{ dump(users) }} #}
     {% if users|length > 0 %}
         <table class="table table-striped table-hover">
-            <thead class="table-light">
+            <thead class="table-light sticky-top">
             <tr>
                 <th scope="col" class="p-3">Username</th>
                 <th scope="col" class="p-3">Email</th>
                 <th scope="col" class="p-3">Role</th>
                 <th scope="col" class="p-3">Status</th>
+                <th scope="col" class="p-3">Verified</th>
                 <th scope="col" class="p-3">Terms</th>
                 <th scope="col" class="p-3">Created</th>
-
-
-                {#                <th scope="col" class="p-3"> #}
-                {#                    <a #}
-                {#                        href="{{ path('user.blogsTable', { order: order == 'ASC' ? 'DESC' : 'ASC' }) }}"> #}
-                {#                        Created #}
-                {#                        {% if order == 'ASC' %} #}
-                {#                            <img src="{{ asset('icons/Sort From Bottom To Top.svg') }}" alt="sort icon"> #}
-                {#                        {% else %} #}
-                {#                            <img src="{{ asset('icons/Sort From Top To Bottom.svg') }}" alt="sort icon"> #}
-                {#                        {% endif %} #}
-                {#                    </a> #}
-                {#                </th> #}
-
-                {#                <th scope="col" class="py-3">Status</th> #}
-
                 <th scope="col" class="pe-3 py-3">Update</th>
             </tr>
             </thead>
@@ -101,16 +86,43 @@
                         </div>
                     </td>
 
+                    {#   Verified  #}
+                    <td class="p-3 fs-7">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>
+                                {% if (user.isVerified) %}
+                                    <i data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       data-bs-title="Verified"
+                                       class="bi bi-check-circle fs-5"></i>
+                                {% else %}
+                                    <i data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       data-bs-title="Not Verified"
+                                       class="bi bi-question-circle fs-5 text-secondary"></i>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </td>
+
                     {#   Terms  #}
                     <td class="p-3 fs-7">
                         <div class="d-flex align-items-center gap-1">
                             <span>
                                 {% if (user.terms) %}
-                                    agreed
+                                    <i data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       data-bs-title="Agreed"
+                                       class="bi bi-check-circle fs-5"></i>
                                 {% else %}
-                                    not agreed
+                                    <i data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
+                                       data-bs-title="Not agreed"
+                                       class="bi bi-question-circle fs-5 text-secondary"></i>
                                 {% endif %}
                             </span>
+
+
                         </div>
                     </td>
 

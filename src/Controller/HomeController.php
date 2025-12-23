@@ -70,5 +70,6 @@ final class HomeController extends AbstractController
             'blogHighlightedHome' => $blogHighlightedHome,
         ]);
 
+
     }
 }

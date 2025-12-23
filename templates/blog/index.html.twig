@@ -18,7 +18,7 @@
     {#        {% include 'components/_carouselProduct.html.twig' with { images: images } %} #}
     {#    </div> #}
 
-    <div class="page-container">
+    <section class="page-container">
 
         <div class="d-flex align-items-center justify-content-between">
             <div class="blog-header">
@@ -48,8 +48,12 @@
 
         {# Blogs cards #}
         {% include 'components/_blogList.html.twig' with { blogs: blogs } %}
+    </section>
 
+{% endblock %}
 
-    </div>
-
+{% block footer %}
+    <footer>
+        {{ include('components/_footer.html.twig') }}
+    </footer>
 {% endblock %}

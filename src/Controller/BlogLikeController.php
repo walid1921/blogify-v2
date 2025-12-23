@@ -15,9 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class UserProfileController extends AbstractController
+final class BlogLikeController extends AbstractController
 {
-    #[Route('/user/profile', name: 'app_user_profile')]
+    #[Route('/user/profile', name: 'blog_like')]
     public function index (EntityManagerInterface $entityManager, UserProfileRepository $profileRepo, BlogsRepository $blogsRepository, UserRepository $userRepository): Response
     {
 
@@ -68,3 +68,15 @@ final class UserProfileController extends AbstractController
         ]);
     }
 }
+
+//
+//{% extends 'base.html.twig' %}
+//
+//{% block title %}Hello UserProfileController!{% endblock %}
+//
+//{% block body %}
+//    <div class="page-container">
+//
+//        <p>You liked a blog check the database</p>
+//    </div>
+//{% endblock %}
