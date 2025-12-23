@@ -8,7 +8,10 @@ use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Form\BlogCategoriesType;
 use App\Form\BlogType;
+use App\Form\UserProfileType;
 use App\Form\UserType;
+use App\Repository\NewsletterRepository;
+use App\Repository\UserProfileRepository;
 use DateTimeImmutable;
 use DateTime;
 use App\Repository\BlogCategoriesRepository;
@@ -37,8 +40,8 @@ final class DashboardController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function dashboardHome (): Response
     {
-        $message = "WOOOOW";
         $currentUser = $this->getUser();
+        $message = "Welcome";
 
 
         return $this->render('dashboard/index.html.twig', [
@@ -47,7 +50,7 @@ final class DashboardController extends AbstractController
         ]);
     }
 
-    // ! All Blogs in a table
+    //! All Blogs in a table
     #[Route('/blogs', name: 'allBlogs')]
     #[IsGranted('ROLE_BLOGGER')]
     public function allBlogs (Request $request, BlogsRepository $blogsRepository, LikesRepository $likesRepository): Response
@@ -93,6 +96,15 @@ final class DashboardController extends AbstractController
     public function createBlog (Request $request, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
 
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // only verified users
+        if (!$user->isVerified()) {
+            $this->addFlash('error', 'You must verify your email before creating blogs.');
+            return $this->redirectToRoute('dashboard.allBlogs');
+        }
+
         // 👤 Get or validate user
 //        $user = $userRepo->find(16);
 //        if (!$user) {
@@ -104,8 +116,7 @@ final class DashboardController extends AbstractController
         $blog->setTitle('');
         $blog->setContent(json_encode(['blocks' => []], JSON_THROW_ON_ERROR)); // initialize with an empty JSON string instead of '':
         $blog->setCreatedAt(new DateTimeImmutable());
-//        $blog->setAuthor($user);
-        $blog->setAuthor($this->getUser());
+        $blog->setAuthor($this->getUser()); // Here we are calling the logged-in user // Or $blog->setAuthor($user);
         $blog->setIsPublished(false);
 
         // Create the form using the BlogType form class
@@ -146,7 +157,6 @@ final class DashboardController extends AbstractController
             $this->addFlash('success', 'Blog added successfully!');
             return $this->redirectToRoute('dashboard.allBlogs');
         }
-
 
         // return new Response('Saved new blog with id ' . $blog->getId());
         return $this->render('dashboard/index.html.twig', [
@@ -370,6 +380,51 @@ final class DashboardController extends AbstractController
     {
         return $this->render('dashboard/index.html.twig', [
             'settingsPage' => true,
+        ]);
+    }
+
+    //! User Profile
+    #[Route('/user/profile', name: 'profile')]
+    #[isGranted('ROLE_USER')]
+    public function profile (Request $request, EntityManagerInterface $entityManager, UserProfileRepository $profileRepo, UserRepository $userRepository): Response
+    {
+
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $userProfile = $user->getUserProfile() ?? new UserProfile();
+
+        $form = $this->createForm(UserProfileType::class, $userProfile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $userProfile = $form->getData();
+            $user->setUserProfile($userProfile);
+            $entityManager->persist($userProfile);
+            $entityManager->flush();
+            $this->addFlash('success', 'Profile updated successfully!');
+
+            return $this->redirectToRoute('dashboard.profile');
+        }
+
+        return $this->render('dashboard/index.html.twig', [
+            'formUserProfile' => $form->createView(),
+        ]);
+    }
+
+    //! Fetch Newsletter
+    #[Route('/newsletter', name: 'newsletter')]
+    #[isGranted('ROLE_ADMIN')]
+    public function newsletter (NewsletterRepository $newsletterRepository): Response
+    {
+        $allNewsletter = $newsletterRepository->findAll();
+
+        return $this->render('dashboard/index.html.twig', [
+            'allNewsletter' => $allNewsletter,
         ]);
     }
 }

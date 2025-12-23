@@ -1,0 +1,121 @@
+//! FOOTER
+.site-footer {
+    background: var(--bs-primary);
+    color: var(--bs-secondary);
+    padding: 80px 0 40px;
+    font-size: 0.9rem;
+
+    a {
+        color: var(--bs-secondary);
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: var(--bs-white);
+        }
+    }
+}
+
+.footer-title {
+    color: var(--bs-white);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+}
+
+.footer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    a {
+        font-size: 0.95rem;
+        font-weight: 300;
+    }
+}
+
+.footer-subtitle {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.footer-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 15px;
+
+    input {
+        padding: 15px 20px;
+        background: transparent;
+        border: 1px solid var(--bs-border-color);
+        color: var(--bs-white);
+        font-size: 0.85rem;
+        outline: none;
+
+        &::placeholder {
+            color: var(--bs-secondary);
+            letter-spacing: 0.08em;
+        }
+
+        &:hover {
+            border-color: var(--bs-white);
+        }
+    }
+
+    //button {
+    //    grid-column: span 2;
+    //    background: transparent;
+    //    border: 1px solid var(--bs-border-color);
+    //    padding: 12px;
+    //    font-size: 0.85rem;
+    //    letter-spacing: 0.12em;
+    //    color: var(--bs-white);
+    //    transition: all 0.2s ease;
+    //
+    //    &:hover {
+    //        border-color: var(--bs-white);
+    //    }
+    //}
+}
+
+.footer-legal {
+    font-size: 0.7rem;
+    color: var(--bs-secondary);
+
+    a {
+        text-decoration: underline;
+    }
+}
+
+.footer-socials {
+    display: flex;
+    gap: 18px;
+    margin: 40px 0;
+    font-size: 1.2rem;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 20px;
+    text-align: center;
+
+    small {
+        display: block;
+        margin-top: 10px;
+        color: var(--bs-white);
+    }
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.75rem;
+
+    span {
+        opacity: 0.5;
+    }
+}

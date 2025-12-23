@@ -72,6 +72,17 @@
                     </li>
                 {% endif %}
 
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.newsletter' ? 'active' : '' }}">
+                        <a href="{{ path('dashboard.newsletter') }}"
+                           class="sidebar__link "
+                           data-tooltip="Newsletter">
+                            <span class="icon"><i class="bi bi-envelope fs-5"></i></span>
+                            <span class="text">Newsletter</span>
+                        </a>
+                    </li>
+                {% endif %}
+
                 <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
                     <a href="#"
                        class="sidebar__link "
@@ -82,8 +93,8 @@
                 </li>
             </ul>
             <ul class="sidebar__list list--secondary">
-                <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
-                    <a href="#"
+                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.profile' ? 'active' : '' }}">
+                    <a href="{{ path('dashboard.profile') }}"
                        class="sidebar__link "
                        data-tooltip="Profile">
                         <span class="icon"><i class="bi bi-person fs-5"></i></span>

@@ -250,6 +250,7 @@ class Blog
     {
         if (!$this->categories->contains($category)) {
             $this->categories->add($category);
+            $category->addBlog($this); // sync inverse side
         }
 
         return $this;
@@ -257,7 +258,9 @@ class Blog
 
     public function removeCategory (BlogCategories $category): static
     {
-        $this->categories->removeElement($category);
+        if ($this->categories->removeElement($category)) {
+            $category->removeBlog($this); // sync inverse side
+        }
 
         return $this;
     }

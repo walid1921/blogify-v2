@@ -1,0 +1,50 @@
+<div class=" table-responsive border border-black border-opacity-25 ">
+    {# {{ dump(categories) }} #}
+    {% if blogCategories|length > 0 %}
+        <table class="table table-striped table-hover">
+            <thead class="table-light sticky-top">
+            <tr>
+                <th scope="col" class="p-3">Username</th>
+                <th scope="col" class="p-3">Email</th>
+                <th scope="col" class="p-3">Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key,newsletter in allNewsletter %}
+                <tr>
+                    {#   username   #}
+                    <td class="p-3 fs-7">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>{{ newsletter.username }}</span>
+                        </div>
+                    </td>
+
+                    {#   email   #}
+                    {#                    <td class="p-3 fs-7"> #}
+                    {#                        <div class="d-flex align-items-center gap-1"> #}
+                    {#                            <span>{{ newsletter.email }}</span> #}
+                    {#                        </div> #}
+                    {#                    </td> #}
+
+                    <td class="p-3 fs-7">
+                        <a href="mailto:{{ newsletter.email }}"
+                           class="link-no-underline-black d-inline-block align-items-center ">
+                            <i class="bi bi-link"></i>
+                            {{ newsletter.email }}
+                        </a>
+                    </td>
+
+                    {#   newsletter created date   #}
+                    <td class="p-3 fs-7">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>{{ newsletter.createdAt|date('Y-m-d') }}</span>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ include('components/_emptyPage.html.twig' , {message : "No Newsletter yet"}) }}
+    {% endif %}
+</div>

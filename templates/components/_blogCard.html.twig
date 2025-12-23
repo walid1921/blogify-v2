@@ -1,7 +1,8 @@
 <div class="col-12 col-md-6 col-lg-4 pe-0 pb-5 d-flex flex-column justify-content-between">
 
 
-    <a href="{{ path('blog.one_blog', { id: blog.id }) }}" class="zoom-wrap position-relative blog-image">
+    <a href="{{ path('blog.one_blog', { id: blog.id }) }}" class="zoom-wrap position-relative blog-image"
+       data-test="blog-card">
         {% if blog.coverImage %}
             <img src="{{ asset('uploads/blogs/' ~ blog.coverImage) }}"
                  alt="{{ blog.title }}"

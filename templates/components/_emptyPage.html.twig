@@ -3,6 +3,13 @@
     <h4>{{ message }}</h4>
     <p class="fw-light px-4">
         It looks like there’s nothing here right now. Start by creating your first
-        <a href="{{ path(linkPath) }}" class="link-underline-black">{{ linkText }}</a>
+
+        {% if linkPath %}
+            <a href="{{ path(linkPath) }}" class="link-underline-black">{{ linkText }}</a>
+        {% else %}
+            <span class="link-underline-black" style="cursor:not-allowed; opacity:0.5;">
+                {{ linkText }} (verify your email)
+            </span>
+        {% endif %}
     </p>
 </div>
