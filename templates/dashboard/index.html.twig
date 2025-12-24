@@ -33,7 +33,7 @@
                 {% endif %}
 
                 {# Home #}
-                {% if app.request.attributes.get('_route') == 'dashboard.home' %}
+                {% if app.current_route == 'dashboard.home' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'DASHBOARD OVERVIEW',
                         description: 'Welcome to your dashboard! Here you can manage your blog posts, categories, and users. Use the sidebar to navigate through different sections.',
@@ -44,7 +44,7 @@
                 {% endif %}
 
                 {# Blogs #}
-                {% if  app.request.attributes.get('_route') == 'dashboard.allBlogs' %}
+                {% if  app.current_route == 'dashboard.allBlogs' %}
                     {% if app.user.verified is true %}
                         {% include 'components/_section_header.html.twig' with {
                             title: 'BLOGS',
@@ -58,14 +58,14 @@
                         } %}
                     {% endif %}
                     {{ include('components/_blogs_table.html.twig') }}
-                {% elseif app.request.attributes.get('_route') == 'dashboard.editBlog' %}
+                {% elseif app.current_route == 'dashboard.editBlog' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'EDIT YOUR BLOG POST',
                         description: 'Hit the "Save" button after finishing the editing.',
                         backButton: true,
                     } %}
                     {{ include('components/_blogForm.html.twig') }}
-                {% elseif app.request.attributes.get('_route') == 'dashboard.createBlog' %}
+                {% elseif app.current_route == 'dashboard.createBlog' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'CREATE A NEW BLOG POST',
                         description: 'Start writing your amazing blog post',
@@ -75,7 +75,7 @@
                 {% endif %}
 
                 {# Categories #}
-                {% if app.request.attributes.get('_route') == 'dashboard.allBlogCategories' %}
+                {% if app.current_route == 'dashboard.allBlogCategories' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'CATEGORIES',
                         count: blogCategories|length,
@@ -87,14 +87,14 @@
                         buttonIconColor: 'white'
                     } %}
                     {{ include('components/_categories_table.html.twig') }}
-                {% elseif app.request.attributes.get('_route') == 'dashboard.createBlogCategories' %}
+                {% elseif app.current_route == 'dashboard.createBlogCategories' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'CREATE NEW CATEGORY',
                         description: 'Fill in the form to create a new category',
                         backButton: true,
                     } %}
                     {{ include('components/_categoryForm.html.twig') }}
-                {% elseif app.request.attributes.get('_route') == 'dashboard.editBlogCategories' %}
+                {% elseif app.current_route == 'dashboard.editBlogCategories' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'EDITING CATEGORY',
                         description: 'Update the category here',
@@ -104,7 +104,7 @@
                 {% endif %}
 
                 {# Users #}
-                {% if app.request.attributes.get('_route') == 'dashboard.users' %}
+                {% if app.current_route == 'dashboard.users' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'USERS',
                         count: users|length,
@@ -116,14 +116,14 @@
                         buttonIconColor: 'white'
                     } %}
                     {{ include('components/_users_table.html.twig') }}
-                {% elseif app.request.attributes.get('_route') == 'dashboard.userEdit' %}
+                {% elseif app.current_route == 'dashboard.userEdit' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'EDITING USER PROFILE',
                         description: 'Update the user data',
                         backButton: true,
                     } %}
                     {{ include('components/_userForm.html.twig') }}
-                {% elseif app.request.attributes.get('_route') == 'dashboard.userCreate' %}
+                {% elseif app.current_route == 'dashboard.userCreate' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'CREATE NEW USER',
                         description: 'Fill in the form to create a new user',
@@ -133,7 +133,7 @@
                 {% endif %}
 
                 {# Settings #}
-                {% if app.request.attributes.get('_route') == 'dashboard.settings' and settingsPage %}
+                {% if app.current_route == 'dashboard.settings' and settingsPage %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'SETTINGS',
                         description: 'Manage your account settings here',
@@ -141,7 +141,7 @@
                 {% endif %}
 
                 {# Profile #}
-                {% if app.request.attributes.get('_route') == 'dashboard.profile' %}
+                {% if app.current_route == 'dashboard.profile' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'PROFILE',
                         description: 'Manage your profile here',
@@ -151,7 +151,7 @@
 
 
                 {# Newsletter #}
-                {% if app.request.attributes.get('_route') == 'dashboard.newsletter' %}
+                {% if app.current_route == 'dashboard.newsletter' %}
                     {% include 'components/_section_header.html.twig' with {
                         title: 'NEWSLETTER',
                         description: 'Manage your newsletter here',

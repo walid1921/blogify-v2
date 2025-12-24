@@ -16,19 +16,18 @@ class UserProfileType extends AbstractType
     public function buildForm (FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('websiteUrl')
+            ->add('instagram')
+            ->add('tiktok')
             ->add('bio')
             ->add('dateOfBirth')
-            ->add('cover_image', FileType::class, [
-                'mapped' => false,
-                'required' => false,
-            ])
             ->add('avatar', FileType::class, [
                 'mapped' => false,
                 'required' => false,
             ])
             ->add('country')
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, [
+                'attr' => ['class' => 'button-primary button-primary--fullWidth']
+            ]);
     }
 
     public function configureOptions (OptionsResolver $resolver): void

@@ -29,7 +29,7 @@
             <ul class="sidebar__list list--primary">
 
                 {% if is_granted('ROLE_USER') %}
-                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.home' ? 'active' : '' }}">
+                    <li class="sidebar__item {{ app.current_route == 'dashboard.home' ? 'active' : '' }}">
                         <a href="{{ path('dashboard.home') }}"
                            class="sidebar__link"
                            data-tooltip="Home">
@@ -40,7 +40,7 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_BLOGGER') %}
-                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.allBlogs' ? 'active' : '' }}">
+                    <li class="sidebar__item {{ app.current_route == 'dashboard.allBlogs' ? 'active' : '' }}">
                         <a href="{{ path('dashboard.allBlogs') }}"
                            class="sidebar__link"
                            data-tooltip="Blogs">
@@ -51,7 +51,7 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.allBlogCategories' ? 'active' : '' }}">
+                    <li class="sidebar__item {{ app.current_route == 'dashboard.allBlogCategories' ? 'active' : '' }}">
                         <a href="{{ path('dashboard.allBlogCategories') }}"
                            class="sidebar__link "
                            data-tooltip="Categories">
@@ -62,7 +62,7 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.users' ? 'active' : '' }}">
+                    <li class="sidebar__item {{ app.current_route == 'dashboard.users' ? 'active' : '' }}">
                         <a href="{{ path('dashboard.users') }}"
                            class="sidebar__link "
                            data-tooltip="Users">
@@ -73,7 +73,7 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.newsletter' ? 'active' : '' }}">
+                    <li class="sidebar__item {{ app.current_route == 'dashboard.newsletter' ? 'active' : '' }}">
                         <a href="{{ path('dashboard.newsletter') }}"
                            class="sidebar__link "
                            data-tooltip="Newsletter">
@@ -83,7 +83,7 @@
                     </li>
                 {% endif %}
 
-                <li class="sidebar__item {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
+                <li class="sidebar__item {{ app.current_route == '' ? 'active' : '' }}">
                     <a href="#"
                        class="sidebar__link "
                        data-tooltip="Favourite">
@@ -93,7 +93,7 @@
                 </li>
             </ul>
             <ul class="sidebar__list list--secondary">
-                <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.profile' ? 'active' : '' }}">
+                <li class="sidebar__item {{ app.current_route == 'dashboard.profile' ? 'active' : '' }}">
                     <a href="{{ path('dashboard.profile') }}"
                        class="sidebar__link "
                        data-tooltip="Profile">
@@ -102,7 +102,7 @@
                 </li>
 
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li class="sidebar__item {{ app.request.attributes.get('_route') == 'dashboard.settings' ? 'active' : '' }}">
+                    <li class="sidebar__item {{ app.current_route == 'dashboard.settings' ? 'active' : '' }}">
                         <a href="{{ path('dashboard.settings') }}"
                            class="sidebar__link "
                            data-tooltip="Settings">

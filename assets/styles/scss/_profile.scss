@@ -1,0 +1,107 @@
+
+.profile-page {
+    padding-top: 120px;
+    min-height: 100vh;
+}
+
+/* Name + tabs */
+.profile-name {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.profile-tabs {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #d5d5d5;
+    margin-bottom: 1.75rem;
+
+    a {
+        padding-bottom: 6px;
+        cursor: pointer;
+        color: var(--bs-secondary);
+
+        &.active {
+            color: #000;
+            border-bottom: 2px solid #000;
+        }
+    }
+}
+
+/* POSTS */
+.profile-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    flex: 1; // fill remaining height
+    overflow-y: auto; // enable scrolling
+    padding-right: 1rem; // avoid scrollbar overlap
+
+    .title {
+        letter-spacing: 0.05em;
+        color: inherit;
+        margin: 0;
+        font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+        line-height: 1.25;
+        font-weight: 500;
+    }
+}
+
+
+.profile-post {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #d5d5d5;
+}
+
+
+.post-image img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* SIDEBAR */
+.profile-sidebar {
+    width: 100%;
+    height: 100%;
+    border-left: solid 1px #d5d5d5;
+}
+
+.profile-sidebar-widget {
+    padding-left: 5rem;
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .profile-avatar img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+    }
+
+    .sidebar-name {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .sidebar-bio {
+        font-size: 0.95rem;
+        color: #555;
+        margin-bottom: 0.75rem;
+    }
+
+    .socials {
+        display: flex;
+        gap: 18px;
+        font-size: 1.2rem;
+    }
+}

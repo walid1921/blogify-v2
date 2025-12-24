@@ -27,6 +27,7 @@ $danger: #DB3545;
 @import "scss/form";
 @import "scss/footer";
 @import "scss/link";
+@import "scss/profile";
 @import "scss/like";
 @import "scss/switchBtn";
 @import "scss/toast";
@@ -42,7 +43,7 @@ $danger: #DB3545;
 body {
     font-family: 'Montserrat', sans-serif;
     letter-spacing: 0.05em;
-
+    overflow-x: hidden;
     //outline: 2px solid red;
     //overflow-x: hidden;
 }
@@ -142,6 +143,10 @@ th {
     min-height: 100vh;
 }
 
+.home-container {
+    padding-top: 90px;
+}
+
 
 //! HEADER
 .blog-header {
@@ -184,7 +189,7 @@ th {
 //! Categories style
 .sticky-categories {
     position: sticky;
-    top: 70px;
+    top: 74px;
     height: 62px;
     background-color: var(--bs-body-bg);
     border-bottom: 1px solid var(--bs-border-color);

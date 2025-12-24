@@ -11,7 +11,7 @@
     {#    <p>Created at: {{ include('blog/_blogDate.html.twig', { blog_date: one_blog.created_at }) }}</p> #}
 
 
-    <div class="page-container">
+    <div class="page-container d-flex flex-column gap-5">
 
         <div class="d-flex flex-column gap-2 mb-4 px-4">
 
@@ -48,34 +48,76 @@
 
         <div class="d-flex flex-column gap-4 mt-4 mb-4 px-4">
             <div class="d-flex gap-3 align-items-center">
-                {% include 'components/_likes.html.twig' with {
-                    iconSize: 'fs-3',
-                    heartColor: 'black',
-                    likesNum: likesCount
-                } %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <form method="post"
+                          action="{{ path('blog_like', { id: blog.id }) }}"
+                          class="icon-heart">
+
+                        <button
+                            class="btn btn-link p-0">
+                            <i class="bi fs-4 bi-heart{{ blog.isLikedByUser(app.user) ? '-fill text-black' : '' }}"></i>
+                        </button>
+                        {% if  blog.likes|length > 0 %}
+                            <span class="likesNum">{{ blog.likes.count }}</span>
+                        {% endif %}
+                    </form>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="icon-hear">
+                        <i class="bi bi-heart fs-4"></i>
+                        {% if  blog.likes|length > 0 %}
+                            <span class="likesNum">{{ blog.likes.count }}</span>
+                        {% endif %}
+                    </a>
+                {% endif %}
 
                 <h1 class="fs-3">{{ blog.title }}</h1>
-
-
             </div>
 
-            <div class="d-flex align-items-end gap-2">
+            <div class="d-flex justify-content-between w-100">
+                <div class="d-flex flex-column gap-4">
+                    <div class="d-flex align-items-end gap-2">
 
-                {% for category in blog.categories %}
-                    <div class="border border-black px-2 ">
-                            <span class="fs-7">
+                        {% for category in blog.categories %}
+                            <div class="border border-secondary px-2 ">
+                            <span class="fs-7 text-secondary">
                                 {{ category.name }}
                             </span>
+                            </div>
+                        {% endfor %}
+
+
+                        {{ include('components/_blogDate.html.twig', { createdAt: blog.createdAt }) }}
                     </div>
-                {% endfor %}
 
+                    <div class="d-flex align-items-center gap-2">
+                        <p class="fs-7"><span class="fw-semibold">Original language:</span> {{ blog.blogLanguage }} -
+                        </p>
+                        <p class="text-secondary fs-7">{{ blog.readTime }} min read</p>
+                    </div>
+                </div>
 
-                {{ include('components/_blogDate.html.twig', { createdAt: blog.createdAt }) }}
-            </div>
+                <div class="d-flex align-items-center gap-3">
+                    <div>
+                        {% if blog.author %}
+                            <a href="{{ path('user_profile', { id: blog.author.id }) }}"
+                               class="fw-semibold">
+                                {{ blog.author.username }}
+                            </a>
+                        {% else %}
+                            <p>Unknown</p>
+                        {% endif %}
+                        <p class="text-secondary fs-7 mb-0">Author</p>
+                    </div>
+                    {% if blog.author %}
+                        <a href="{{ path('user_profile', { id: blog.author.id }) }}" class="user"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="top"
+                           data-bs-title="Visit profile">
+                            <i class="bi bi-person fs-3"></i>
+                        </a>
 
-            <div class="d-flex align-items-center gap-2">
-                <p class="fs-7"><span class="fw-semibold">Original language:</span> {{ blog.blogLanguage }} -</p>
-                <p class="text-secondary fs-7">{{ blog.readTime }} min read</p>
+                    {% endif %}
+                </div>
             </div>
 
             <div class="w-100 bg-secondary opacity-50" style="height: 1px;"></div>
@@ -83,43 +125,86 @@
 
         <div class="d-flex flex-column align-items-center justify-content-center w-100 px-4">
 
-            <div class="js-blog-content" data-content="{{ blog.content|e('html_attr') }}"></div>
+            <div class="js-blog-content" data-content="{{ blog.content|e('html_attr') }}">
 
-            <div class="d-flex justify-content-between w-100 pt-4">
-                <div class="d-flex align-items-center gap-3">
-                    <a href="#" class="user" data-bs-toggle="tooltip"
-                       data-bs-placement="top"
-                       data-bs-title="Visit profile">
-                        <i class="bi bi-person fs-4"></i>
-                    </a>
-                    <div>
-                        {% if blog.author %}
-                            <p class="mb-0">{{ blog.author.username }}</p>
-                        {% else %}
-                            <p>Unknown</p>
-                        {% endif %}
-                        <p class="text-secondary fs-7 mb-0">Author</p>
-                    </div>
-                </div>
+            </div>
 
-                <div class="d-flex gap-3">
-                    <a href="#">
-                        <i data-bs-toggle="tooltip"
+            <div class="d-flex align-items-center gap-3 w-100 pt-4">
+                {% if blog.author %}
+                    {% if true %}
+                        {#                            <a href="{{ path('user_profile', { id: blog.author.id }) }}" #}
+                        {#                               class="user" #}
+                        {#                               data-bs-toggle="tooltip" #}
+                        {#                               data-bs-placement="top" #}
+                        {#                               data-bs-title="Visit profile"> #}
+                        {#                                <img #}
+                        {#                                    src="{{ blog.author.userProfile.avatar #}
+                        {#                                    ? asset(blog.author.userProfile.avatar) #}
+                        {#                                    : 'https://api.dicebear.com/8.x/adventurer/svg?seed=' ~ blog.author.username }}" #}
+                        {#                                    class="rounded-circle" #}
+                        {#                                    width="36" #}
+                        {#                                    height="36" #}
+                        {#                                    alt="{{ blog.author.username }}" #}
+                        {#                                > #}
+                        {#                            </a> #}
+                        <a href="{{ path('user_profile', { id: blog.author.id }) }}" class="user"
+                           data-bs-toggle="tooltip"
                            data-bs-placement="top"
-                           data-bs-title="Instagram"
-                           class="bi bi-instagram fs-4"></i>
-
-                    </a>
-                    <a href="#">
-                        <i data-bs-toggle="tooltip"
+                           data-bs-title="Visit profile">
+                            <i class="bi bi-person fs-4"></i>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('user_profile', { id: blog.author.id }) }}" class="user"
+                           data-bs-toggle="tooltip"
                            data-bs-placement="top"
-                           data-bs-title="Facebook"
-                           class="bi bi-facebook fs-4"></i>
-                    </a>
+                           data-bs-title="Visit profile">
+                            <i class="bi bi-person fs-4"></i>
+                        </a>
+                    {% endif %}
+                {% endif %}
+                <div>
+                    {% if blog.author %}
+                        <a href="{{ path('user_profile', { id: blog.author.id }) }}"
+                           class="fw-semibold">
+                            {{ blog.author.username }}
+                        </a>
+                    {% else %}
+                        <p>Unknown</p>
+                    {% endif %}
+                    <p class="text-secondary fs-7 mb-0">Author</p>
                 </div>
             </div>
 
+
         </div>
+
+        {# MOST READ BLOGS #}
+        <section class="d-flex flex-column pt-3 w-100 mt-3 mt-md-5" data-test="most-read-blogs">
+
+            <div class="blog-header mb-4">
+                <h2 class="text-uppercase">Most Read Blogs</h2>
+            </div>
+
+
+            <div class="w-100">
+                <div class="d-flex gap-1">
+                    {% for blog in latestBlogs %}
+                        {{ include('components/_blogCard.html.twig', {blog: blog}) }}
+                    {% endfor %}
+                </div>
+            </div>
+
+
+            <div class="d-flex justify-content-end mt-3 mt-md-5 me-3">
+                {% include 'components/_button.html.twig' with {
+                    typeButton: 'primary',
+                    path: path('blog.allBlogs'),
+                    textButton: 'See All Blogs',
+                    iconType: 'chevron-right',
+                    iconColor: 'white'
+                } %}
+            </div>
+        </section>
 
     </div>
 

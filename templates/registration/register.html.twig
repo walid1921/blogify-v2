@@ -3,7 +3,7 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <div class="page-container mt-4">
+    <div class="page-container mt-4 mb-5">
         <div class="d-flex flex-column justify-content-center align-items-center">
 
             {# --- Switcher (Login / Register) --- #}
@@ -68,4 +68,11 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+
+{% block footer %}
+    <footer>
+        {{ include('components/_footer.html.twig') }}
+    </footer>
 {% endblock %}

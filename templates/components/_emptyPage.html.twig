@@ -1,12 +1,17 @@
 <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center gap-4"
      style="height: 30vh;">
     <h4>{{ message }}</h4>
-    <p class="fw-light px-4">
-        It looks like there’s nothing here right now. Start by creating your first
 
-        {% if linkPath %}
-            <a href="{{ path(linkPath) }}" class="link-underline-black">{{ linkText }}</a>
-        {% else %}
+    <p class="fw-light px-4">
+        It looks like there’s nothing here right now.
+
+        {% if linkPath is defined and linkText is defined and linkPath and linkText %}
+            Start by creating your first
+            <a href="{{ path(linkPath) }}" class="link-underline-black">
+                {{ linkText }}
+            </a>
+        {% elseif linkText is defined and linkText %}
+            Start by creating your first
             <span class="link-underline-black" style="cursor:not-allowed; opacity:0.5;">
                 {{ linkText }} (verify your email)
             </span>

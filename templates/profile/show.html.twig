@@ -1,0 +1,217 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }}-Profile{% endblock %}
+
+{% block body %}
+    <div class="profile-page">
+        {% if user.userProfile %}
+            <div class="container-xl">
+                <div class="row">
+                    {# LEFT: BLOG LIST #}
+                    <div class="col-lg-9">
+                        <h1 class="profile-name">{{ user.username }}</h1>
+
+                        <div class="profile-tabs">
+                            {% if user.blogs is not empty %}
+                                <a class="{{ app.current_route == 'user_profile' ? 'active' : '' }}"
+                                   href="{{ path('user_profile', { id: user.id }) }}">
+                                    Blogs
+                                </a>
+                            {% endif %}
+
+                            {% if user.userProfile.bio is not empty %}
+                                <a class="{{ app.current_route == 'user_about' ? 'active' : '' }}"
+                                   href="{{ path('user_about', { id: user.id }) }}">
+                                    About
+                                </a>
+                            {% endif %}
+
+                        </div>
+                        {% if app.current_route == "user_profile" %}
+
+                            {% if blogs|length > 0 %}
+                                <div class="profile-posts">
+                                    {% for blog in blogs %}
+                                        <article class="profile-post">
+                                            <div class="d-flex flex-column gap-2 w-100">
+
+                                                <div class="d-flex gap-2">
+                                                    {% for category in blog.categories %}
+                                                        <div class="border border-secondary px-2 ">
+                                                        <span class="fs-7 text-secondary">
+                                                            {{ category.name }}
+                                                        </span>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+
+                                                <a class="title"
+                                                   href="{{ path('blog.one_blog', {id: blog.id}) }}">
+                                                    {{ blog.title }}
+                                                    <small class="fw-normal text-secondary"> - {{ blog.readTime }} min
+                                                        read</small>
+                                                </a>
+
+                                                <p class="fw-light">
+                                                    {{ blog.excerpt|striptags|u.truncate(140, '...') }}
+                                                </p>
+
+                                                <div
+                                                    class="row ">
+
+                                                    <div
+                                                        class="d-flex w-100 justify-content-between align-content-end gap-2">
+
+                                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                            <form method="post"
+                                                                  action="{{ path('blog_like', { id: blog.id }) }}"
+                                                                  class="d-flex gap-1 align-items-end">
+
+                                                                <button
+                                                                    class="btn btn-link p-0">
+                                                                    <i class="bi fs-5 bi-heart{{ blog.isLikedByUser(app.user) ? '-fill text-black' : '' }}"></i>
+                                                                </button>
+                                                                {% if  blog.likes|length > 0 %}
+                                                                    <span class="fs-8">{{ blog.likes.count }}</span>
+                                                                {% endif %}
+                                                            </form>
+                                                        {% else %}
+                                                            <a href="{{ path('app_login') }}"
+                                                               class="d-flex gap-1 align-items-end">
+                                                                <i class="bi bi-heart fs-5"></i>
+                                                                {% if  blog.likes|length > 0 %}
+                                                                    <span
+                                                                        class="fs-8">{{ blog.likes.count }}</span>
+                                                                {% endif %}
+                                                            </a>
+                                                        {% endif %}
+                                                        <span
+                                                            class="text-secondary col-2">{{ blog.createdAt|date('M d, Y') }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {% if blog.coverImage %}
+                                                <a href="{{ path('blog.one_blog', {id: blog.id}) }}" class="post-image">
+                                                    <img src="{{ asset('uploads/blogs/' ~ blog.coverImage) }}"
+                                                         alt="{{ blog.title }}"
+                                                    >
+                                                </a>
+                                            {% endif %}
+                                        </article>
+                                    {% else %}
+                                        <p class="text-muted">This user hasn’t published any posts yet.</p>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="col-lg-9">
+                                    {{ include('components/_emptyPage.html.twig' , {message : "No Blogs yet"}) }}
+                                </div>
+                            {% endif %}
+                        {% elseif app.current_route == "user_about" %}
+                            {% if user.userProfile.bio is not empty %}
+                                <div class="profile-posts">
+                                    {{ user.userProfile.bio }}
+                                </div>
+
+                            {% else %}
+                                <div class="col-lg-9">
+                                    {{ include('components/_emptyPage.html.twig' , {message : "User still didn't add any information about him"}) }}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+
+                    {# RIGHT: PROFILE SIDEBAR #}
+                    <div class="col-lg-3">
+                        <aside class="profile-sidebar">
+                            <div class="profile-sidebar-widget">
+                                <div class="profile-avatar">
+                                    <img
+                                        src="{{ user.userProfile.avatar
+                                        ? asset(user.userProfile.avatar)
+                                        : 'https://api.dicebear.com/8.x/adventurer/svg?seed=' ~ user.username }}"
+                                        alt="{{ user.username }}"
+                                    >
+                                </div>
+
+                                <h4 class="sidebar-name">{{ user.username }}</h4>
+
+                                {% if user.userProfile.bio %}
+                                    <p class="sidebar-bio d-flex flex-column gap-2">
+                                        {{ user.userProfile.bio|u.truncate(80, '...') }}
+                                        <a class="link-underline-black"
+                                           href="{{ path('user_about', { id: user.id }) }}">
+                                            more about me
+                                        </a>
+                                    </p>
+                                {% endif %}
+
+                                <div class="socials">
+                                    {% if user.userProfile.instagram is not empty %}
+                                        <a
+                                            href="{{ user.userProfile.instagram }}"
+                                            target="_blank"
+                                            class="link-no-underline-black">
+                                            <i class="bi bi-instagram"></i>
+                                        </a>
+                                    {% endif %}
+
+                                    {% if user.userProfile.instagram is not empty %}
+                                        <a
+                                            href="{{ user.userProfile.tiktok }}"
+                                            class="link-no-underline-black">
+                                            <i class="bi bi-tiktok"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </aside>
+                    </div>
+
+                </div>
+            </div>
+        {% else %}
+            {{ include('components/_emptyPage.html.twig' , {message : "No Profile yet"}) }}
+        {% endif %}
+
+        {# MOST READ BLOGS #}
+        {% if latestBlogs|length > 0 %}
+            <section class="pt-3 mt-3 mt-md-5">
+                <div class="">
+                    <div class="blog-header mb-4">
+                        <h2 class="text-uppercase">Most Read Blogs</h2>
+                    </div>
+
+                    <div class="w-100">
+                        <div class="d-flex gap-1">
+                            {% for blog in latestBlogs %}
+                                {{ include('components/_blogCard.html.twig', { blog: blog }) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-3 mt-md-5 me-3">
+                        {% include 'components/_button.html.twig' with {
+                            typeButton: 'primary',
+                            path: path('blog.allBlogs'),
+                            textButton: 'See All Blogs',
+                            iconType: 'chevron-right',
+                            iconColor: 'white'
+                        } %}
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+
+{% block footer %}
+    <footer>
+        {{ include('components/_footer.html.twig') }}
+    </footer>
+{% endblock %}

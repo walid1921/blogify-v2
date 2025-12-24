@@ -5,71 +5,103 @@
 
         {{ form_errors(formUserProfile) }}
 
-        <div class="d-flex flex-column gap-4 w-100">
+        <div class="d-flex justify-content-around gap-4 w-100 mt-3">
 
             {# 🔹 Cover + Avatar wrapper #}
-            <div class="profile-cover-wrapper position-relative">
+            {#            <div class="profile-cover-wrapper position-relative"> #}
 
-                {# Cover image upload (same as blog cover) #}
-                {{ form_widget(formUserProfile.cover_image, {
-                    attr: { class: 'cover-upload-input profile-cover-input' }
-                }) }}
+            {#                #}{# Cover image upload (same as blog cover) #}
+            {#                {{ form_widget(formUserProfile.cover_image, { #}
+            {#                    attr: { class: 'cover-upload-input profile-cover-input' } #}
+            {#                }) }} #}
 
-                {# 🔹 Floating avatar #}
-                <div class="profile-avatar-wrapper">
-                    <label class="profile-avatar-label">
-                        {{ form_widget(formUserProfile.avatar, {
-                            attr: { class: 'profile-avatar-input' }
-                        }) }}
+            {#                #}{# 🔹 Floating avatar #}
+            {#                <div class="profile-avatar-wrapper"> #}
+            {#                    <label class="profile-avatar-label"> #}
+            {#                        {{ form_widget(formUserProfile.avatar, { #}
+            {#                            attr: { class: 'profile-avatar-input' } #}
+            {#                        }) }} #}
 
-                        <div class="profile-avatar">
-                            {% if user.profile.avatarPath is defined %}
-                                <img src="{{ asset(user.profile.avatarPath) }}" alt="Avatar">
-                            {% else %}
-                                <span class="avatar-placeholder">
+            {#                        <div class="profile-avatar"> #}
+            {#                            {% if user.profile.avatarPath is defined %} #}
+            {#                                <img src="{{ asset(user.profile.avatarPath) }}" alt="Avatar"> #}
+            {#                            {% else %} #}
+            {#                                <span class="avatar-placeholder"> #}
+            {#                                    <img #}
+            {#                                        src="https://api.dicebear.com/8.x/adventurer/svg?seed=your-custom-seed" #}
+            {#                                        alt="User Avatar" #}
+            {#                                        class="avatar-img" #}
+            {#                                    > #}
+            {#                                </span> #}
+            {#                            {% endif %} #}
+            {#                        </div> #}
+            {#                    </label> #}
+            {#                </div> #}
+            {#            </div> #}
+
+            <div class="d-flex flex-column gap-5 w-50">
+                {# Bio #}
+                <div class="d-flex">
+                    {{ form_row(formUserProfile.bio, {
+                        row_attr: { class: 'form-row-inline' }
+                    }) }}
+                </div>
+
+                {# Website + Country #}
+                <div class="d-flex gap-3">
+                    {{ form_row(formUserProfile.instagram, {
+                        row_attr: { class: 'form-row-inline' }
+                    }) }}
+
+                    {{ form_row(formUserProfile.tiktok, {
+                        row_attr: { class: 'form-row-inline' }
+                    }) }}
+                </div>
+
+                {# Date of birth + country #}
+                <div class="d-flex gap-3">
+
+                    {{ form_row(formUserProfile.dateOfBirth, {
+                        row_attr: { class: 'form-row-inline' }
+                    }) }}
+
+
+                    {{ form_row(formUserProfile.country, {
+                        row_attr: { class: 'form-row-inline' }
+                    }) }}
+                </div>
+
+                {# Submit #}
+                <div class="d-flex flex-column gap-1">
+                    {{ form_row(formUserProfile.save) }}
+                </div>
+            </div>
+
+            {# avatar #}
+            <div class="">
+                <label class="profile-avatar-label">
+                    {{ form_widget(formUserProfile.avatar, {
+                        attr: { class: 'profile-avatar-input' }
+                    }) }}
+
+                    <div class="profile-avatar">
+                        {% if user.profile.avatarPath is defined %}
+                            <img src="{{ asset(user.profile.avatarPath) }}" alt="Avatar">
+                        {% else %}
+                            <span class="avatar-placeholder">
                                     <img
                                         src="https://api.dicebear.com/8.x/adventurer/svg?seed=your-custom-seed"
                                         alt="User Avatar"
                                         class="avatar-img"
                                     >
                                 </span>
-                            {% endif %}
-                        </div>
-                    </label>
-                </div>
-            </div>
-
-            {# Bio #}
-            <div class="d-flex w-75">
-                {{ form_row(formUserProfile.bio, {
-                    row_attr: { class: 'form-row-inline' }
-                }) }}
-            </div>
-
-            {# Website + Country #}
-            <div class="d-flex gap-3">
-                {{ form_row(formUserProfile.websiteUrl, {
-                    row_attr: { class: 'form-row-inline' }
-                }) }}
-
-                {{ form_row(formUserProfile.country, {
-                    row_attr: { class: 'form-row-inline' }
-                }) }}
-            </div>
-
-            {# Date of birth #}
-            <div class="d-flex gap-3">
-                {{ form_row(formUserProfile.dateOfBirth, {
-                    row_attr: { class: 'form-row-inline' }
-                }) }}
-            </div>
-
-            {# Submit #}
-            <div class="d-flex flex-column gap-1">
-                {{ form_row(formUserProfile.save) }}
+                        {% endif %}
+                    </div>
+                </label>
             </div>
 
         </div>
+
 
         {{ form_end(formUserProfile) }}
     </div>

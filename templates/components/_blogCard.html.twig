@@ -29,9 +29,27 @@
                 </div>
                 <div class="w-100 bg-secondary" style="height: 1px;"></div>
 
-                {% include 'components/_likes.html.twig' with {
-                    iconSize: 'fs-5',
-                } %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <form method="post"
+                          action="{{ path('blog_like', { id: blog.id }) }}"
+                          class="d-flex gap-1 align-items-end">
+
+                        <button
+                            class="btn btn-link p-0">
+                            <i class="bi fs-5 text-secondary bi-heart{{ blog.isLikedByUser(app.user) ? '-fill text-black' : '' }}"></i>
+                        </button>
+                        {% if  blog.likes|length > 0 %}
+                            <span class="text-secondary fs-8">{{ blog.likes.count }}</span>
+                        {% endif %}
+                    </form>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="d-flex gap-1 align-items-end">
+                        <i class="bi bi-heart fs-5 text-secondary"></i>
+                        {% if  blog.likes|length > 0 %}
+                            <span class="text-secondary fs-8">{{ blog.likes.count }}</span>
+                        {% endif %}
+                    </a>
+                {% endif %}
 
             </div>
 
