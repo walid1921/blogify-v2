@@ -4,16 +4,9 @@
 
 
 {% block body %}
-    {#    <a href="{{ path('blog') }}" class="px-2 py-1 bg-green-300 border inline-block">Back</a> #}
-    {#    <h1>{{ one_blog.blogName }}</h1> #}
-    {#    <p>Author: {{ one_blog.author }}</p> #}
-    {#    <p>{{ one_blog.content }}</p> #}
-    {#    <p>Created at: {{ include('blog/_blogDate.html.twig', { blog_date: one_blog.created_at }) }}</p> #}
+    <div class="page-container d-flex flex-column gap-4">
 
-
-    <div class="page-container d-flex flex-column gap-5">
-
-        <div class="d-flex flex-column gap-2 mb-4 px-4">
+        <div class="d-flex flex-column gap-2 px-4">
 
             <div class="d-flex justify-content-start">
                 <div class=" mb-2">
@@ -46,7 +39,7 @@
         </div>
 
 
-        <div class="d-flex flex-column gap-4 mt-4 mb-4 px-4">
+        <div class="d-flex flex-column gap-4 px-4">
             <div class="d-flex gap-3 align-items-center">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <form method="post"
