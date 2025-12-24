@@ -178,6 +178,7 @@ final class BlogController extends AbstractController
         return $this->render('blog/oneBlog.html.twig', [
             'blog' => $blog,
             'likesCount' => $likesCount,
+            'latestBlogs' => $blogRepo->findLatestPublished()
         ]);
     }
 }

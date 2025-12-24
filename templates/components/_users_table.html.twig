@@ -20,7 +20,8 @@
                     {#   Username  #}
                     <td class="p-3 fs-7">
                         <div class="d-flex align-items-center gap-1">
-                            <span class="position-relative">
+                            <a href="{{ path('user_profile', {id: user.id}) }}"
+                               class="link-no-underline-black position-relative">
                                 {{ user.username }}
 
                                 {% if is_granted('ROLE_ADMIN') and user.id == app.user.id %}
@@ -29,7 +30,7 @@
                                           data-bs-placement="top"
                                           data-bs-title="You"></span>
                                 {% endif %}
-                            </span>
+                            </a>
                         </div>
                     </td>
 

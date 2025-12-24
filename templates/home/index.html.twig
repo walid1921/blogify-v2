@@ -46,19 +46,10 @@
         {% endfor %}
     </div>
 
-    <div class="page-container">
+    <div class="home-container">
 
         {# Hero Section #}
-        <section class="row g-3 g-md-0 align-items-stretch pt-3 w-100" data-test="hero">
-
-            <div class="blog-header">
-                <h1 class="text-uppercase" data-test="hero-heading">Blogs</h1>
-                <p class="fw-light">I think in this page its not needed to have a header to find something else</p>
-            </div>
-
-            <div class="sticky-categories px-2 px-md-4 mb-2 mb-md-3">
-                {% include 'components/_blogCategories.html.twig' %}
-            </div>
+        <section class="row g-3 g-md-0 align-items-stretch w-100" data-test="hero">
 
             {# TOP LEFT BLOG #}
             <div
@@ -90,9 +81,27 @@
                         </div>
                         <div class="w-100 bg-secondary" style="height: 1px;"></div>
 
-                        {% include 'components/_likes.html.twig' with {
-                            iconSize: 'fs-3',
-                        } %}
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <form method="post"
+                                  action="{{ path('blog_like', { id: blogHighlightedHome.id }) }}"
+                                  class="d-flex gap-1 align-items-end">
+
+                                <button
+                                    class="btn btn-link p-0">
+                                    <i class="bi fs-5 text-secondary bi-heart{{ blogHighlightedHome.isLikedByUser(app.user) ? '-fill text-black' : '' }}"></i>
+                                </button>
+                                {% if  blogHighlightedHome.likes|length > 0 %}
+                                    <span class="text-secondary fs-8">{{ blogHighlightedHome.likes.count }}</span>
+                                {% endif %}
+                            </form>
+                        {% else %}
+                            <a href="{{ path('app_login') }}" class="d-flex gap-1 align-items-end">
+                                <i class="bi bi-heart fs-5 text-secondary"></i>
+                                {% if  blogHighlightedHome.likes|length > 0 %}
+                                    <span class="text-secondary fs-8">{{ blogHighlightedHome.likes.count }}</span>
+                                {% endif %}
+                            </a>
+                        {% endif %}
                     </div>
 
 
@@ -218,10 +227,12 @@
             {#            <h2 class="text-uppercase mb-4">Latest Blogs</h2> #}
 
             {# Three recommended blogs #}
-            <div class="row g-3 align-items-stretch">
-                {% for blog in latestBlogs %}
-                    {{ include('components/_blogCard.html.twig', {blog: blog}) }}
-                {% endfor %}
+            <div class="w-100">
+                <div class="d-flex gap-1">
+                    {% for blog in latestBlogs %}
+                        {{ include('components/_blogCard.html.twig', {blog: blog}) }}
+                    {% endfor %}
+                </div>
             </div>
 
 
@@ -246,10 +257,12 @@
             {#            <h2 class="text-uppercase mb-4">Latest Blogs</h2> #}
 
             {# Three latest blogs #}
-            <div class="row g-3 align-items-stretch">
-                {% for blog in latestBlogs %}
-                    {{ include('components/_blogCard.html.twig', {blog: blog}) }}
-                {% endfor %}
+            <div class="w-100">
+                <div class="d-flex gap-1">
+                    {% for blog in latestBlogs %}
+                        {{ include('components/_blogCard.html.twig', {blog: blog}) }}
+                    {% endfor %}
+                </div>
             </div>
 
 

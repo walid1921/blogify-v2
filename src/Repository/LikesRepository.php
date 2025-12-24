@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Blog;
 use App\Entity\Likes;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -62,6 +64,17 @@ class LikesRepository extends ServiceEntityRepository
         }
 
         return $counts;
+    }
+
+    public function findOneByBlogAndUser (Blog $blog, User $user): ?Likes
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.blog = :blog')
+            ->andWhere('l.user = :user')
+            ->setParameter('blog', $blog)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 }

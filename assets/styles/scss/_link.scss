@@ -143,6 +143,7 @@
     text-decoration: none;
     position: relative;
     transition: color 0.3s ease, transform 0.3s ease;
+    width: fit-content;
 
     svg {
         width: clamp(16px, 1.8vw, 20px);
@@ -175,6 +176,7 @@
     text-decoration: none;
     position: relative;
     transition: color 0.3s ease, transform 0.3s ease;
+    width: fit-content;
 
     svg {
         width: clamp(16px, 1.8vw, 20px);

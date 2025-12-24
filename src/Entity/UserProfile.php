@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserProfileRepository;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,9 +15,6 @@ class UserProfile
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $websiteUrl = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $bio = null;
@@ -35,28 +33,22 @@ class UserProfile
     private ?string $cover_image = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?DateTimeImmutable $created_at = null;
 
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $country = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $instagram = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $tiktok = null;
 
     public function getId (): ?int
     {
         return $this->id;
     }
 
-
-    public function getWebsiteUrl (): ?string
-    {
-        return $this->websiteUrl;
-    }
-
-    public function setWebsiteUrl (?string $websiteUrl): static
-    {
-        $this->websiteUrl = $websiteUrl;
-
-        return $this;
-    }
 
     public function getBio (): ?string
     {
@@ -94,50 +86,74 @@ class UserProfile
         return $this;
     }
 
-    public function getAvatar(): ?string
+    public function getAvatar (): ?string
     {
         return $this->avatar;
     }
 
-    public function setAvatar(?string $avatar): static
+    public function setAvatar (?string $avatar): static
     {
         $this->avatar = $avatar;
 
         return $this;
     }
 
-    public function getCoverImage(): ?string
+    public function getCoverImage (): ?string
     {
         return $this->cover_image;
     }
 
-    public function setCoverImage(?string $cover_image): static
+    public function setCoverImage (?string $cover_image): static
     {
         $this->cover_image = $cover_image;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt (): ?DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt (DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getCountry(): ?string
+    public function getCountry (): ?string
     {
         return $this->country;
     }
 
-    public function setCountry(?string $country): static
+    public function setCountry (?string $country): static
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    public function getInstagram (): ?string
+    {
+        return $this->instagram;
+    }
+
+    public function setInstagram (?string $instagram): static
+    {
+        $this->instagram = $instagram;
+
+        return $this;
+    }
+
+    public function getTiktok (): ?string
+    {
+        return $this->tiktok;
+    }
+
+    public function setTiktok (?string $tiktok): static
+    {
+        $this->tiktok = $tiktok;
 
         return $this;
     }

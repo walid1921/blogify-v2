@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {% if  app.request.attributes.get('_route') == 'userCreate' %}
+    {% if  app.current_route == 'userCreate' %}
         Create User
-    {% elseif app.request.attributes.get('_route') == 'userEdit' %}
+    {% elseif app.current_route == 'userEdit' %}
         Edit User
     {% endif %}
 {% endblock %}
@@ -25,9 +25,9 @@
 
             <div class="blog-header">
                 <h1 class="text-uppercase">
-                    {% if  app.request.attributes.get('_route') == 'userCreate' %}
+                    {% if  app.current_route == 'userCreate' %}
                         Create a New User
-                    {% elseif app.request.attributes.get('_route') == 'userEdit' %}
+                    {% elseif app.current_route == 'userEdit' %}
                         Editing <span class="">{{ username }}'s</span> Profile
                     {% endif %}
                 </h1>
