@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Newsletter;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Form\RegistrationFormType;
@@ -49,8 +50,14 @@ class RegistrationController extends AbstractController
             $profile->setUser($user);
             $profile->setCreatedAt(new DateTimeImmutable());
 
+            $newsletter = new Newsletter();
+            $newsletter->setCreatedAt(new DateTimeImmutable());
+            $newsletter->setUsername($user->getUsername());
+            $newsletter->setEmail($user->getEmail());
+
             $entityManager->persist($user);
             $entityManager->persist($profile);
+            $entityManager->persist($newsletter);
             $entityManager->flush();
 
             // generate a signed url and email it to the user

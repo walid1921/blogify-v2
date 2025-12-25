@@ -3,6 +3,15 @@
 {% block title %}{{ user.username }}-Profile{% endblock %}
 
 {% block body %}
+    {# Notifications #}
+    <div class="notification-container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                {% include 'components/_toast.html.twig' with { type: label,  message: message } %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
     <div class="profile-page">
         {% if user.userProfile %}
             <div class="container-xl">

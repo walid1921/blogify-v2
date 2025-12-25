@@ -3,6 +3,15 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
+    {# Notifications #}
+    <div class="notification-container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                {% include 'components/_toast.html.twig' with { type: label,  message: message } %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
     <div class="page-container mt-4 mb-5">
         <div class="d-flex flex-column justify-content-center align-items-center">
 
