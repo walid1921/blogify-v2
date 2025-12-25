@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Blog;
 use App\Entity\BlogCategories;
+use App\Entity\Newsletter;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Form\BlogCategoriesType;
@@ -324,7 +325,13 @@ final class DashboardController extends AbstractController
             $profile->setUser($user);
             $profile->setCreatedAt(new DateTimeImmutable());
 
+            $newsletter = new Newsletter();
+            $newsletter->setCreatedAt(new DateTimeImmutable());
+            $newsletter->setUsername($user->getUsername());
+            $newsletter->setEmail($user->getEmail());
+
             $entityManager->persist($profile);
+            $entityManager->persist($newsletter);
             $entityManager->flush();
 
             $this->addFlash('success', 'User created successfully!');

@@ -7,6 +7,14 @@
 
 
 {% block body %}
+    {# Notifications #}
+    <div class="notification-container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                {% include 'components/_toast.html.twig' with { type: label,  message: message } %}
+            {% endfor %}
+        {% endfor %}
+    </div>
 
     {#    {% set images = [ #}
     {#        'images/34A0294_Matze-Ried.png', #}

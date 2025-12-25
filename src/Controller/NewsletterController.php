@@ -10,11 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class NewsletterController extends AbstractController
 {
-    #[isGranted('ROLE_USER')]
     #[Route('/newsletter', name: 'newsletter_subscribe', methods: ['POST'])]
     public function newsletter (
         Request                $request,
@@ -33,6 +31,15 @@ final class NewsletterController extends AbstractController
 
             $this->addFlash('success', 'Thanks for joining our newsletter!');
         } else {
+            if ($form->get('email')->getErrors(true)->count() > 0) {
+                foreach ($form->get('email')->getErrors(true) as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+                return $this->redirect(
+                    $request->headers->get('referer') ?? '/'
+                );
+            }
+
             $this->addFlash('error', 'Please enter a valid email.');
         }
 
