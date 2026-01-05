@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'This email address is already registered.')]
+#[UniqueEntity(fields: ['googleId'], message: 'This Google account is already linked.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -38,7 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
 //    #[Assert\NotBlank(message: 'Password is required')]
     private ?string $password = null;
 
@@ -73,6 +74,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
+    private ?string $googleId = null;
 
     public function __construct ()
     {
@@ -295,6 +299,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->isVerified = $isVerified;
 
+        return $this;
+    }
+
+    public function getGoogleId (): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId (?string $googleId): static
+    {
+        $this->googleId = $googleId;
         return $this;
     }
 }
