@@ -28,6 +28,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item px-3">
+                    <a class="nav-link {{ current == 'blog.allBlogs' ? 'active' }}"
+                       href="{{ path('blog.allBlogs') }}">
+                        Our vision
+                    </a>
+                </li>
+
                 {% if is_granted('ROLE_USER') %}
                     <li class="nav-item px-3">
                         <a class="nav-link {{ current starts with 'dashboard.' ? 'active' }}"
@@ -47,16 +54,25 @@
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                     >
-                        <img
-                            src="https://api.dicebear.com/8.x/adventurer/svg?seed=your-custom-seed"
-                            alt="User Avatar"
-                            class="avatar-img"
-                        >
+
+                        {% if app.user.userProfile and app.user.userProfile.avatar %}
+                            <img
+                                src="{{ asset(app.user.userProfile.avatar) }}"
+                                alt="{{ app.user.username }}"
+                                class="avatar-img"
+                            >
+                        {% else %}
+                            <img
+                                src="https://api.dicebear.com/8.x/adventurer/svg?seed={{ app.user.username }}"
+                                alt="{{ app.user.username }}"
+                                class="avatar-img"
+                            >
+                        {% endif %}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item d-flex flex-column align-items-start"
-                               href="{{ path('dashboard.createBlog') }}">
+                               href="{{ path('dashboard.profile') }}">
                                 <span>{{ app.user.username }}</span>
                                 <span class="text-secondary">{{ app.user.email }}</span>
                             </a>
@@ -80,13 +96,15 @@
 
                             </a>
                         </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center gap-2"
-                               href="{{ path('dashboard.createBlog') }}">
-                                <span class="icon"><i class="bi bi-gear fs-5"></i></span>
-                                <span class="text">Settings</span>
-                            </a>
-                        </li>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center gap-2"
+                                   href="{{ path('dashboard.createBlog') }}">
+                                    <span class="icon"><i class="bi bi-gear fs-5"></i></span>
+                                    <span class="text">Settings</span>
+                                </a>
+                            </li>
+                        {% endif %}
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -102,11 +120,19 @@
 
             {% else %}
 
-                {% include 'components/_button.html.twig' with {
-                    typeButton: 'primary',
-                    path: path('app_login'),
-                    textButton: 'Login',
-                } %}
+                <div class="d-flex align-items-center gap-3">
+                    {% include 'components/_button.html.twig' with {
+                        typeButton: 'secondary',
+                        path: path('app_login'),
+                        textButton: 'Login',
+                    } %}
+
+                    {% include 'components/_button.html.twig' with {
+                        typeButton: 'primary',
+                        path: path('app_register'),
+                        textButton: 'Register',
+                    } %}
+                </div>
 
             {% endif %}
         </div>

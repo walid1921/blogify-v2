@@ -15,7 +15,7 @@
         <div class="d-flex align-items-start gap-2">
             <h2 class="text-uppercase">{{ title }}</h2>
 
-            {% if count is defined %}
+            {% if count is defined and count > 0 %}
                 <small>{{ count }}</small>
             {% endif %}
         </div>

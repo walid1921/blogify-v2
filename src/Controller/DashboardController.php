@@ -434,4 +434,29 @@ final class DashboardController extends AbstractController
             'allNewsletter' => $allNewsletter,
         ]);
     }
+
+    //! Fetch Liked Blogs
+    #[Route('/favourite', name: 'favourite')]
+    #[isGranted('ROLE_USER')]
+    public function favourite (BlogsRepository $blogsRepository): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $blogs = $blogsRepository->findLikedByCurrentUser($user);
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
+
+        // Because your excerpt is not a DB field — you extract it from the JSON content.
+        foreach ($blogs as $blog) {
+            $blog->getExcerpt();
+        }
+
+        return $this->render('dashboard/index.html.twig', [
+            'blogs' => $blogs,
+            'favouritePage' => true,
+        ]);
+    }
 }

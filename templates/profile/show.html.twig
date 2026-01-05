@@ -108,14 +108,12 @@
                                                 </a>
                                             {% endif %}
                                         </article>
-                                    {% else %}
-                                        <p class="text-muted">This user hasn’t published any posts yet.</p>
                                     {% endfor %}
                                 </div>
-                            {% else %}
-                                <div class="col-lg-9">
-                                    {{ include('components/_emptyPage.html.twig' , {message : "No Blogs yet"}) }}
-                                </div>
+                                {#                            {% else %} #}
+                                {#                                <div class="col-lg-9"> #}
+                                {#                                    {{ include('components/_emptyPage.html.twig' , {message : "No Blogs yet"}) }} #}
+                                {#                                </div> #}
                             {% endif %}
                         {% elseif app.current_route == "user_about" %}
                             {% if user.userProfile.bio is not empty %}
@@ -137,12 +135,14 @@
                         <aside class="profile-sidebar">
                             <div class="profile-sidebar-widget">
                                 <div class="profile-avatar">
-                                    <img
-                                        src="{{ user.userProfile.avatar
-                                        ? asset(user.userProfile.avatar)
-                                        : 'https://api.dicebear.com/8.x/adventurer/svg?seed=' ~ user.username }}"
-                                        alt="{{ user.username }}"
-                                    >
+                                    <a href="{{ path('dashboard.profile', {id: user.id}) }}">
+                                        <img
+                                            src="{{ user.userProfile.avatar
+                                            ? asset(user.userProfile.avatar)
+                                            : 'https://api.dicebear.com/8.x/adventurer/svg?seed=' ~ user.username }}"
+                                            alt="{{ user.username }}"
+                                        >
+                                    </a>
                                 </div>
 
                                 <h4 class="sidebar-name">{{ user.username }}</h4>
@@ -167,7 +167,7 @@
                                         </a>
                                     {% endif %}
 
-                                    {% if user.userProfile.instagram is not empty %}
+                                    {% if user.userProfile.tiktok is not empty %}
                                         <a
                                             href="{{ user.userProfile.tiktok }}"
                                             class="link-no-underline-black">

@@ -153,11 +153,22 @@
                 {# Newsletter #}
                 {% if app.current_route == 'dashboard.newsletter' %}
                     {% include 'components/_section_header.html.twig' with {
+                        count: allNewsletter|length,
                         title: 'NEWSLETTER',
-                        description: 'Manage your newsletter here',
+                        description: 'Manage the newsletter here',
                     } %}
 
                     {{ include('components/_newsletter_table.html.twig') }}
+                {% endif %}
+
+                {# Favourite #}
+                {% if app.current_route == 'dashboard.favourite' and favouritePage %}
+                    {% include 'components/_section_header.html.twig' with {
+                        count: blogs|length,
+                        title: 'FAVOURITE BLOGS',
+                        description: 'Manage your favourite blogs here',
+                    } %}
+                    {{ include('components/_blogsLikedByCurrentUserList.html.twig') }}
                 {% endif %}
 
             </div>

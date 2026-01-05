@@ -16,7 +16,7 @@ class UserProfile
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $bio = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

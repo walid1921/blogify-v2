@@ -83,14 +83,16 @@
                     </li>
                 {% endif %}
 
-                <li class="sidebar__item {{ app.current_route == '' ? 'active' : '' }}">
-                    <a href="#"
-                       class="sidebar__link "
-                       data-tooltip="Favourite">
-                        <span class="icon"><i class="bi bi-star fs-5"></i></span>
-                        <span class="text">Favourite</span>
-                    </a>
-                </li>
+                {% if is_granted('ROLE_USER') %}
+                    <li class="sidebar__item {{ app.current_route == 'dashboard.favourite' ? 'active' : '' }}">
+                        <a href="{{ path('dashboard.favourite') }}"
+                           class="sidebar__link "
+                           data-tooltip="Favourite">
+                            <span class="icon"><i class="bi bi-heart fs-5"></i></span>
+                            <span class="text">Favourite</span>
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
             <ul class="sidebar__list list--secondary">
                 <li class="sidebar__item {{ app.current_route == 'dashboard.profile' ? 'active' : '' }}">
