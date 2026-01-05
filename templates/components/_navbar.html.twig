@@ -74,7 +74,7 @@
                             <a class="dropdown-item d-flex flex-column align-items-start"
                                href="{{ path('dashboard.profile') }}">
                                 <span>{{ app.user.username }}</span>
-                                <span class="text-secondary">{{ app.user.email }}</span>
+                                <span class="text-secondary">{{ app.user.email|u.truncate(15, "...") }}</span>
                             </a>
                         </li>
                         <li>
