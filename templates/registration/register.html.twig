@@ -29,10 +29,10 @@
                 {#  {{ form_errors(registrationForm) }} #}
 
                 {# ======================== GOOGLE LOGIN BUTTON ======================== #}
-                <button type="button" class="google-btn mb-4">
+                <a href="{{ path('connect_google') }}" class="google-btn mb-4">
                     <img src="{{ asset('icons/google.svg') }}" class="google-icon" alt="Google">
                     Register with Google
-                </button>
+                </a>
 
                 {# ======================== DIVIDER ======================== #}
                 <div class="divider my-4">
