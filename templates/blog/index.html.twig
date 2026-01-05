@@ -31,31 +31,78 @@
         <div class="d-flex align-items-center justify-content-between">
             <div class="blog-header">
                 <h1 class="text-uppercase">BLOGS</h1>
-                <p class="fw-light">All blogs will be here (+ pagination, search, filter, open single blog)</p>
+                <p class="fw-light">Discover fresh perspectives, deep dives, and stories worth your time.</p>
             </div>
         </div>
 
         <div class="sticky-categories px-2 px-md-4">
             {% include 'components/_blogCategories.html.twig' %}
             <li class="nav-item dropdown list-unstyled">
-                <a class="nav-link d-flex gap-2" href="{{ path('blog.allBlogs') }}" role="button"
+                <a class="nav-link d-flex gap-2"
+                   href="{{ path('blog.allBlogs') }}"
+                   role="button"
                    data-bs-toggle="dropdown"
                    aria-expanded="false">
-                    Most recent
+                    {% if (currentSort) %}
+                        {% if (currentSort == 'most_liked') %}
+                            Most liked
+                        {% elseif (currentSort == 'most_recent') %}
+                            Most recent
+                        {% elseif (currentSort == 'most_read') %}
+                            Most read
+                        {% elseif (currentSort == 'i_liked' and is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                            I liked
+                        {% endif %}
+                    {% else %}
+                        Most recent
+                    {% endif %}
                     <i class="bi bi-chevron-down fs-6"></i>
                 </a>
+
                 <ul class="dropdown-menu fs-7">
-                    <li><a class="dropdown-item" href="{{ path('blog.allBlogs') }}">All blogs</a></li>
                     <li>
-                        <hr class="dropdown-divider">
+                        <a class="dropdown-item {{ currentSort == 'most_recent' ? 'active' : '' }}"
+                           href="{{ path('blog.allBlogs', { sort: 'most_recent' }) }}">
+                            Most recent
+                        </a>
                     </li>
-                    <li><a class="dropdown-item mt-1" href="#">Something else here</a></li>
+
+                    <li>
+                        <a class="dropdown-item {{ currentSort == 'most_liked' ? 'active' : '' }}"
+                           href="{{ path('blog.allBlogs', { sort: 'most_liked' }) }}">
+                            Most liked
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item {{ currentSort == 'most_read' ? 'active' : '' }}"
+                           href="{{ path('blog.allBlogs', { sort: 'most_read' }) }}">
+                            Most read
+                        </a>
+                    </li>
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li>
+                            <a class="dropdown-item {{ currentSort == 'i_liked' ? 'active' : '' }}"
+                               href="{{ path('blog.allBlogs', { sort: 'i_liked' }) }}">
+                                I liked
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </li>
+
         </div>
 
         {# Blogs cards #}
         {% include 'components/_blogList.html.twig' with { blogs: blogs } %}
+
+        {% include 'components/_pagination.html.twig' with {
+            currentPage: currentPage,
+            totalPages: totalPages,
+            currentSort: currentSort,
+            currentCategory: currentCategory
+        } %}
     </section>
 
 {% endblock %}

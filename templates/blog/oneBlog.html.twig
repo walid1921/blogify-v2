@@ -49,7 +49,7 @@
 
 
         <div class="d-flex flex-column gap-4 px-4">
-            <div class="d-flex gap-3 align-items-center">
+            <div class="d-flex gap-3 align-items-center mt-3">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <form method="post"
                           action="{{ path('blog_like', { id: blog.id }) }}"
@@ -64,7 +64,7 @@
                         {% endif %}
                     </form>
                 {% else %}
-                    <a href="{{ path('app_login') }}" class="icon-hear">
+                    <a href="{{ path('app_login') }}" class="icon-heart">
                         <i class="bi bi-heart fs-4"></i>
                         {% if  blog.likes|length > 0 %}
                             <span class="likesNum">{{ blog.likes.count }}</span>
@@ -125,10 +125,27 @@
             <div class="w-100 bg-secondary opacity-50" style="height: 1px;"></div>
         </div>
 
+
         <div class="d-flex flex-column align-items-center justify-content-center w-100 px-4">
+            {% set canRead = is_granted('IS_AUTHENTICATED_FULLY') %}
 
-            <div class="js-blog-content" data-content="{{ blog.content|e('html_attr') }}">
+            {% if canRead %}
+                {% set contentForJs = blog.content %}
+            {% else %}
+                {#                {% set contentForJs = blog.excerpt %} #}
+                {% set contentForJs = blog.content %}
 
+            {% endif %}
+
+            <div class="blog-content-wrapper {{ not canRead ? 'is-locked' : '' }}">
+                <div
+                    class="js-blog-content"
+                    data-content="{{ contentForJs|e('html_attr') }}">
+                </div>
+
+                {% if not canRead %}
+                    {% include 'components/_loginPaywall.html.twig' %}
+                {% endif %}
             </div>
 
             <div class="d-flex align-items-center gap-3 w-100 pt-4">

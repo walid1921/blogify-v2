@@ -1,0 +1,77 @@
+{% if blogs|length > 0 %}
+    <div class="profile-posts">
+        {% for blog in blogs %}
+            <article class="profile-post">
+                <div class="d-flex flex-column gap-2 w-100">
+
+                    <div class="d-flex gap-2">
+                        {% for category in blog.categories %}
+                            <div class="border border-secondary px-2 ">
+                                                        <span class="fs-7 text-secondary">
+                                                            {{ category.name }}
+                                                        </span>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <a class="title"
+                       href="{{ path('blog.one_blog', {id: blog.id}) }}">
+                        {{ blog.title }}
+                        <small class="fw-normal text-secondary"> - {{ blog.readTime }} min
+                            read</small>
+                    </a>
+
+                    <p class="fw-light">
+                        {{ blog.excerpt|striptags|u.truncate(140, '...') }}
+                    </p>
+
+                    <div
+                        class="row ">
+
+                        <div
+                            class="d-flex w-100 justify-content-between align-content-end gap-2">
+
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <form method="post"
+                                      action="{{ path('blog_like', { id: blog.id }) }}"
+                                      class="d-flex gap-1 align-items-end">
+
+                                    <button
+                                        class="btn btn-link p-0">
+                                        <i class="bi fs-5 bi-heart{{ blog.isLikedByUser(app.user) ? '-fill text-black' : '' }}"></i>
+                                    </button>
+                                    {% if  blog.likes|length > 0 %}
+                                        <span class="fs-8">{{ blog.likes.count }}</span>
+                                    {% endif %}
+                                </form>
+                            {% else %}
+                                <a href="{{ path('app_login') }}"
+                                   class="d-flex gap-1 align-items-end">
+                                    <i class="bi bi-heart fs-5"></i>
+                                    {% if  blog.likes|length > 0 %}
+                                        <span
+                                            class="fs-8">{{ blog.likes.count }}</span>
+                                    {% endif %}
+                                </a>
+                            {% endif %}
+                            <span
+                                class="text-secondary col-2">{{ blog.createdAt|date('M d, Y') }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {% if blog.coverImage %}
+                    <a href="{{ path('blog.one_blog', {id: blog.id}) }}" class="post-image">
+                        <img src="{{ asset('uploads/blogs/' ~ blog.coverImage) }}"
+                             alt="{{ blog.title }}"
+                        >
+                    </a>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="border border-black border-opacity-25 h-100">
+        {{ include('components/_emptyPage.html.twig' , {message : "No blogs liked yet"}) }}
+    </div>
+{% endif %}

@@ -1,0 +1,48 @@
+{% if totalPages > 1 %}
+    <div class="pagination-wrapper mt-5">
+        <ul class="custom-pagination">
+
+            {# Previous #}
+            {% if currentPage > 1 %}
+                <li>
+                    <a href="{{ path('blog.allBlogs', {
+                        page: currentPage - 1,
+                        sort: currentSort,
+                        category: currentCategory
+                    }) }}">
+                        <i class="bi bi-chevron-left fs-7 "></i>
+                    </a>
+                </li>
+            {% endif %}
+
+            {# Pages #}
+            {% for page in 1..totalPages %}
+                <li class="{{ page == currentPage ? 'active' : '' }}">
+                    <a href="{{ path('blog.allBlogs', {
+                        page: page,
+                        sort: currentSort,
+                        category: currentCategory
+                    }) }}">
+                        {{ page }}
+                    </a>
+                </li>
+            {% endfor %}
+
+            {# Next #}
+            {% if currentPage < totalPages %}
+                <li>
+                    <a href="{{ path('blog.allBlogs', {
+                        page: currentPage + 1,
+                        sort: currentSort,
+                        category: currentCategory
+                    }) }}">
+                        <i class="bi bi-chevron-right fs-7 "></i>
+                    </a>
+                </li>
+            {% endif %}
+
+        </ul>
+
+        <div class="pagination-line"></div>
+    </div>
+{% endif %}

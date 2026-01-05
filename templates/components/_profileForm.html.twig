@@ -78,26 +78,30 @@
             </div>
 
             {# avatar #}
-            <div class="">
+            <div class="d-flex flex-column align-items-center gap-3">
                 <label class="profile-avatar-label">
                     {{ form_widget(formUserProfile.avatar, {
                         attr: { class: 'profile-avatar-input' }
                     }) }}
 
                     <div class="profile-avatar">
-                        {% if user.profile.avatarPath is defined %}
-                            <img src="{{ asset(user.profile.avatarPath) }}" alt="Avatar">
+                        {% if app.user.userProfile and app.user.userProfile.avatar %}
+                            <img
+                                src="{{ asset(app.user.userProfile.avatar) }}"
+                                alt="{{ app.user.username }}"
+                            >
                         {% else %}
-                            <span class="avatar-placeholder">
-                                    <img
-                                        src="https://api.dicebear.com/8.x/adventurer/svg?seed=your-custom-seed"
-                                        alt="User Avatar"
-                                        class="avatar-img"
-                                    >
-                                </span>
+                            <img
+                                src="https://api.dicebear.com/8.x/adventurer/svg?seed={{ app.user.username }}"
+                                alt="{{ app.user.username }}"
+                            >
                         {% endif %}
                     </div>
+
                 </label>
+                <h4 class="sidebar-name">{{ app.user.username }}</h4>
+                <a href="{{ path('user_profile', {id: app.user.id}) }}" class="link-underline-black">See my
+                    profile</a>
             </div>
 
         </div>

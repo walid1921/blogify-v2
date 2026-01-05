@@ -8,10 +8,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Security\ActionDenyTrait;
+use function PHPUnit\Framework\throwException;
 
 
 #[Route('/blog', name: 'blog.')]
@@ -82,24 +85,44 @@ final class BlogController extends AbstractController
     /**
      * @throws JsonException
      */
-    #[Route('/', name: 'allBlogs', requirements: ['limit' => '\d+'])]
-    public function index (BlogsRepository $blogRepo): Response
+    #[Route('/', name: 'allBlogs')]
+    public function index (BlogsRepository $blogRepo, Request $request): Response
     {
+        $page = max(1, (int)$request->query->get('page', 1));
+        $limit = 6;
 
+        $sort = $request->query->get('sort', 'most_recent');
+        $category = $request->query->get('category');
 
-        // Fetch blogs from the repository
-        $blogs = $blogRepo->findAllPublished();
+        // "I liked" requires login
+        if ($sort === 'i_liked' && !$this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
 
-        foreach ($blogs as $blog) {
+        $paginator = $blogRepo->findPaginated(
+            $page,
+            $limit,
+            $sort,
+            $category,
+            $this->getUser()
+        );
+
+        $totalBlogs = count($paginator);
+        $totalPages = (int)ceil($totalBlogs / $limit);
+
+        foreach ($paginator as $blog) {
             $blog->getExcerpt();
         }
 
-
         return $this->render('blog/index.html.twig', [
-            'blogs' => $blogs,
-//            'blogs' => $this->dummyBlogs,
+            'blogs' => $paginator,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'currentSort' => $sort,
+            'currentCategory' => $category,
         ]);
     }
+
 
     //! Update blog's status
     #[IsGranted('ROLE_BLOGGER')]

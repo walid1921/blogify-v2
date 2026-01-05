@@ -1,10 +1,25 @@
 <ul class="d-flex align-items-center gap-3 gap-md-4 p-2 m-0 overflow-auto hide-scrollbar">
+
+    <li>
+        <a href="{{ path('blog.allBlogs', {
+            sort: currentSort
+        }) }}">
+            <span
+                class="link-no-underline-black fw-normal fs-responsive
+                {{ currentCategory is null ? 'fw-semibold text-black' : '' }}">
+                All
+            </span>
+        </a>
+    </li>
+
     {% for category in blogCategories %}
         <li>
-            {#            <a href="{{ path('blog.byCategory', {id: category.id}) }}"> #}
-            <a href="#">
+            <a href="{{ path('blog.allBlogs', {
+                category: category.name,
+                sort: currentSort
+            }) }}">
                 <span
-                    class="link-no-underline-black fw-normal fs-responsive d-flex align-items-center position-relative">
+                    class="link-no-underline-black fw-normal fs-responsive d-flex align-items-center position-relative {{ currentCategory == category.name ? 'fw-semibold text-black' : '' }}">
                     {{ category.name }}
 
                     {# Calculate if createdAt is within last 3 days #}
