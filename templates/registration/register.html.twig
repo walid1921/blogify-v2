@@ -45,7 +45,14 @@
 
                     {{ form_row(registrationForm.username) }}
 
-                    {{ form_row(registrationForm.email) }}
+                    <div class="d-flex flex-column gap-1">
+
+                        {{ form_row(registrationForm.email) }}
+
+                        <p class="text-secondary fs-8 mb-0">
+                            Email verification required, please use a valid address
+                        </p>
+                    </div>
 
                     {{ form_row(registrationForm.plainPassword) }}
 
