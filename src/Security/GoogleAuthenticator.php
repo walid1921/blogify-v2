@@ -40,26 +40,53 @@ class GoogleAuthenticator extends AbstractAuthenticator
 
         $googleId = $googleUser->getId();
         $email = $googleUser->getEmail();
+        $avatar = $googleUser->getAvatar();
 
         return new SelfValidatingPassport(
-            new UserBadge($email, function () use ($googleId, $email, $googleUser) {
+            new UserBadge($email, function () use ($googleId, $email, $googleUser, $avatar) {
 
                 $repo = $this->em->getRepository(User::class);
 
                 // 1. Google ID first
                 $user = $repo->findOneBy(['googleId' => $googleId]);
 
-                // 2. Email fallback (link accounts)
-                if (!$user) {
-                    $user = $repo->findOneBy(['email' => $email]);
+                if ($user) {
+                    $profile = $user->getUserProfile();
 
-                    if ($user) {
-                        $user->setGoogleId($googleId);
-                        $this->em->flush();
-
-                        return $user;
+                    if (!$profile) {
+                        $profile = new UserProfile();
+                        $profile->setUser($user);
+                        $profile->setCreatedAt(new DateTimeImmutable());
+                        $this->em->persist($profile);
                     }
+
+                    $profile->setAvatar($avatar);
+                    $this->em->flush();
+
+                    return $user;
                 }
+
+                // 2. Email fallback (link existing account)
+                $user = $repo->findOneBy(['email' => $email]);
+
+                if ($user) {
+                    $user->setGoogleId($googleId);
+
+                    $profile = $user->getUserProfile();
+
+                    if (!$profile) {
+                        $profile = new UserProfile();
+                        $profile->setUser($user);
+                        $profile->setCreatedAt(new DateTimeImmutable());
+                        $this->em->persist($profile);
+                    }
+
+                    $profile->setAvatar($avatar);
+                    $this->em->flush();
+
+                    return $user;
+                }
+
 
                 // 3. Create new user
                 if (!$user) {
@@ -76,6 +103,7 @@ class GoogleAuthenticator extends AbstractAuthenticator
                     $user->setCreatedAt(new DateTimeImmutable());
 
                     $profile = new UserProfile();
+                    $profile->setAvatar($avatar);
                     $profile->setUser($user);
                     $profile->setCreatedAt(new DateTimeImmutable());
 

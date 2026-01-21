@@ -85,16 +85,15 @@
                     }) }}
 
                     <div class="profile-avatar">
-                        {% if app.user.userProfile and app.user.userProfile.avatar %}
-                            <img
-                                src="{{ profiles ~ app.user.userProfile.avatar }}"
-                                alt="User Avatar"
-                            >
+                        {% set avatar = app.user.userProfile.avatar ?? null %}
+
+                        {% if avatar %}
+                            {% if avatar starts with 'http' %}
+                                <img src="{{ avatar }}" alt="User Avatar">
+                            {% else %}
+                                <img src="{{ profiles ~ avatar }}" alt="User Avatar">
+                            {% endif %}
                         {% else %}
-                            {#                            <img #}
-                            {#                                src="https://api.dicebear.com/8.x/adventurer/svg?seed={{ app.user.username }}" #}
-                            {#                                alt="{{ app.user.username }}" #}
-                            {#                            > #}
                             <i class="bi bi-image fs-1 text-secondary"></i>
                         {% endif %}
                     </div>
