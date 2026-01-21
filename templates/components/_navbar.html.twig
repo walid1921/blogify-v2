@@ -55,12 +55,14 @@
                         aria-expanded="false"
                     >
 
-                        {% if app.user.userProfile and app.user.userProfile.avatar %}
-                            <img
-                                src="{{ profiles ~ app.user.userProfile.avatar }}"
-                                alt="User Avatar"
-                                class="avatar-img"
-                            >
+                        {% set avatar = app.user.userProfile.avatar ?? null %}
+
+                        {% if avatar %}
+                            {% if avatar starts with 'http' %}
+                                <img src="{{ avatar }}" alt="User Avatar" class="avatar-img">
+                            {% else %}
+                                <img src="{{ profiles ~ avatar }}" alt="User Avatar" class="avatar-img">
+                            {% endif %}
                         {% else %}
                             <span class="avatar-icon"><i class="bi bi-person fs-3"></i></span>
                         {% endif %}

@@ -54,7 +54,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Likes>
      */
-    #[ORM\OneToMany(targetEntity: Likes::class, mappedBy: 'user')]
+    // orphanRemoval: true -> is now deleting likes when user is deleted, so better to fix it and keep users likes history
+    #[ORM\OneToMany(targetEntity: Likes::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $likes;
 
     /**
