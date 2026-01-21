@@ -21,7 +21,18 @@
                     <td class="p-3 fs-7">
                         <div class="d-flex align-items-center gap-1">
                             <a href="{{ path('user_profile', {id: user.id}) }}"
-                               class="link-no-underline-black position-relative">
+                               class="link-no-underline-black position-relative d-flex align-items-center gap-4">
+                                {% set avatar = user.userProfile.avatar ?? null %}
+
+                                {% if avatar %}
+                                    {% if avatar starts with 'http' %}
+                                        <img src="{{ avatar }}" alt="User Avatar" class="avatar-img">
+                                    {% else %}
+                                        <img src="{{ profiles ~ avatar }}" alt="User Avatar" class="avatar-img">
+                                    {% endif %}
+                                {% else %}
+                                    <span class="avatar-icon"><i class="bi bi-person fs-4"></i></span>
+                                {% endif %}
                                 {{ user.username }}
 
                                 {% if is_granted('ROLE_ADMIN') and user.id == app.user.id %}
