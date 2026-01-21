@@ -22,12 +22,14 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Security\ActionDenyTrait;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/dashboard', name: 'dashboard.')]
 //#[isGranted('IS_AUTHENTICATED_FULLY ')]
@@ -140,10 +142,7 @@ final class DashboardController extends AbstractController
 
                 // move the file to /public/uploads/blogs
                 try {
-                    $imageFile->move(
-                        $this->getParameter('kernel.project_dir') . '/public/uploads/blogs',
-                        $newFilename
-                    );
+                    $imageFile->move($this->getParameter('service_profile_pictures_directory', $newFilename));
                 } catch (Exception $e) {
                     $this->addFlash('error', 'Image upload failed: ' . $e->getMessage());
                 }
@@ -393,9 +392,10 @@ final class DashboardController extends AbstractController
     //! User Profile
     #[Route('/user/profile', name: 'profile')]
     #[isGranted('ROLE_USER')]
-    public function profile (Request $request, EntityManagerInterface $entityManager, UserProfileRepository $profileRepo, UserRepository $userRepository): Response
+    public function profile (Request $request, EntityManagerInterface $entityManager, UserProfileRepository $profileRepo, UserRepository $userRepository, SluggerInterface $slugger): Response
     {
 
+        /** @var User $user */
         $user = $this->getUser();
 
         if (!$user instanceof User) {
@@ -411,6 +411,34 @@ final class DashboardController extends AbstractController
 
             $userProfile = $form->getData();
             $user->setUserProfile($userProfile);
+
+            $profileImageFile = $form->get('avatar')->getData();
+            if ($profileImageFile) {
+                $originalFilename = pathinfo(
+                    $profileImageFile->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                );
+
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = uniqid('', true) . '.' . $profileImageFile->guessExtension();
+
+                // dd($originalFilename, $safeFilename, $newFilename);
+
+                // move the file to /public/uploads/profiles
+                try {
+                    $profileImageFile->move(
+                        $this->getParameter('kernel.project_dir') . '/public/uploads/profiles',
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Image upload failed: ' . $e->getMessage());
+                }
+                // set filename in the entity
+                $userProfile->setAvatar($newFilename);
+
+            }
+
+
             $entityManager->persist($userProfile);
             $entityManager->flush();
             $this->addFlash('success', 'Profile updated successfully!');

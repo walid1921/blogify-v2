@@ -57,16 +57,12 @@
 
                         {% if app.user.userProfile and app.user.userProfile.avatar %}
                             <img
-                                src="{{ asset(app.user.userProfile.avatar) }}"
-                                alt="{{ app.user.username }}"
+                                src="{{ profiles ~ app.user.userProfile.avatar }}"
+                                alt="User Avatar"
                                 class="avatar-img"
                             >
                         {% else %}
-                            <img
-                                src="https://api.dicebear.com/8.x/adventurer/svg?seed={{ app.user.username }}"
-                                alt="{{ app.user.username }}"
-                                class="avatar-img"
-                            >
+                            <span class="avatar-icon"><i class="bi bi-person fs-3"></i></span>
                         {% endif %}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">

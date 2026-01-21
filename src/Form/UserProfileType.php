@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class UserProfileType extends AbstractType
 {
@@ -23,6 +24,19 @@ class UserProfileType extends AbstractType
             ->add('avatar', FileType::class, [
                 'mapped' => false,
                 'required' => false,
+                'constraints' => [
+                    new Image(
+                        maxSize: '4M',
+                        mimeTypes: ['image/jpeg', 'image/png'],
+                        mimeTypesMessage: 'Please upload a valid image'
+                    ),
+                ],
+//                'constraints' => [
+//                    'maxSize' => '1024k',
+//                    'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'
+//                    ],
+//                    'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, GIF).',
+//                ]
             ])
             ->add('country')
             ->add('save', SubmitType::class, [

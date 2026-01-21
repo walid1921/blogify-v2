@@ -15,16 +15,6 @@
         display: none !important;
     }
 
-    .avatar-img {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 1px solid var(--bs-border-color);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        cursor: pointer;
-    }
-
     .dropdown-menu {
         min-width: 160px;
         font-size: 0.9rem;
@@ -39,4 +29,27 @@
             }
         }
     }
+}
+
+.avatar-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--bs-border-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.avatar-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $body-bg;
+    border: 1px solid var(--bs-border-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
 }
