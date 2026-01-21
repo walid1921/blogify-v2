@@ -22,7 +22,7 @@
                     class="link-no-underline-black fw-normal fs-responsive d-flex align-items-center position-relative {{ currentCategory == category.name ? 'fw-semibold text-black' : '' }}">
                     {{ category.name }}
 
-                    {# Calculate if createdAt is within last 3 days #}
+                    {# Calculate if createdAt is within last 3 days - show Indicator #}
                     {% set now = "now"| date("U") %}
                     {% set created = category.createdAt|date("U") %}
                     {% set diff = (now - created) / 86400 %} {# seconds → days #}

@@ -115,6 +115,7 @@
                                 {#                                    {{ include('components/_emptyPage.html.twig' , {message : "No Blogs yet"}) }} #}
                                 {#                                </div> #}
                             {% endif %}
+
                         {% elseif app.current_route == "user_about" %}
                             {% if user.userProfile.bio is not empty %}
                                 <div class="profile-posts">
@@ -135,14 +136,18 @@
                         <aside class="profile-sidebar">
                             <div class="profile-sidebar-widget">
                                 <div class="profile-avatar">
-                                    <a href="{{ path('dashboard.profile', {id: user.id}) }}">
+                                    {% if app.user.userProfile and app.user.userProfile.avatar %}
                                         <img
-                                            src="{{ user.userProfile.avatar
-                                            ? asset(user.userProfile.avatar)
-                                            : 'https://api.dicebear.com/8.x/adventurer/svg?seed=' ~ user.username }}"
-                                            alt="{{ user.username }}"
+                                            src="{{ profiles ~ app.user.userProfile.avatar }}"
+                                            alt="User Avatar"
                                         >
-                                    </a>
+                                    {% else %}
+                                        {#                            <img #}
+                                        {#                                src="https://api.dicebear.com/8.x/adventurer/svg?seed={{ app.user.username }}" #}
+                                        {#                                alt="{{ app.user.username }}" #}
+                                        {#                            > #}
+                                        <i class="bi bi-image fs-1 text-secondary"></i>
+                                    {% endif %}
                                 </div>
 
                                 <h4 class="sidebar-name">{{ user.username }}</h4>

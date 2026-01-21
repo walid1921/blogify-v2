@@ -110,14 +110,21 @@
                         {% endif %}
                         <p class="text-secondary fs-7 mb-0">Author</p>
                     </div>
-                    {% if blog.author %}
-                        <a href="{{ path('user_profile', { id: blog.author.id }) }}" class="user"
-                           data-bs-toggle="tooltip"
-                           data-bs-placement="top"
-                           data-bs-title="Visit profile">
-                            <i class="bi bi-person fs-3"></i>
-                        </a>
-
+                    {% if blog.author.userProfile and blog.author.userProfile.avatar %}
+                        {% if blog.author %}
+                            <a href="{{ path('user_profile', { id: blog.author.id }) }}" class=""
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               data-bs-title="Visit profile">
+                                <img
+                                    src="{{ profiles ~ blog.author.userProfile.avatar }}"
+                                    alt="User Avatar"
+                                    class="avatar-img"
+                                >
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <span class="avatar-icon"><i class="bi bi-person fs-3"></i></span>
                     {% endif %}
                 </div>
             </div>
@@ -149,37 +156,21 @@
             </div>
 
             <div class="d-flex align-items-center gap-3 w-100 pt-4">
-                {% if blog.author %}
-                    {% if true %}
-                        {#                            <a href="{{ path('user_profile', { id: blog.author.id }) }}" #}
-                        {#                               class="user" #}
-                        {#                               data-bs-toggle="tooltip" #}
-                        {#                               data-bs-placement="top" #}
-                        {#                               data-bs-title="Visit profile"> #}
-                        {#                                <img #}
-                        {#                                    src="{{ blog.author.userProfile.avatar #}
-                        {#                                    ? asset(blog.author.userProfile.avatar) #}
-                        {#                                    : 'https://api.dicebear.com/8.x/adventurer/svg?seed=' ~ blog.author.username }}" #}
-                        {#                                    class="rounded-circle" #}
-                        {#                                    width="36" #}
-                        {#                                    height="36" #}
-                        {#                                    alt="{{ blog.author.username }}" #}
-                        {#                                > #}
-                        {#                            </a> #}
-                        <a href="{{ path('user_profile', { id: blog.author.id }) }}" class="user"
+                {% if blog.author.userProfile and blog.author.userProfile.avatar %}
+                    {% if blog.author %}
+                        <a href="{{ path('user_profile', { id: blog.author.id }) }}" class=""
                            data-bs-toggle="tooltip"
                            data-bs-placement="top"
                            data-bs-title="Visit profile">
-                            <i class="bi bi-person fs-4"></i>
-                        </a>
-                    {% else %}
-                        <a href="{{ path('user_profile', { id: blog.author.id }) }}" class="user"
-                           data-bs-toggle="tooltip"
-                           data-bs-placement="top"
-                           data-bs-title="Visit profile">
-                            <i class="bi bi-person fs-4"></i>
+                            <img
+                                src="{{ profiles ~ blog.author.userProfile.avatar }}"
+                                alt="User Avatar"
+                                class="avatar-img"
+                            >
                         </a>
                     {% endif %}
+                {% else %}
+                    <span class="avatar-icon"><i class="bi bi-person fs-3"></i></span>
                 {% endif %}
                 <div>
                     {% if blog.author %}

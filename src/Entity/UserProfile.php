@@ -29,9 +29,6 @@ class UserProfile
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $cover_image = null;
-
     #[ORM\Column]
     private ?DateTimeImmutable $created_at = null;
 
@@ -94,18 +91,6 @@ class UserProfile
     public function setAvatar (?string $avatar): static
     {
         $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    public function getCoverImage (): ?string
-    {
-        return $this->cover_image;
-    }
-
-    public function setCoverImage (?string $cover_image): static
-    {
-        $this->cover_image = $cover_image;
 
         return $this;
     }
